@@ -1,0 +1,416 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+    <title>FTF Custom Values - Dark Edition</title>
+
+    <meta name="mobile-web-app-capable" content="yes">
+    <meta name="apple-mobile-web-app-capable" content="yes">
+    <meta name="application-name" content="FTF Values">
+    <meta name="apple-mobile-web-app-title" content="FTF Values">
+    <meta name="theme-color" content="#060913">
+    <meta name="msapplication-navbutton-color" content="#060913">
+    <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
+    
+    <link rel="icon" sizes="192x192" href="https://via.placeholder.com/192">
+    <link rel="apple-touch-icon" href="https://via.placeholder.com/192">
+</head>
+<body style="background-color: #060913; color: #ffffff; font-family: sans-serif; padding: 20px; margin: 0;">
+
+    <div style="text-align: center; margin-bottom: 30px;">
+        <h1 style="color: #7b89f4; font-size: 42px; margin-bottom: 5px; font-weight: bold; letter-spacing: 1px;">FTF Custom Values 👑</h1>
+        <p style="color: #62697e; margin: 0;">O seu ranking personalizado, justo e sem manipulação</p>
+    </div>
+
+    <div style="text-align: center; margin-bottom: 20px;">
+        <button id="btnInstalarApp" style="display: none; background: linear-gradient(135deg, #6c5ce7, #a55eea); color: white; border: none; padding: 12px 24px; border-radius: 8px; font-weight: bold; cursor: pointer; font-size: 16px; box-shadow: 0 4px 15px rgba(108, 92, 231, 0.4);">✨ Instalar Aplicativo FTF ✨</button>
+    </div>
+
+    <div id="criador-form" style="background-color: #0b0f19; padding: 20px; border-radius: 10px; border: 1px solid #1a2235; max-width: 450px; margin: 0 auto 40px auto; box-shadow: 0 4px 15px rgba(0,0,0,0.5);">
+        <h3 style="margin-top: 0; color: #7b89f4; border-bottom: 1px solid #1a2235; padding-bottom: 10px;">Adicionar Novo Item</h3>
+        
+        <input type="text" id="nomeItem" placeholder="Nome do Item (Ex: Party Balloons)" style="width: 95%; padding: 10px; margin-bottom: 12px; background: #121826; color: #fff; border: 1px solid #232f4b; border-radius: 6px;">
+        
+        <input type="text" id="valorItem" placeholder="Valor em FV (Ex: 300)" style="width: 95%; padding: 10px; margin-bottom: 12px; background: #121826; color: #fff; border: 1px solid #232f4b; border-radius: 6px;">
+
+        <label style="color: #8fa0c4; font-size: 14px; display: block; margin-bottom: 5px;">Raridade do Item:</label>
+        <select id="raridadeItem" style="width: 100%; padding: 10px; margin-bottom: 12px; background: #121826; color: #fff; border: 1px solid #232f4b; border-radius: 6px; cursor: pointer;">
+            <option value="legendary">⭐ Legendary</option>
+            <option value="epics">✨ Epics</option>
+            <option value="rares">💎 Rares</option>
+            <option value="commons">📦 Commons</option>
+        </select>
+
+        <label style="color: #8fa0c4; font-size: 14px; display: block; margin-bottom: 5px;">Demanda (Aceita quebrados, Ex: 4.5):</label>
+        <input type="text" id="demandaNota" placeholder="Ex: 4.5" style="width: 95%; padding: 10px; margin-bottom: 12px; background: #121826; color: #fff; border: 1px solid #232f4b; border-radius: 6px;">
+
+        <label style="color: #8fa0c4; font-size: 14px; display: block; margin-bottom: 5px;">Tendência de Valor:</label>
+        <select id="tendenciaValor" style="width: 100%; padding: 10px; margin-bottom: 12px; background: #121826; color: #fff; border: 1px solid #232f4b; border-radius: 6px; cursor: pointer;">
+            <option value="none">Estável / Sem Setinha</option>
+            <option value="subiu">Subiu (↑ Verde)</option>
+            <option value="caiu">Caiu (↓ Vermelho)</option>
+            <option value="corrigido">Corrigido (* Amarelo)</option>
+        </select>
+
+        <label style="color: #8fa0c4; font-size: 14px; display: block; margin-bottom: 5px;">Status Especial:</label>
+        <select id="statusItem" style="width: 100%; padding: 10px; margin-bottom: 12px; background: #121826; color: #fff; border: 1px solid #232f4b; border-radius: 6px; cursor: pointer;">
+            <option value="none">Nenhum / Normal</option>
+            <option value="overpaid">Overpaid For (📈)</option>
+            <option value="underpaid">Underpaid For (📉)</option>
+            <option value="niche">Niche (💎 Raro)</option>
+        </select>
+
+        <input type="text" id="estabilidadeItem" placeholder="Estabilidade (Ex: Stable, Struggling)" style="width: 95%; padding: 10px; margin-bottom: 12px; background: #121826; color: #fff; border: 1px solid #232f4b; border-radius: 6px;">
+        
+        <label style="display:block; margin: 10px 0; color: #8fa0c4; font-size: 14px;">📸 Escolha a foto da galeria:</label>
+        <input type="file" id="fotoArquivo" accept="image/*" style="margin-bottom: 15px; color: #8fa0c4;">
+
+        <button type="button" onclick="criarNovoCard()" style="width: 100%; padding: 12px; background: #5364e6; color: white; border: none; border-radius: 6px; cursor: pointer; font-weight: bold; font-size: 15px; transition: 0.2s;">Adicionar Item à Lista ✨</button>
+    </div>
+
+    <hr style="border: 1px solid #1a2235; margin: 40px 0;">
+
+    <div style="max-width: 1200px; margin: 0 auto;">
+        
+        <div style="display: flex; justify-content: center; gap: 10px; margin-bottom: 15px; background-color: #0b0f19; padding: 10px; border-radius: 8px; border: 1px solid #1a2235;">
+            <button class="btn-aba active" id="aba-legendary" onclick="filtrarRaridade('legendary')" style="background: #1c2336; color: #ffb830; border: 1px solid #ffb830; padding: 10px 20px; border-radius: 6px; cursor: pointer; font-weight: bold; font-size: 14px;">👑 Legendaries</button>
+            <button class="btn-aba" id="aba-epics" onclick="filtrarRaridade('epics')" style="background: transparent; color: #a55eea; border: 1px solid transparent; padding: 10px 20px; border-radius: 6px; cursor: pointer; font-weight: bold; font-size: 14px;">✨ Epics</button>
+            <button class="btn-aba" id="aba-rares" onclick="filtrarRaridade('rares')" style="background: transparent; color: #45aaf2; border: 1px solid transparent; padding: 10px 20px; border-radius: 6px; cursor: pointer; font-weight: bold; font-size: 14px;">💎 Rares</button>
+            <button class="btn-aba" id="aba-commons" onclick="filtrarRaridade('commons')" style="background: transparent; color: #a5b1c2; border: 1px solid transparent; padding: 10px 20px; border-radius: 6px; cursor: pointer; font-weight: bold; font-size: 14px;">📦 Commons</button>
+        </div>
+
+        <div style="text-align: center; margin-bottom: 25px;">
+            <button type="button" onclick="exportarLista()" style="background: #2ed573; color: white; border: none; padding: 10px 20px; border-radius: 6px; font-weight: bold; cursor: pointer; font-size: 14px; box-shadow: 0 4px 10px rgba(46, 213, 115, 0.3);">Copiar Código da Lista 📋</button>
+        </div>
+
+        <h2 id="titulo-secao" style="color: #fff; font-size: 24px; margin-left: 10px; border-left: 4px solid #ffb830; padding-left: 10px; text-transform: uppercase;">📋 LISTA DE ITENS: LEGENDARY</h2>
+        
+        <div id="container-cards" style="display: grid; grid-template-columns: repeat(auto-fill, minmax(190px, 1fr)); gap: 12px; padding: 5px;"></div>
+    </div>
+
+    <script>
+        let listaDeMarretas = [];
+        try {
+            listaDeMarretas = JSON.parse(localStorage.getItem('ftf_custom_list')) || [];
+        } catch(e) {
+            listaDeMarretas = [];
+        }
+        
+        let imagemCarregadaBase64 = 'https://via.placeholder.com/150';
+        let raridadeAtual = 'legendary'; 
+
+        // SCRIPT DE INSTALAÇÃO DO APP (PWA)
+        let disparadorInstalacao = null;
+        window.addEventListener('beforeinstallprompt', (e) => {
+            e.preventDefault();
+            disparadorInstalacao = e;
+            const btnInstalar = document.getElementById('btnInstalarApp');
+            if (btnInstalar) btnInstalar.style.display = 'inline-block';
+        });
+
+        document.getElementById('btnInstalarApp')?.addEventListener('click', async () => {
+            if (disparadorInstalacao) {
+                disparadorInstalacao.prompt();
+                const { outcome } = await disparadorInstalacao.userChoice;
+                if (outcome === 'accepted') {
+                    document.getElementById('btnInstalarApp').style.display = 'none';
+                }
+                disparadorInstalacao = null;
+            }
+        });
+
+        window.onload = function() {
+            carregarCardsSalvos();
+            
+            document.getElementById('fotoArquivo').addEventListener('change', function(evento) {
+                const arquivo = evento.target.files[0];
+                if (arquivo) {
+                    const reader = new FileReader();
+                    reader.onload = function(e) { imagemCarregadaBase64 = e.target.result; }
+                    reader.readAsDataURL(arquivo);
+                }
+            });
+        };
+
+        function criarNovoCard() {
+            const nome = document.getElementById('nomeItem').value;
+            let valor = document.getElementById('valorItem').value;
+            const raridade = document.getElementById('raridadeItem').value;
+            const demanda = document.getElementById('demandaNota').value || '5';
+            const tendencia = document.getElementById('tendenciaValor').value;
+            const status = document.getElementById('statusItem').value;
+            const estabilidade = document.getElementById('estabilidadeItem').value || 'Stable';
+
+            if (!nome) {
+                alert('Amg, dá o nome da lenda pelo menos! 😂');
+                return;
+            }
+
+            if (valor === undefined || valor === null || valor.trim() === '') {
+                valor = 'unstable';
+            }
+
+            const novoObj = { 
+                id: Date.now(), 
+                nome: nome, 
+                valor: valor.toString().trim(), 
+                raridade: raridade || 'legendary', 
+                demanda: demanda, 
+                tendencia: tendencia, 
+                status: status, 
+                templates: estabilidade, 
+                imgSrc: imagemCarregadaBase64 
+            };
+            
+            listaDeMarretas.push(novoObj);
+            atualizarLocalStorage();
+            
+            raridadeAtual = raridade;
+            definirAbaAtivaVisual(raridade);
+            carregarCardsSalvos();
+
+            document.getElementById('nomeItem').value = '';
+            document.getElementById('valorItem').value = '';
+            document.getElementById('demandaNota').value = '';
+            document.getElementById('estabilidadeItem').value = '';
+            document.getElementById('fotoArquivo').value = '';
+            imagemCarregadaBase64 = 'https://via.placeholder.com/150';
+        }
+
+        function renderizarCardHTML(item) {
+            const container = document.getElementById('container-cards');
+            const card = document.createElement('div');
+            
+            let corRaridade = '#ffb830'; 
+            if (item.raridade === 'epics') corRaridade = '#a55eea';
+            if (item.raridade === 'rares') corRaridade = '#45aaf2';
+            if (item.raridade === 'commons') corRaridade = '#a5b1c2';
+
+            card.style.backgroundColor = '#0b0f19';
+            card.style.border = `1.5px solid ${corRaridade}`; 
+            card.style.borderRadius = '12px';
+            card.style.padding = '12px';
+            card.style.width = '100%'; 
+            card.style.color = '#fff';
+            card.style.position = 'relative';
+            card.style.boxSizing = 'border-box';
+            card.style.display = 'flex';
+            card.style.flexDirection = 'column';
+            card.setAttribute('data-id', item.id);
+
+            card.innerHTML = `
+                <button class="btn-deletar" style="position: absolute; top: 8px; right: 8px; background: transparent; border: none; color: #62697e; font-weight: bold; cursor: pointer; font-size: 12px; z-index: 5;">❌</button>
+
+                <div style="background-color: transparent; width: 100%; height: 110px; display: flex; align-items: center; justify-content: center; margin-bottom: 10px;">
+                    <img src="${item.imgSrc}" alt="${item.nome}" style="max-width: 100%; max-height: 100%; object-fit: contain;">
+                </div>
+
+                <span class="txt-posicao-automatica" style="position: absolute; top: 12px; left: 12px; background: #5364e6; color: #fff; font-size: 10px; font-weight: bold; padding: 2px 5px; border-radius: 4px;">#--</span>
+
+                <h3 style="margin: 0 0 2px 0; color: #ffffff; font-size: 14px; font-weight: bold; letter-spacing: 0.3px; white-space: nowrap; overflow: hidden; text-overflow: ellipsis;">${item.nome}</h3>
+                <span style="color: ${corRaridade}; font-size: 9px; font-weight: bold; text-transform: uppercase; letter-spacing: 1px;">${item.raridade || 'legendary'}</span>
+                
+                <div style="margin-top: 10px; font-size: 11px; display: flex; flex-direction: column; gap: 6px;">
+                    <div>
+                        <div style="color: #4b5266; font-size: 8px; font-weight: bold; text-transform: uppercase; letter-spacing: 0.5px; margin-bottom: 2px;">VALUE</div>
+                        <div style="display: flex; justify-content: space-between; align-items: center;">
+                            <span class="box-valor-dinamico" style="font-size: 16px; font-weight: bold;"></span>
+                            <span class="txt-estabilidade" style="background: #161c2e; color: #8fa0c4; font-size: 9px; font-weight: bold; padding: 2px 6px; border-radius: 4px; border: 1px solid #232f4b;">${item.templates || 'Stable'}</span>
+                        </div>
+                    </div>
+
+                    <div class="box-badge-status" style="display: flex; justify-content: flex-end; margin-top: -2px;"></div>
+
+                    <div style="display: flex; justify-content: space-between; align-items: center; margin-top: 2px; border-top: 1px solid #161c2e; padding-top: 8px;">
+                        <span style="color: #4b5266; font-size: 8px; font-weight: bold; text-transform: uppercase; letter-spacing: 0.5px;">DEMAND</span>
+                        <span class="txt-demanda-estrelas" style="font-size: 11px; letter-spacing: 0.5px;"></span>
+                    </div>
+                </div>
+
+                <div style="margin-top: 12px; display: flex; flex-direction: column; gap: 4px; border-top: 1px solid #161c2e; padding-top: 8px;">
+                    <div style="display: flex; gap: 4px;">
+                        <button class="btn-subir" style="flex: 1; background: #121826; color: #fff; border: 1px solid #232f4b; padding: 4px; cursor: pointer; border-radius: 4px; font-size: 10px;">▲ Subir</button>
+                        <button class="btn-descer" style="flex: 1; background: #121826; color: #fff; border: 1px solid #232f4b; padding: 4px; cursor: pointer; border-radius: 4px; font-size: 10px;">▼ Descer</button>
+                    </div>
+                    <button class="btn-editar" style="background: #1c2336; color: #7b89f4; border: 1px solid #2d3854; padding: 4px; cursor: pointer; border-radius: 4px; font-size: 10px; font-weight: bold;">✏️ Editar</button>
+                </div>
+            `;
+
+            card.querySelector('.btn-editar').addEventListener('click', function() {
+                const novoValor = prompt("Novo Valor em FV:", item.valor);
+                const novaDemanda = prompt("Nova Demanda (0 a 5):", item.demanda);
+                const novaEstabilidade = prompt("Nova Estabilidade:", item.templates);
+                const novaTendencia = prompt("Nova tendência (subiu, caiu, corrigido, none):", item.tendencia);
+                const novoStatus = prompt("Novo Status (overpaid, underpaid, niche, none):", item.status || 'none');
+
+                if (novoValor !== null && novoValor.trim() !== '') item.valor = novoValor.trim();
+                if (novaDemanda !== null) item.demanda = novaDemanda;
+                if (novaEstabilidade !== null) item.templates = novaEstabilidade;
+                if (novaTendencia !== null) item.tendencia = novaTendencia.trim().toLowerCase();
+                if (novoStatus !== null) item.status = novoStatus.trim().toLowerCase();
+
+                atualizarLocalStorage();
+                carregarCardsSalvos();
+            });
+
+            card.querySelector('.btn-deletar').addEventListener('click', function() {
+                listaDeMarretas = listaDeMarretas.filter(m => m.id !== item.id);
+                card.remove();
+                reordenarArrayEGuardar();
+            });
+
+            card.querySelector('.btn-subir').addEventListener('click', function() {
+                const irmaoAnterior = card.previousElementSibling;
+                if (irmaoAnterior) {
+                    container.insertBefore(card, irmaoAnterior);
+                    reordenarArrayEGuardar();
+                }
+            });
+
+            card.querySelector('.btn-descer').addEventListener('click', function() {
+                const proximoIrmao = card.nextElementSibling;
+                if (proximoIrmao) {
+                    container.insertBefore(proximoIrmao, card);
+                    reordenarArrayEGuardar();
+                }
+            });
+
+            atualizarEstiloValorDoCard(card, item);
+            gerarEstrelasDemanda(card, item.demanda);
+            container.appendChild(card);
+        }
+
+        function filtrarRaridade(raridadeAlvo) {
+            raridadeAtual = raridadeAlvo;
+            definirAbaAtivaVisual(raridadeAlvo);
+            carregarCardsSalvos();
+        }
+
+        function definirAbaAtivaVisual(raridadeAlvo) {
+            const botoes = document.querySelectorAll('.btn-aba');
+            botoes.forEach(btn => {
+                btn.style.background = 'transparent';
+                btn.style.borderColor = 'transparent';
+            });
+
+            const coresAbas = { legendary: '#ffb830', epics: '#a55eea', rares: '#45aaf2', commons: '#a5b1c2' };
+            const botaoAtivo = document.getElementById('aba-' + raridadeAlvo);
+            if (botaoAtivo) {
+                botaoAtivo.style.background = '#1c2336';
+                botaoAtivo.style.borderColor = coresAbas[raridadeAlvo];
+            }
+
+            const titulo = document.getElementById('titulo-secao');
+            if (titulo) {
+                titulo.style.borderLeftColor = coresAbas[raridadeAlvo];
+                titulo.innerText = `📋 LISTA DE ITENS: ${raridadeAlvo}`;
+            }
+        }
+
+        function atualizarEstiloValorDoCard(cardHTML, item) {
+            const containerValor = cardHTML.querySelector('.box-valor-dinamico');
+            const containerBadge = cardHTML.querySelector('.box-badge-status');
+            if (!containerValor) return;
+
+            let badgeTendencia = '';
+            let corValor = '#ffffff';
+
+            let valorExibido = "unstable";
+            if (item.valor !== undefined && item.valor !== null && item.valor.toString().toLowerCase() !== 'undefined') {
+                valorExibido = item.valor.toString().replace(/[↑↓*]/g, '').trim(); 
+            } else {
+                item.valor = "unstable";
+            }
+
+            if (item.tendencia === 'subiu') { badgeTendencia = ` <span style="color: #2ed573;">↑</span>`; corValor = '#2ed573'; }
+            else if (item.tendencia === 'caiu') { badgeTendencia = ` <span style="color: #ff4757;">↓</span>`; corValor = '#ff4757'; }
+            else if (item.tendencia === 'corrigido') { badgeTendencia = ` <span style="color: #ffa502;">*</span>`; corValor = '#ffa502'; }
+            
+            containerValor.style.color = corValor;
+            containerValor.innerHTML = `${valorExibido}${badgeTendencia}`;
+
+            if (containerBadge) {
+                containerBadge.innerHTML = '';
+                if (item.status === 'overpaid') containerBadge.innerHTML = `<span style="color: #2ed573; font-size: 8px; font-weight: bold; background: rgba(46, 213, 115, 0.1); padding: 1px 4px; border-radius: 4px; border: 1px solid rgba(46, 213, 115, 0.3);">+ Overpaid</span>`;
+                else if (item.status === 'underpaid') containerBadge.innerHTML = `<span style="color: #ff9f43; font-size: 8px; font-weight: bold; background: rgba(255, 159, 67, 0.1); padding: 1px 4px; border-radius: 4px; border: 1px solid rgba(255, 159, 67, 0.3);">- Underpaid</span>`;
+                else if (item.status === 'niche') containerBadge.innerHTML = `<span style="color: #a55eea; font-size: 8px; font-weight: bold; background: rgba(165, 94, 234, 0.1); padding: 1px 4px; border-radius: 4px; border: 1px solid rgba(165, 94, 234, 0.3);">💎 Niche</span>`;
+            }
+        }
+
+        function gerarEstrelasDemanda(cardHTML, notaEstrelas) {
+            const containerEstrelas = cardHTML.querySelector('.txt-demanda-estrelas');
+            if (!containerEstrelas) return;
+
+            let notaNum = parseFloat(notaEstrelas) || 0;
+            let estrelasTexto = '';
+            for (let i = 1; i <= 5; i++) {
+                if (notaNum >= i) estrelasTexto += '<span style="color: #ffb830;">⭐</span>';
+                else if (notaNum > i - 1 && notaNum < i) estrelasTexto += '<span style="font-size: 11px; vertical-align: middle;">✨</span>';
+                else estrelasTexto += '<span style="color: #323b54;">☆</span>';
+            }
+            containerEstrelas.innerHTML = estrelasTexto;
+        }
+
+        function carregarCardsSalvos() {
+            document.getElementById('container-cards').innerHTML = '';
+            const itensFiltrados = listaDeMarretas.filter(item => (item.raridade || 'legendary') === raridadeAtual);
+            itensFiltrados.forEach(item => {
+                renderizarCardHTML(item);
+            });
+            atualizarNumerosVisuais();
+        }
+
+        function atualizarLocalStorage() {
+            try {
+                localStorage.setItem('ftf_custom_list', JSON.stringify(listaDeMarretas));
+            } catch(e) {
+                console.log("Erro ao salvar no localStorage");
+            }
+        }
+
+        function reordenarArrayEGuardar() {
+            const cardsNaTela = document.querySelectorAll('#container-cards > div');
+            let listaLimpa = listaDeMarretas.filter(item => (item.raridade || 'legendary') !== raridadeAtual);
+            
+            cardsNaTela.forEach((cardHTML) => {
+                const id = parseInt(cardHTML.getAttribute('data-id'));
+                const correspondente = listaDeMarretas.find(m => m.id === id);
+                if (correspondente) {
+                    if (correspondente.valor) {
+                        correspondente.valor = correspondente.valor.toString().replace(/[↑↓*]/g, '').trim();
+                    }
+                    listaLimpa.push(correspondente);
+                }
+            });
+            
+            listaDeMarretas = listaLimpa;
+            atualizarLocalStorage();
+            atualizarNumerosVisuais();
+        }
+
+        function atualizarNumerosVisuais() {
+            const cardsNaTela = document.querySelectorAll('#container-cards > div');
+            cardsNaTela.forEach((cardHTML, index) => {
+                const caixaTextoPosicao = cardHTML.querySelector('.txt-posicao-automatica');
+                if (caixaTextoPosicao) {
+                    caixaTextoPosicao.innerText = `#${index + 1}`;
+                }
+            });
+        }
+
+        function exportarLista() {
+            if (listaDeMarretas.length === 0) {
+                alert("Amg, adiciona algum card primeiro antes de copiar! 😂");
+                return;
+            }
+            const dadosTexto = JSON.stringify(listaDeMarretas, null, 2);
+            navigator.clipboard.writeText(dadosTexto).then(() => {
+                alert("Código da lista copiado! 🚀 Só colar aqui!");
+            }).catch(err => {
+                alert("Erro ao copiar automaticamente, tente selecionar manualmente.");
+            });
+        }
+    </script>
+
+</body>
+</html>
