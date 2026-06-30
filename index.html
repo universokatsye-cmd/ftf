@@ -1,3 +1,4 @@
+
 <!DOCTYPE html>
 <html lang="pt-BR">
 <head>
@@ -14,6 +15,16 @@
     
     <link rel="icon" sizes="192x192" href="https://via.placeholder.com/192">
     <link rel="apple-touch-icon" href="https://via.placeholder.com/192">
+    
+    <style>
+        /* Classe para sumir com os controles na hora do print */
+        .hide-mode #criador-form,
+        .hide-mode .btn-aba-container,
+        .hide-mode #btn-exportar-container,
+        .hide-mode #search-container,
+        .hide-mode .btn-deletar,
+        .hide-mode .btn-acoes-card { display: none !important; }
+    </style>
 </head>
 <body style="background-color: #060913; color: #ffffff; font-family: sans-serif; padding: 20px; margin: 0;">
 
@@ -23,7 +34,15 @@
     </div>
 
     <div style="text-align: center; margin-bottom: 20px;">
+        <button id="togglePrintBtn" onclick="togglePrintMode()" style="background: #1c2336; color: #7b89f4; border: 1px solid #7b89f4; padding: 12px 24px; border-radius: 8px; font-weight: bold; cursor: pointer; font-size: 16px;">Ocultar Botões (Modo Print)</button>
+    </div>
+
+    <div style="text-align: center; margin-bottom: 20px;">
         <button id="btnInstalarApp" style="display: none; background: linear-gradient(135deg, #6c5ce7, #a55eea); color: white; border: none; padding: 12px 24px; border-radius: 8px; font-weight: bold; cursor: pointer; font-size: 16px; box-shadow: 0 4px 15px rgba(108, 92, 231, 0.4);">✨ Instalar Aplicativo FTF ✨</button>
+    </div>
+
+    <div id="search-container" style="max-width: 450px; margin: 0 auto 20px auto; text-align: center;">
+        <input type="text" id="barraPesquisa" placeholder="🔍 Pesquisar marreta pelo nome..." oninput="carregarCardsSalvos()" style="width: 95%; padding: 12px; background: #121826; color: #fff; border: 1px solid #7b89f4; border-radius: 8px; font-size: 15px;">
     </div>
 
     <div id="criador-form" style="background-color: #0b0f19; padding: 20px; border-radius: 10px; border: 1px solid #1a2235; max-width: 450px; margin: 0 auto 40px auto; box-shadow: 0 4px 15px rgba(0,0,0,0.5);">
@@ -31,6 +50,8 @@
         
         <input type="text" id="nomeItem" placeholder="Nome do Item (Ex: Party Balloons)" style="width: 95%; padding: 10px; margin-bottom: 12px; background: #121826; color: #fff; border: 1px solid #232f4b; border-radius: 6px;">
         
+        <input type="text" id="linkImagem" placeholder="Link da Imagem na Internet (URL)" style="width: 95%; padding: 10px; margin-bottom: 12px; background: #121826; color: #fff; border: 1px solid #232f4b; border-radius: 6px;">
+
         <input type="text" id="valorItem" placeholder="Valor em FV (Ex: 300)" style="width: 95%; padding: 10px; margin-bottom: 12px; background: #121826; color: #fff; border: 1px solid #232f4b; border-radius: 6px;">
 
         <label style="color: #8fa0c4; font-size: 14px; display: block; margin-bottom: 5px;">Raridade do Item:</label>
@@ -61,9 +82,6 @@
         </select>
 
         <input type="text" id="estabilidadeItem" placeholder="Estabilidade (Ex: Stable, Struggling)" style="width: 95%; padding: 10px; margin-bottom: 12px; background: #121826; color: #fff; border: 1px solid #232f4b; border-radius: 6px;">
-        
-        <label style="display:block; margin: 10px 0; color: #8fa0c4; font-size: 14px;">📸 Escolha a foto da galeria:</label>
-        <input type="file" id="fotoArquivo" accept="image/*" style="margin-bottom: 15px; color: #8fa0c4;">
 
         <button type="button" onclick="criarNovoCard()" style="width: 100%; padding: 12px; background: #5364e6; color: white; border: none; border-radius: 6px; cursor: pointer; font-weight: bold; font-size: 15px; transition: 0.2s;">Adicionar Item à Lista ✨</button>
     </div>
@@ -72,14 +90,14 @@
 
     <div style="max-width: 1200px; margin: 0 auto;">
         
-        <div style="display: flex; justify-content: center; gap: 10px; margin-bottom: 15px; background-color: #0b0f19; padding: 10px; border-radius: 8px; border: 1px solid #1a2235;">
-            <button class="btn-aba active" id="aba-legendary" onclick="filtrarRaridade('legendary')" style="background: #1c2336; color: #ffb830; border: 1px solid #ffb830; padding: 10px 20px; border-radius: 6px; cursor: pointer; font-weight: bold; font-size: 14px;">👑 Legendaries</button>
+        <div class="btn-aba-container" style="display: flex; justify-content: center; gap: 10px; margin-bottom: 15px; background-color: #0b0f19; padding: 10px; border-radius: 8px; border: 1px solid #1a2235;">
+            <button class="btn-aba" id="aba-legendary" onclick="filtrarRaridade('legendary')" style="background: #1c2336; color: #ffb830; border: 1px solid #ffb830; padding: 10px 20px; border-radius: 6px; cursor: pointer; font-weight: bold; font-size: 14px;">👑 Legendaries</button>
             <button class="btn-aba" id="aba-epics" onclick="filtrarRaridade('epics')" style="background: transparent; color: #a55eea; border: 1px solid transparent; padding: 10px 20px; border-radius: 6px; cursor: pointer; font-weight: bold; font-size: 14px;">✨ Epics</button>
             <button class="btn-aba" id="aba-rares" onclick="filtrarRaridade('rares')" style="background: transparent; color: #45aaf2; border: 1px solid transparent; padding: 10px 20px; border-radius: 6px; cursor: pointer; font-weight: bold; font-size: 14px;">💎 Rares</button>
             <button class="btn-aba" id="aba-commons" onclick="filtrarRaridade('commons')" style="background: transparent; color: #a5b1c2; border: 1px solid transparent; padding: 10px 20px; border-radius: 6px; cursor: pointer; font-weight: bold; font-size: 14px;">📦 Commons</button>
         </div>
 
-        <div style="text-align: center; margin-bottom: 25px;">
+        <div id="btn-exportar-container" style="text-align: center; margin-bottom: 25px;">
             <button type="button" onclick="exportarLista()" style="background: #2ed573; color: white; border: none; padding: 10px 20px; border-radius: 6px; font-weight: bold; cursor: pointer; font-size: 14px; box-shadow: 0 4px 10px rgba(46, 213, 115, 0.3);">Copiar Código da Lista 📋</button>
         </div>
 
@@ -91,12 +109,12 @@
     <script>
         let listaDeMarretas = [];
         try {
-            listaDeMarretas = JSON.parse(localStorage.getItem('ftf_custom_list')) || [];
+            // Mudamos o nome da chave para não conflitar com dados antigos travados
+            listaDeMarretas = JSON.parse(localStorage.getItem('ftf_custom_list_url')) || [];
         } catch(e) {
             listaDeMarretas = [];
         }
         
-        let imagemCarregadaBase64 = 'https://via.placeholder.com/150';
         let raridadeAtual = 'legendary'; 
 
         // SCRIPT DE INSTALAÇÃO DO APP (PWA)
@@ -121,19 +139,26 @@
 
         window.onload = function() {
             carregarCardsSalvos();
-            
-            document.getElementById('fotoArquivo').addEventListener('change', function(evento) {
-                const arquivo = evento.target.files[0];
-                if (arquivo) {
-                    const reader = new FileReader();
-                    reader.onload = function(e) { imagemCarregadaBase64 = e.target.result; }
-                    reader.readAsDataURL(arquivo);
-                }
-            });
         };
+
+        // Função do Modo Print
+        function togglePrintMode() {
+            document.body.classList.toggle('hide-mode');
+            const btn = document.getElementById('togglePrintBtn');
+            if (document.body.classList.contains('hide-mode')) {
+                btn.innerText = "Mostrar Botões (Modo Edição)";
+                btn.style.background = "#7b89f4";
+                btn.style.color = "#000";
+            } else {
+                btn.innerText = "Ocultar Botões (Modo Print)";
+                btn.style.background = "#1c2336";
+                btn.style.color = "#7b89f4";
+            }
+        }
 
         function criarNovoCard() {
             const nome = document.getElementById('nomeItem').value;
+            const urlImagem = document.getElementById('linkImagem').value || 'https://via.placeholder.com/150';
             let valor = document.getElementById('valorItem').value;
             const raridade = document.getElementById('raridadeItem').value;
             const demanda = document.getElementById('demandaNota').value || '5';
@@ -159,7 +184,7 @@
                 tendencia: tendencia, 
                 status: status, 
                 templates: estabilidade, 
-                imgSrc: imagemCarregadaBase64 
+                imgSrc: urlImagem 
             };
             
             listaDeMarretas.push(novoObj);
@@ -170,11 +195,10 @@
             carregarCardsSalvos();
 
             document.getElementById('nomeItem').value = '';
+            document.getElementById('linkImagem').value = '';
             document.getElementById('valorItem').value = '';
             document.getElementById('demandaNota').value = '';
             document.getElementById('estabilidadeItem').value = '';
-            document.getElementById('fotoArquivo').value = '';
-            imagemCarregadaBase64 = 'https://via.placeholder.com/150';
         }
 
         function renderizarCardHTML(item) {
@@ -202,7 +226,7 @@
                 <button class="btn-deletar" style="position: absolute; top: 8px; right: 8px; background: transparent; border: none; color: #62697e; font-weight: bold; cursor: pointer; font-size: 12px; z-index: 5;">❌</button>
 
                 <div style="background-color: transparent; width: 100%; height: 110px; display: flex; align-items: center; justify-content: center; margin-bottom: 10px;">
-                    <img src="${item.imgSrc}" alt="${item.nome}" style="max-width: 100%; max-height: 100%; object-fit: contain;">
+                    <img src="${item.imgSrc}" alt="${item.nome}" style="max-width: 100%; max-height: 100%; object-fit: contain;" onerror="this.src='https://placehold.co/150x110/0b0f19/ffffff?text=Sem+Foto'">
                 </div>
 
                 <span class="txt-posicao-automatica" style="position: absolute; top: 12px; left: 12px; background: #5364e6; color: #fff; font-size: 10px; font-weight: bold; padding: 2px 5px; border-radius: 4px;">#--</span>
@@ -227,7 +251,7 @@
                     </div>
                 </div>
 
-                <div style="margin-top: 12px; display: flex; flex-direction: column; gap: 4px; border-top: 1px solid #161c2e; padding-top: 8px;">
+                <div class="btn-acoes-card" style="margin-top: 12px; display: flex; flex-direction: column; gap: 4px; border-top: 1px solid #161c2e; padding-top: 8px;">
                     <div style="display: flex; gap: 4px;">
                         <button class="btn-subir" style="flex: 1; background: #121826; color: #fff; border: 1px solid #232f4b; padding: 4px; cursor: pointer; border-radius: 4px; font-size: 10px;">▲ Subir</button>
                         <button class="btn-descer" style="flex: 1; background: #121826; color: #fff; border: 1px solid #232f4b; padding: 4px; cursor: pointer; border-radius: 4px; font-size: 10px;">▼ Descer</button>
@@ -353,16 +377,23 @@
 
         function carregarCardsSalvos() {
             document.getElementById('container-cards').innerHTML = '';
-            const itensFiltrados = listaDeMarretas.filter(item => (item.raridade || 'legendary') === raridadeAtual);
+            const termoPesquisa = document.getElementById('barraPesquisa').value.toLowerCase();
+            
+            const itensFiltrados = listaDeMarretas.filter(item => {
+                const bateRaridade = (item.raridade || 'legendary') === raridadeAtual;
+                const bateNome = item.nome.toLowerCase().includes(termoPesquisa);
+                return bateRaridade && bateNome;
+            });
+            
             itensFiltrados.forEach(item => {
                 renderizarCardHTML(item);
             });
-            atualizarNumerosVisuais();
+            atualizarNumbersVisuais();
         }
 
         function atualizarLocalStorage() {
             try {
-                localStorage.setItem('ftf_custom_list', JSON.stringify(listaDeMarretas));
+                localStorage.setItem('ftf_custom_list_url', JSON.stringify(listaDeMarretas));
             } catch(e) {
                 console.log("Erro ao salvar no localStorage");
             }
@@ -385,10 +416,10 @@
             
             listaDeMarretas = listaLimpa;
             atualizarLocalStorage();
-            atualizarNumerosVisuais();
+            atualizarNumbersVisuais();
         }
 
-        function atualizarNumerosVisuais() {
+        function atualizarNumbersVisuais() {
             const cardsNaTela = document.querySelectorAll('#container-cards > div');
             cardsNaTela.forEach((cardHTML, index) => {
                 const caixaTextoPosicao = cardHTML.querySelector('.txt-posicao-automatica');
