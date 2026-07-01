@@ -616,14 +616,18 @@
             containerEstrelas.innerHTML = estrelasTexto;
         }
 
-        function carregarCardsSalvos() {
+                function carregarCardsSalvos() {
             const container = document.getElementById('container-cards');
             if (!container) return;
 
-            const termoPesquisa = (document.getElementById('barraPesquisa')?.value || "").toLowerCase();
+            // Pega o termo de pesquisa, ou deixa vazio se não existir o elemento
+            const barra = document.getElementById('barraPesquisa');
+            const termoPesquisa = barra ? barra.value.toLowerCase() : "";
 
             const itensFiltrados = listaDeMarretas.filter(item => {
-                const bateRaridade = (item.raridade || 'legendary') === raridadeAtual;
+                // Força a raridade a ser comparada sempre em minúsculo para não dar erro
+                const raridadeItem = (item.raridade || 'legendary').toLowerCase();
+                const bateRaridade = raridadeItem === raridadeAtual.toLowerCase();
                 const bateNome = (item.nome || "").toLowerCase().includes(termoPesquisa);
                 return bateRaridade && bateNome;
             });
@@ -639,6 +643,7 @@
             container.appendChild(fragment);
             atualizarNumbersVisuais();
         }
+
 
                 function reordenarArrayEGuardar() {
             // 1. Pegamos todos os cards que NÃO SÃO da raridade atual (para não mexer neles)
