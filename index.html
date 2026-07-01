@@ -16,15 +16,14 @@
     <link rel="apple-touch-icon" href="https://via.placeholder.com/192">
     
     <style>
-        /* Classe para sumir com os controles na hora do print */
         .hide-mode #criador-form,
         .hide-mode .btn-aba-container,
         .hide-mode #btn-exportar-container,
         .hide-mode #search-container,
         .hide-mode .btn-deletar,
-        .hide-mode .btn-acoes-card { display: none !important; }
+        .hide-mode .btn-acoes-card,
+        .hide-mode #btn-limpar-tudo { display: none !important; }
 
-        /* Estilos para as abas do formulário */
         .form-tabs { display: flex; gap: 5px; margin-bottom: 15px; border-bottom: 1px solid #1a2235; padding-bottom: 8px; }
         .form-tab-btn { background: transparent; color: #62697e; border: none; padding: 6px 12px; cursor: pointer; font-weight: bold; font-size: 13px; border-radius: 4px; }
         .form-tab-btn.active { background: #1c2336; color: #ffa502; border: 1px solid #2d3854; }
@@ -37,12 +36,9 @@
         <p style="color: #62697e; margin: 0;">O seu ranking personalizado, justo e sem manipulação</p>
     </div>
 
-    <div style="text-align: center; margin-bottom: 20px;">
-        <button id="togglePrintBtn" onclick="togglePrintMode()" style="background: #1c2336; color: #ffa502; border: 1px solid #ffa502; padding: 12px 24px; border-radius: 8px; font-weight: bold; cursor: pointer; font-size: 16px;">Ocultar Botões (Modo Print)</button>
-    </div>
-
-    <div style="text-align: center; margin-bottom: 20px;">
-        <button id="btnInstalarApp" style="display: none; background: linear-gradient(135deg, #ffa502, #ffb830); color: black; border: none; padding: 12px 24px; border-radius: 8px; font-weight: bold; cursor: pointer; font-size: 16px; box-shadow: 0 4px 15px rgba(255, 165, 0, 0.4);">✨ Instalar Aplicativo FTF ✨</button>
+    <div style="text-align: center; margin-bottom: 20px; display: flex; justify-content: center; gap: 10px;">
+        <button id="togglePrintBtn" onclick="togglePrintMode()" style="background: #1c2336; color: #ffa502; border: 1px solid #ffa502; padding: 12px 24px; border-radius: 8px; font-weight: bold; cursor: pointer; font-size: 16px;">Modo Print</button>
+        <button id="btn-limpar-tudo" onclick="limparTudoForçado()" style="background: #ff4757; color: white; border: none; padding: 12px 24px; border-radius: 8px; font-weight: bold; cursor: pointer; font-size: 16px;">⚠️ Resetar Site</button>
     </div>
 
     <div id="search-container" style="max-width: 450px; margin: 0 auto 20px auto; text-align: center;">
@@ -58,12 +54,12 @@
 
         <div id="form-individual">
             <h3 style="margin-top: 0; color: #ffa502; margin-bottom: 15px;">Adicionar Novo Item</h3>
-            <input type="text" id="nomeItem" placeholder="Nome do Item (Ex: Party Balloons)" style="width: 95%; padding: 10px; margin-bottom: 12px; background: #121826; color: #fff; border: 1px solid #232f4b; border-radius: 6px;">
-            <input type="text" id="linkImagem" placeholder="Link da Imagem na Internet (URL)" style="width: 95%; padding: 10px; margin-bottom: 12px; background: #121826; color: #fff; border: 1px solid #232f4b; border-radius: 6px;">
-            <input type="text" id="valorItem" placeholder="Valor em FV (Ex: 300)" style="width: 95%; padding: 10px; margin-bottom: 12px; background: #121826; color: #fff; border: 1px solid #232f4b; border-radius: 6px;">
+            <input type="text" id="nomeItem" placeholder="Nome do Item" style="width: 95%; padding: 10px; margin-bottom: 12px; background: #121826; color: #fff; border: 1px solid #232f4b; border-radius: 6px;">
+            <input type="text" id="linkImagem" placeholder="Link da Imagem (URL)" style="width: 95%; padding: 10px; margin-bottom: 12px; background: #121826; color: #fff; border: 1px solid #232f4b; border-radius: 6px;">
+            <input type="text" id="valorItem" placeholder="Valor em FV" style="width: 95%; padding: 10px; margin-bottom: 12px; background: #121826; color: #fff; border: 1px solid #232f4b; border-radius: 6px;">
 
             <label style="color: #8fa0c4; font-size: 14px; display: block; margin-bottom: 5px;">Raridade do Item:</label>
-            <select id="raridadeItem" style="width: 100%; padding: 10px; margin-bottom: 12px; background: #121826; color: #fff; border: 1px solid #232f4b; border-radius: 6px; cursor: pointer;">
+            <select id="raridadeItem" style="width: 100%; padding: 10px; margin-bottom: 12px; background: #121826; color: #fff; border: 1px solid #232f4b; border-radius: 6px;">
                 <option value="legendary">⭐ Legendary</option>
                 <option value="epics">✨ Epics</option>
                 <option value="rares">💎 Rares</option>
@@ -74,7 +70,7 @@
             <input type="text" id="demandaNota" placeholder="Ex: 4.5" style="width: 95%; padding: 10px; margin-bottom: 12px; background: #121826; color: #fff; border: 1px solid #232f4b; border-radius: 6px;">
 
             <label style="color: #8fa0c4; font-size: 14px; display: block; margin-bottom: 5px;">Tendência de Valor:</label>
-            <select id="tendenciaValor" style="width: 100%; padding: 10px; margin-bottom: 12px; background: #121826; color: #fff; border: 1px solid #232f4b; border-radius: 6px; cursor: pointer;">
+            <select id="tendenciaValor" style="width: 100%; padding: 10px; margin-bottom: 12px; background: #121826; color: #fff; border: 1px solid #232f4b; border-radius: 6px;">
                 <option value="none">Estável / Sem Setinha</option>
                 <option value="subiu">Subiu (↑ Verde)</option>
                 <option value="caiu">Caiu (↓ Vermelho)</option>
@@ -82,21 +78,21 @@
             </select>
 
             <label style="color: #8fa0c4; font-size: 14px; display: block; margin-bottom: 5px;">Status Especial:</label>
-            <select id="statusItem" style="width: 100%; padding: 10px; margin-bottom: 12px; background: #121826; color: #fff; border: 1px solid #232f4b; border-radius: 6px; cursor: pointer;">
-                <option value="none">Nenhum / Normal</option>
+            <select id="statusItem" style="width: 100%; padding: 10px; margin-bottom: 12px; background: #121826; color: #fff; border: 1px solid #232f4b; border-radius: 6px;">
+                <option value="none">Nenhum</option>
                 <option value="overpaid">Overpaid For (📈)</option>
                 <option value="underpaid">Underpaid For (📉)</option>
                 <option value="niche">Niche (💎 Raro)</option>
             </select>
 
-            <input type="text" id="estabilidadeItem" placeholder="Estabilidade (Ex: Stable, Struggling)" style="width: 95%; padding: 10px; margin-bottom: 12px; background: #121826; color: #fff; border: 1px solid #232f4b; border-radius: 6px;">
-            <button type="button" onclick="criarNovoCard()" style="width: 100%; padding: 12px; background: #ffa502; color: black; border: none; border-radius: 6px; cursor: pointer; font-weight: bold; font-size: 15px;">Adicionar Item à Lista ✨</button>
+            <input type="text" id="estabilidadeItem" placeholder="Estabilidade (Ex: Stable)" style="width: 95%; padding: 10px; margin-bottom: 12px; background: #121826; color: #fff; border: 1px solid #232f4b; border-radius: 6px;">
+            <button type="button" onclick="criarNovoCard()" style="width: 100%; padding: 12px; background: #ffa502; color: black; border: none; border-radius: 6px; cursor: pointer; font-weight: bold; font-size: 15px;">Adicionar Item ✨</button>
         </div>
 
         <div id="form-massa" style="display: none;">
             <h3 style="margin-top: 0; color: #ffa502; margin-bottom: 5px;">Importador Automático</h3>
-            <p style="color: #62697e; font-size: 12px; margin-bottom: 15px;">Cole aqui os links (pode colocar quantos quiser de cada vez):</p>
-            <textarea id="listaLinksMassa" rows="8" placeholder="https://i.postimg.cc/..." style="width: 95%; padding: 10px; background: #121826; color: #fff; border: 1px solid #232f4b; border-radius: 6px; font-family: monospace; font-size: 12px; margin-bottom: 15px; resize: vertical;"></textarea>
+            <p style="color: #62697e; font-size: 12px; margin-bottom: 15px;">Cole aqui os links (pode colocar quantos quiser):</p>
+            <textarea id="listaLinksMassa" rows="8" placeholder="Cole os links aqui..." style="width: 95%; padding: 10px; background: #121826; color: #fff; border: 1px solid #232f4b; border-radius: 6px; font-family: monospace; font-size: 12px; margin-bottom: 15px; resize: vertical;"></textarea>
             <button type="button" onclick="importarLinksEmMassa()" style="width: 100%; padding: 12px; background: #2ed573; color: white; border: none; border-radius: 6px; cursor: pointer; font-weight: bold; font-size: 15px;">Gerar Cards do Estoque 🚀</button>
         </div>
 
@@ -114,7 +110,7 @@
         </div>
 
         <div id="btn-exportar-container" style="text-align: center; margin-bottom: 25px;">
-            <button type="button" onclick="exportarLista()" style="background: #2ed573; color: white; border: none; padding: 10px 20px; border-radius: 6px; font-weight: bold; cursor: pointer; font-size: 14px; box-shadow: 0 4px 10px rgba(46, 213, 115, 0.3);">Copiar Código da Lista 📋</button>
+            <button type="button" onclick="exportarLista()" style="background: #2ed573; color: white; border: none; padding: 10px 20px; border-radius: 6px; font-weight: bold; cursor: pointer; font-size: 14px;">Copiar Código da Lista 📋</button>
         </div>
 
         <h2 id="titulo-secao" style="color: #fff; font-size: 24px; margin-left: 10px; border-left: 4px solid #ffa502; padding-left: 10px; text-transform: uppercase;">📋 LISTA DE ITENS: LEGENDARY</h2>
@@ -131,26 +127,6 @@
         }
         
         let raridadeAtual = 'legendary'; 
-
-        // SCRIPT DE INSTALAÇÃO DO APP (PWA)
-        let disparadorInstalacao = null;
-        window.addEventListener('beforeinstallprompt', (e) => {
-            e.preventDefault();
-            disparadorInstalacao = e;
-            const btnInstalar = document.getElementById('btnInstalarApp');
-            if (btnInstalar) btnInstalar.style.display = 'inline-block';
-        });
-
-        document.getElementById('btnInstalarApp')?.addEventListener('click', async () => {
-            if (disparadorInstalacao) {
-                disparadorInstalacao.prompt();
-                const { outcome } = await disparadorInstalacao.userChoice;
-                if (outcome === 'accepted') {
-                    document.getElementById('btnInstalarApp').style.display = 'none';
-                }
-                disparadorInstalacao = null;
-            }
-        });
 
         window.onload = function() {
             carregarCardsSalvos();
@@ -171,57 +147,65 @@
             }
         }
 
-        // NOVA FUNÇÃO COM REGEX SUPER LIMPADOR DE QUEBRAS DE LINHA E ESPAÇOS
+        function limparTudoForçado() {
+            if(confirm("Amg, quer deletar TUDO mesmo e começar do zero?")) {
+                localStorage.removeItem('ftf_custom_list_url');
+                listaDeMarretas = [];
+                carregarCardsSalvos();
+                alert("Site limpinho e desbugado! Pode usar! ✨");
+            }
+        }
+
+        // Sistema ultra permissivo que aceita qualquer texto que contenha um link
         function importarLinksEmMassa() {
             const campoTexto = document.getElementById('listaLinksMassa').value;
             if(!campoTexto.trim()) {
-                alert('Cole os links primeiro, amg! 😂');
+                alert('Cole os links primeiro! 😂');
                 return;
             }
 
-            // Separa por qualquer tipo de espaço, quebra de linha ou caractere invisível (\s+)
-            const links = campoTexto.split(/\s+/);
-            let adicionados = 0;
+            // Captura qualquer coisa que comece com http ou https até o próximo espaço/quebra
+            const regexLinks = /(https?:\/\/[^\s]+)/g;
+            const linksEncontrados = campoTexto.match(regexLinks);
 
-            links.forEach((linha) => {
-                const url = linha.trim();
-                // Verifica se a linha limpa realmente parece um link válido
-                if(url && (url.toLowerCase().startsWith('http://') || url.toLowerCase().startsWith('https://'))) {
-                    adicionados++;
-                    const novoObj = { 
-                        id: Date.now() + adicionados + Math.floor(Math.random() * 5000), 
-                        nome: `Nova Marreta ${listaDeMarretas.length + 1}`, 
-                        valor: 'unstable', 
-                        raridade: raridadeAtual, 
-                        demanda: '5', 
-                        tendencia: 'none', 
-                        status: 'none', 
-                        templates: 'Stable', 
-                        imgSrc: url 
-                    };
-                    listaDeMarretas.push(novoObj);
-                }
+            if(!linksEncontrados || linksEncontrados.length === 0) {
+                alert('Nenhum link detectado! Copie direto a lista de URLs.');
+                return;
+            }
+
+            let adicionados = 0;
+            linksEncontrados.forEach((url) => {
+                adicionados++;
+                const novoObj = { 
+                    id: Date.now() + adicionados + Math.floor(Math.random() * 9000), 
+                    nome: `Nova Marreta ${listaDeMarretas.length + 1}`, 
+                    valor: 'unstable', 
+                    raridade: raridadeAtual, 
+                    demanda: '5', 
+                    tendencia: 'none', 
+                    status: 'none', 
+                    templates: 'Stable', 
+                    imgSrc: url.trim() 
+                };
+                listaDeMarretas.push(novoObj);
+                // Salva na hora cada unidade criada
+                localStorage.setItem('ftf_custom_list_url', JSON.stringify(listaDeMarretas));
             });
 
-            if(adicionados > 0) {
-                atualizarLocalStorage();
-                carregarCardsSalvos();
-                document.getElementById('listaLinksMassa').value = '';
-                alert(`Sucesso! ${adicionados} marretas carregadas nesta rodada. Pode colocar as próximas! 😎`);
-            } else {
-                alert('Eita! O app não encontrou nenhum link válido que comece com "http" no texto colado. Dá uma olhadinha se copiou certo!');
-            }
+            carregarCardsSalvos();
+            document.getElementById('listaLinksMassa').value = '';
+            alert(`Show! ${adicionados} marretas salvas com sucesso! 😎`);
         }
 
         function togglePrintMode() {
             document.body.classList.toggle('hide-mode');
             const btn = document.getElementById('togglePrintBtn');
             if (document.body.classList.contains('hide-mode')) {
-                btn.innerText = "Mostrar Botões (Modo Edição)";
+                btn.innerText = "Modo Edição";
                 btn.style.background = "#ffa502";
                 btn.style.color = "#000";
             } else {
-                btn.innerText = "Ocultar Botões (Modo Print)";
+                btn.innerText = "Modo Print";
                 btn.style.background = "#1c2336";
                 btn.style.color = "#ffa502";
             }
@@ -230,7 +214,7 @@
         function criarNovoCard() {
             const nome = document.getElementById('nomeItem').value;
             const urlImagem = document.getElementById('linkImagem').value || 'https://via.placeholder.com/150';
-            let valor = document.getElementById('valorItem').value;
+            let valor = document.getElementById('valorItem').value || 'unstable';
             const raridade = document.getElementById('raridadeItem').value;
             const demanda = document.getElementById('demandaNota').value || '5';
             const tendencia = document.getElementById('tendenciaValor').value;
@@ -238,12 +222,8 @@
             const estabilidade = document.getElementById('estabilidadeItem').value || 'Stable';
 
             if (!nome) {
-                alert('Amg, dá o nome da lenda pelo menos! 😂');
+                alert('Dá um nome para o item, amg!');
                 return;
-            }
-
-            if (valor === undefined || valor === null || valor.trim() === '') {
-                valor = 'unstable';
             }
 
             const novoObj = { 
@@ -259,7 +239,7 @@
             };
             
             listaDeMarretas.push(novoObj);
-            atualizarLocalStorage();
+            localStorage.setItem('ftf_custom_list_url', JSON.stringify(listaDeMarretas));
             
             raridadeAtual = raridade;
             definirAbaAtivaVisual(raridade);
@@ -268,18 +248,14 @@
             document.getElementById('nomeItem').value = '';
             document.getElementById('linkImagem').value = '';
             document.getElementById('valorItem').value = '';
-            document.getElementById('demandaNota').value = '';
-            document.getElementById('estabilidadeItem').value = '';
         }
 
         function renderizarCardHTML(item) {
             const container = document.getElementById('container-cards');
             const card = document.createElement('div');
             
-            let corBordaFixa = '#ffa502'; 
-
             card.style.backgroundColor = '#0b0f19';
-            card.style.border = `1.5px solid ${corBordaFixa}`; 
+            card.style.border = `1.5px solid #ffa502`; 
             card.style.borderRadius = '12px';
             card.style.padding = '12px';
             card.style.width = '100%'; 
@@ -292,33 +268,26 @@
 
             card.innerHTML = `
                 <button class="btn-deletar" style="position: absolute; top: 8px; right: 8px; background: transparent; border: none; color: #62697e; font-weight: bold; cursor: pointer; font-size: 12px; z-index: 5;">❌</button>
-
                 <div style="background-color: transparent; width: 100%; height: 110px; display: flex; align-items: center; justify-content: center; margin-bottom: 10px;">
                     <img src="${item.imgSrc}" alt="${item.nome}" style="max-width: 100%; max-height: 100%; object-fit: contain;" onerror="this.src='https://placehold.co/150x110/0b0f19/ffffff?text=Sem+Foto'">
                 </div>
-
                 <span class="txt-posicao-automatica" style="position: absolute; top: 12px; left: 12px; background: #ffa502; color: #000; font-size: 10px; font-weight: bold; padding: 2px 5px; border-radius: 4px;">#--</span>
-
-                <h3 style="margin: 0 0 2px 0; color: #ffffff; font-size: 14px; font-weight: bold; letter-spacing: 0.3px; white-space: nowrap; overflow: hidden; text-overflow: ellipsis;">${item.nome}</h3>
-                <span style="color: #62697e; font-size: 9px; font-weight: bold; text-transform: uppercase; letter-spacing: 1px;">${item.raridade || 'legendary'}</span>
-                
+                <h3 style="margin: 0 0 2px 0; color: #ffffff; font-size: 14px; font-weight: bold; white-space: nowrap; overflow: hidden; text-overflow: ellipsis;">${item.nome}</h3>
+                <span style="color: #62697e; font-size: 9px; font-weight: bold; text-transform: uppercase;">${item.raridade || 'legendary'}</span>
                 <div style="margin-top: 10px; font-size: 11px; display: flex; flex-direction: column; gap: 6px;">
                     <div>
-                        <div style="color: #4b5266; font-size: 8px; font-weight: bold; text-transform: uppercase; letter-spacing: 0.5px; margin-bottom: 2px;">VALUE</div>
+                        <div style="color: #4b5266; font-size: 8px; font-weight: bold; text-transform: uppercase;">VALUE</div>
                         <div style="display: flex; justify-content: space-between; align-items: center;">
                             <span class="box-valor-dinamico" style="font-size: 16px; font-weight: bold;"></span>
                             <span class="txt-estabilidade" style="background: #161c2e; color: #8fa0c4; font-size: 9px; font-weight: bold; padding: 2px 6px; border-radius: 4px; border: 1px solid #232f4b;">${item.templates || 'Stable'}</span>
                         </div>
                     </div>
-
                     <div class="box-badge-status" style="display: flex; justify-content: flex-end; margin-top: -2px;"></div>
-
                     <div style="display: flex; justify-content: space-between; align-items: center; margin-top: 2px; border-top: 1px solid #161c2e; padding-top: 8px;">
-                        <span style="color: #4b5266; font-size: 8px; font-weight: bold; text-transform: uppercase; letter-spacing: 0.5px;">DEMAND</span>
-                        <span class="txt-demanda-estrelas" style="font-size: 11px; letter-spacing: 0.5px;"></span>
+                        <span style="color: #4b5266; font-size: 8px; font-weight: bold;">DEMAND</span>
+                        <span class="txt-demanda-estrelas" style="font-size: 11px;"></span>
                     </div>
                 </div>
-
                 <div class="btn-acoes-card" style="margin-top: 12px; display: flex; flex-direction: column; gap: 4px; border-top: 1px solid #161c2e; padding-top: 8px;">
                     <div style="display: flex; gap: 4px;">
                         <button class="btn-subir" style="flex: 1; background: #121826; color: #fff; border: 1px solid #232f4b; padding: 4px; cursor: pointer; border-radius: 4px; font-size: 10px;">▲ Subir</button>
@@ -329,30 +298,31 @@
             `;
 
             card.querySelector('.btn-editar').addEventListener('click', function() {
-                const novoNome = prompt("Mudar nome da Marreta:", item.nome);
-                const novoValor = prompt("Novo Valor em FV:", item.valor);
+                const novoNome = prompt("Mudar nome:", item.nome);
+                const novoValor = prompt("Novo Valor:", item.valor);
                 const novaDemanda = prompt("Nova Demanda (0 a 5):", item.demanda);
                 const novaEstabilidade = prompt("Nova Estabilidade:", item.templates);
                 const novaTendencia = prompt("Nova tendência (subiu, caiu, corrigido, none):", item.tendencia);
                 const novoStatus = prompt("Novo Status (overpaid, underpaid, niche, none):", item.status || 'none');
                 const novaRaridade = prompt("Mudar Raridade (legendary, epics, rares, commons):", item.raridade);
 
-                if (novoNome !== null && novoNome.trim() !== '') item.nome = novoNome.trim();
-                if (novoValor !== null && novoValor.trim() !== '') item.valor = novoValor.trim();
-                if (novaDemanda !== null) item.demanda = novaDemanda;
-                if (novaEstabilidade !== null) item.templates = novaEstabilidade;
-                if (novaTendencia !== null) item.tendencia = novaTendencia.trim().toLowerCase();
-                if (novoStatus !== null) item.status = novoStatus.trim().toLowerCase();
-                if (novaRaridade !== null && novaRaridade.trim() !== '') item.raridade = novaRaridade.trim().toLowerCase();
+                if (novoNome) item.nome = novoNome.trim();
+                if (novoValor) item.valor = novoValor.trim();
+                if (novaDemanda) item.demanda = novaDemanda;
+                if (novaEstabilidade) item.templates = novaEstabilidade;
+                if (novaTendencia) item.tendencia = novaTendencia.trim().toLowerCase();
+                if (novoStatus) item.status = novoStatus.trim().toLowerCase();
+                if (novaRaridade) item.raridade = novaRaridade.trim().toLowerCase();
 
-                atualizarLocalStorage();
+                localStorage.setItem('ftf_custom_list_url', JSON.stringify(listaDeMarretas));
                 carregarCardsSalvos();
             });
 
             card.querySelector('.btn-deletar').addEventListener('click', function() {
                 listaDeMarretas = listaDeMarretas.filter(m => m.id !== item.id);
                 card.remove();
-                reordenarArrayEGuardar();
+                localStorage.setItem('ftf_custom_list_url', JSON.stringify(listaDeMarretas));
+                atualizarNumbersVisuais();
             });
 
             card.querySelector('.btn-subir').addEventListener('click', function() {
@@ -388,18 +358,12 @@
                 btn.style.background = 'transparent';
                 btn.style.borderColor = 'transparent';
             });
-
             const botaoAtivo = document.getElementById('aba-' + raridadeAlvo);
             if (botaoAtivo) {
                 botaoAtivo.style.background = '#1c2336';
                 botaoAtivo.style.borderColor = '#ffa502';
             }
-
-            const titulo = document.getElementById('titulo-secao');
-            if (titulo) {
-                titulo.style.borderLeftColor = '#ffa502';
-                titulo.innerText = `📋 LISTA DE ITENS: ${raridadeAlvo}`;
-            }
+            document.getElementById('titulo-secao').innerText = `📋 LISTA DE ITENS: ${raridadeAlvo}`;
         }
 
         function atualizarEstiloValorDoCard(cardHTML, item) {
@@ -408,20 +372,13 @@
             if (!containerValor) return;
 
             let badgeTendencia = '';
-            let corValor = '#ffa502';
-
-            let valorExibido = "unstable";
-            if (item.valor !== undefined && item.valor !== null && item.valor.toString().toLowerCase() !== 'undefined') {
-                valorExibido = item.valor.toString().replace(/[↑↓*]/g, '').trim(); 
-            } else {
-                item.valor = "unstable";
-            }
+            let valorExibido = item.valor || "unstable";
 
             if (item.tendencia === 'subiu') { badgeTendencia = ` <span style="color: #2ed573;">↑</span>`; }
             else if (item.tendencia === 'caiu') { badgeTendencia = ` <span style="color: #ff4757;">↓</span>`; }
             else if (item.tendencia === 'corrigido') { badgeTendencia = ` <span style="color: #ffa502;">*</span>`; }
             
-            containerValor.style.color = corValor;
+            containerValor.style.color = '#ffa502';
             containerValor.innerHTML = `${valorExibido}${badgeTendencia}`;
 
             if (containerBadge) {
@@ -435,12 +392,11 @@
         function gerarEstrelasDemanda(cardHTML, notaEstrelas) {
             const containerEstrelas = cardHTML.querySelector('.txt-demanda-estrelas');
             if (!containerEstrelas) return;
-
             let notaNum = parseFloat(notaEstrelas) || 0;
             let estrelasTexto = '';
             for (let i = 1; i <= 5; i++) {
                 if (notaNum >= i) estrelasTexto += '<span style="color: #ffb830;">⭐</span>';
-                else if (notaNum > i - 1 && notaNum < i) estrelasTexto += '<span style="font-size: 11px; vertical-align: middle;">✨</span>';
+                else if (notaNum > i - 1 && notaNum < i) estrelasTexto += '<span>✨</span>';
                 else estrelasTexto += '<span style="color: #323b54;">☆</span>';
             }
             containerEstrelas.innerHTML = estrelasTexto;
@@ -456,19 +412,8 @@
                 return bateRaridade && bateNome;
             });
             
-            itensFiltrados.forEach(item => {
-                renderizarCardHTML(item);
-            });
+            itensFiltrados.forEach(item => { renderizarCardHTML(item); });
             atualizarNumbersVisuais();
-        }
-
-        function atualizarLocalStorage() {
-            try {
-                localStorage.setItem('ftf_custom_list_url', JSON.stringify(listaDeMarretas));
-                console.log("Salvo com sucesso!");
-            } catch(e) {
-                alert("A memória do tablet encheu! Apague alguns cards antigos usando o botão ❌.");
-            }
         }
 
         function reordenarArrayEGuardar() {
@@ -478,16 +423,11 @@
             cardsNaTela.forEach((cardHTML) => {
                 const id = parseInt(cardHTML.getAttribute('data-id'));
                 const correspondente = listaDeMarretas.find(m => m.id === id);
-                if (correspondente) {
-                    if (correspondente.valor) {
-                        correspondente.valor = correspondente.valor.toString().replace(/[↑↓*]/g, '').trim();
-                    }
-                    listaLimpa.push(correspondente);
-                }
+                if (correspondente) listaLimpa.push(correspondente);
             });
             
             listaDeMarretas = listaLimpa;
-            atualizarLocalStorage();
+            localStorage.setItem('ftf_custom_list_url', JSON.stringify(listaDeMarretas));
             atualizarNumbersVisuais();
         }
 
@@ -495,26 +435,20 @@
             const cardsNaTela = document.querySelectorAll('#container-cards > div');
             cardsNaTela.forEach((cardHTML, index) => {
                 const caixaTextoPosicao = cardHTML.querySelector('.txt-posicao-automatica');
-                if (caixaTextoPosicao) {
-                    caixaTextoPosicao.innerText = `#${index + 1}`;
-                }
+                if (caixaTextoPosicao) caixaTextoPosicao.innerText = `#${index + 1}`;
             });
         }
 
         function exportarLista() {
             if (listaDeMarretas.length === 0) {
-                alert("Amg, adiciona algum card primeiro antes de copiar! 😂");
+                alert("Adicione itens primeiro!");
                 return;
             }
-            const dadosTexto = JSON.stringify(listaDeMarretas, null, 2);
-            navigator.clipboard.writeText(dadosTexto).then(() => {
-                alert("Código da lista copiado! 🚀 Só colar aqui!");
-            }).catch(err => {
-                alert("Erro ao copiar automaticamente, tente selecionar manualmente.");
+            navigator.clipboard.writeText(JSON.stringify(listaDeMarretas, null, 2)).then(() => {
+                alert("Lista copiada! 📋");
             });
         }
     </script>
-
 </body>
 </html>
 
