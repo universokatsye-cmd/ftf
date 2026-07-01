@@ -659,6 +659,13 @@ setTimeout(() => {
             localStorage.setItem('ftf_custom_v3', JSON.stringify(listaDeMarretas));
             atualizarNumbersVisuais();
         }
+        const container = document.getElementById("container-cards");
+
+alert(
+    "Filhos: " + container.children.length +
+    "\nDisplay: " + getComputedStyle(container).display +
+    "\nHTML: " + container.innerHTML.length
+);
 
         function atualizarNumbersVisuais() {
             const cardsNaTela = document.querySelectorAll('#container-cards > div');
