@@ -323,7 +323,7 @@
                 dadosLocais = null;
             }
 
-            if(!Array.isArray(dadosLocLocal) || dadosLocais === null || dadosLocais.length === 0) {
+            if(!Array.isArray(dadosLocais) || dadosLocais === null || dadosLocais.length === 0) {
                 forçarInjecaoListaPadrao();
             } else {
                 listaDeMarretas = dadosLocais;
@@ -489,60 +489,400 @@ const card = document.createElement("div");
 card.style.backgroundColor = '#0b0f19';
 card.style.border = `1.5px solid #ffa502`; 
 card.style.borderRadius = '12px';
-card.style.padding = '12px';
-card.style.width = '100%'; 
-card.style.color = '#fff';
-card.style.position = 'relative';
-card.style.boxSizing = 'border-box';
-card.style.display = 'flex';
-card.style.flexDirection = 'column';
-card.setAttribute('data-id', item.id);
 
-// --- LOGICA DE INTELIGÊNCIA DAS FOTOS (SÓ ADICIONEI ISSO AQUI) ---
-const listaPNG = [
-    "Bundle-Of-Harmony", "Bundle-Of-Longevity", "Honey-Cheesecake", 
-    "Lily-of-The-Valley", "Lonely-Date", "Sakura-Parasol", 
-    "Strawberry-Fields", "Sweethearts-Store", "Veridian-Greenhouse", 
-    "Woodland-Staff", "Year-Of-The-Horse"
-];
-// Se o ID estiver na lista acima, vira .png, senão vira .webp
-const extensao = listaPNG.includes(item.id) ? "png" : "webp";
-const caminhoImagem = `./imagens/${item.id}.${extensao}`;
-// -----------------------------------------------------------------
+            <script>
+        const BASE_PADRAO_MARRETAS = [
+            {"id":1001,"nome":"1 Billion","imgSrc":"https://i.postimg.cc/RZt4jpTP/1-Billion.webp","raridade":"legendary"},
+            {"id":1002,"nome":"2019","imgSrc":"https://i.postimg.cc/HkMdfvtB/2019.webp","raridade":"legendary"},
+            {"id":1003,"nome":"2020","imgSrc":"https://i.postimg.cc/qMSpDH27/2020.webp","raridade":"legendary"},
+            {"id":1004,"nome":"2021","imgSrc":"https://i.postimg.cc/sx03Rt88/2021.webp","raridade":"legendary"},
+            {"id":1005,"nome":"2022","imgSrc":"https://i.postimg.cc/brFqjKM4/2022.webp","raridade":"legendary"},
+            {"id":1006,"nome":"2023","imgSrc":"https://i.postimg.cc/5ykfMZGZ/2023.webp","raridade":"legendary"},
+            {"id":1007,"nome":"2024","imgSrc":"https://i.postimg.cc/KjsmydV6/2024.webp","raridade":"legendary"},
+            {"id":1008,"nome":"2025","imgSrc":"https://i.postimg.cc/7hQqypdv/2025.webp","raridade":"legendary"},
+            {"id":1009,"nome":"2026","imgSrc":"https://i.postimg.cc/90fcKWxR/2026.webp","raridade":"legendary"},
+            {"id":1010,"nome":"2nd Anniversary","imgSrc":"https://i.postimg.cc/rF3qZ25f/2nd-Anniversary.webp","raridade":"legendary"},
+            {"id":1011,"nome":"3rd Anniversary","imgSrc":"https://i.postimg.cc/ncgnSfqh/3rd-Anniversary.webp","raridade":"legendary"},
+            {"id":1012,"nome":"4th Anniversary","imgSrc":"https://i.postimg.cc/tJm9HLfS/4th-Anniversary.webp","raridade":"legendary"},
+            {"id":1013,"nome":"5 Billion","imgSrc":"https://i.postimg.cc/DZ62xWc1/5-Billion.webp","raridade":"legendary"},
+            {"id":1014,"nome":"5th Anniversary","imgSrc":"https://i.postimg.cc/tJm9HLfv/5th-Anniversary.webp","raridade":"legendary"},
+            {"id":1015,"nome":"6th Anniversary","imgSrc":"https://i.postimg.cc/J0dRW9gd/6th-Anniversary.webp","raridade":"legendary"},
+            {"id":1016,"nome":"7th Anniversary","imgSrc":"https://i.postimg.cc/mkrTJbdP/7th-Anniversary.webp","raridade":"legendary"},
+            {"id":1017,"nome":"8th Anniversary","imgSrc":"https://i.postimg.cc/qq7pSkmg/8th-Anniversary.webp","raridade":"legendary"},
+            {"id":1018,"nome":"Acidic Potions","imgSrc":"https://i.postimg.cc/FKgmKf8c/Acidic-Potions.webp","raridade":"legendary"},
+            {"id":1019,"nome":"Alchemist Hunter","imgSrc":"https://i.postimg.cc/LsBRsqw1/Alchemist-Hunter.webp","raridade":"legendary"},
+            {"id":1020,"nome":"Ancestral Trident","imgSrc":"https://i.postimg.cc/W1ZTQYns/Ancestral-Trident.webp","raridade":"legendary"},
+            {"id":1021,"nome":"Ancient Portal","imgSrc":"https://i.postimg.cc/MZs6RQTR/Ancient-Portal.webp","raridade":"legendary"},
+            {"id":1022,"nome":"Ancient Trident","imgSrc":"https://i.postimg.cc/YCFMJD3M/Ancient-Trident.webp","raridade":"legendary"},
+            {"id":1023,"nome":"Antique Piano","imgSrc":"https://i.postimg.cc/jjQKjWmD/Antique-Piano.webp","raridade":"legendary"},
+            {"id":1024,"nome":"Aurora Abolisher","imgSrc":"https://i.postimg.cc/TYFTNvng/Aurora-Abolisher.webp","raridade":"legendary"},
+            {"id":1025,"nome":"Autumn Crops","imgSrc":"https://i.postimg.cc/vHcQvZgk/Autumn-Crops.webp","raridade":"legendary"},
+            {"id":1026,"nome":"Autumn Lamp","imgSrc":"https://i.postimg.cc/KjsmydVQ/Autumn-Lamp.webp","raridade":"legendary"},
+            {"id":1027,"nome":"Autumn Scarecrow","imgSrc":"https://i.postimg.cc/QMrhsg41/Autumn-Scarecrow.webp","raridade":"legendary"},
+            {"id":1028,"nome":"Autumn Tent","imgSrc":"https://i.postimg.cc/rpLMcGnL/Autumn-Tent.webp","raridade":"legendary"},
+            {"id":1029,"nome":"Batwing Basher","imgSrc":"https://i.postimg.cc/HxYm8Y1h/Batwing-Basher.webp","raridade":"legendary"},
+            {"id":1030,"nome":"Beach Boat","imgSrc":"https://i.postimg.cc/J7TrJknT/Beach-Boat.webp","raridade":"legendary"},
+            {"id":1031,"nome":"Bitter Lemonade Basket","imgSrc":"https://i.postimg.cc/3wC7wyVF/Bitter-Lemonade-Basket.webp","raridade":"legendary"},
+            {"id":1032,"nome":"Black Light Madness","imgSrc":"https://i.postimg.cc/MKvWYpfK/Black-Light-Madness.webp","raridade":"legendary"},
+            {"id":1033,"nome":"Blade of Thorns","imgSrc":"https://i.postimg.cc/LsBRsqwn/Blade-of-Thorns.webp","raridade":"legendary"},
+            {"id":1034,"nome":"Bleeding Heart","imgSrc":"https://i.postimg.cc/MGbxGcNt/Bleeding-Heart.webp","raridade":"legendary"},
+            {"id":1035,"nome":"Bloodline Bat","imgSrc":"https://i.postimg.cc/tJg9wXr1/Bloodline-Bat.webp","raridade":"legendary"},
+            {"id":1036,"nome":"Bloodthirst Axe","imgSrc":"https://i.postimg.cc/DzdFzWHd/Bloodthirst-Axe.webp","raridade":"legendary"},
+            {"id":1037,"nome":"Blue Nutcracker","imgSrc":"https://i.postimg.cc/gknYK2LL/Blue-Nutcracker.webp","raridade":"legendary"},
+            {"id":1038,"nome":"Blueberry Jam Basket","imgSrc":"https://i.postimg.cc/7LMDLCdV/Blueberry-Jam-Basket.webp","raridade":"legendary"},
+            {"id":1039,"nome":"Book of Fortunes","imgSrc":"https://i.postimg.cc/fTpMqQYL/Book-of-Fortunes.webp","raridade":"legendary"},
+            {"id":1040,"nome":"Bundle Of Harmony","imgSrc":"https://i.postimg.cc/mrNRrcJn/Bundle-Of-Harmony.png","raridade":"legendary"},
+            {"id":1041,"nome":"Bundle Of Longevity","imgSrc":"https://i.postimg.cc/4y3XqJ8w/Bundle-Of-Longevity.png","raridade":"legendary"},
+            {"id":1042,"nome":"Candy Cane Jar","imgSrc":"https://i.postimg.cc/htmcHZrn/Candy-Cane-Jar.webp","raridade":"legendary"},
+            {"id":1043,"nome":"Celestial Witch Broom","imgSrc":"https://i.postimg.cc/NjXBWCx7/Celestial-Witch-Broom.webp","raridade":"legendary"},
+            {"id":1044,"nome":"Cherry Blossom Tree","imgSrc":"https://i.postimg.cc/KzGb3GyZ/Cherry-Blossom-Tree.webp","raridade":"legendary"},
+            {"id":1045,"nome":"Chromatic Phoenix","imgSrc":"https://i.postimg.cc/BQkJ7f2L/Chromatic-Phoenix.webp","raridade":"legendary"},
+            {"id":1046,"nome":"Circus Cage","imgSrc":"https://i.postimg.cc/cC5dNV2G/Circus-Cage.webp","raridade":"legendary"},
+            {"id":1047,"nome":"Classic","imgSrc":"https://i.postimg.cc/7LMDLCdF/Classic.webp","raridade":"legendary"},
+            {"id":1048,"nome":"Coastal Lighthouse","imgSrc":"https://i.postimg.cc/v8PY9VBK/Coastal-Lighthouse.webp","raridade":"legendary"},
+            {"id":1049,"navbutton-color":"","content":"#060913","id":1049,"nome":"Cocoa Machine","imgSrc":"https://i.postimg.cc/4xcsr21P/Cocoa-Machine.webp","raridade":"legendary"},
+            {"id":1050,"nome":"Coffin","imgSrc":"https://i.postimg.cc/N0wBY8JQ/Coffin.webp","raridade":"legendary"},
+            {"id":1051,"nome":"Cornucopia","imgSrc":"https://i.postimg.cc/d3SJKzXW/Cornucopia.webp","raridade":"legendary"},
+            {"id":1052,"nome":"Cozy Cocoa","imgSrc":"https://i.postimg.cc/3rL8pvRz/Cozy-Cocoa.webp","raridade":"legendary"},
+            {"id":1053,"nome":"Cranberry Barrel","imgSrc":"https://i.postimg.cc/bvjp80CD/Cranberry-Barrel.webp","raridade":"legendary"},
+            {"id":1054,"nome":"Cuddly Bunny","imgSrc":"https://i.postimg.cc/h4CDxdj2/Cuddly-Bunny.webp","raridade":"legendary"},
+            {"id":1055,"nome":"Cursed Circus Tent","imgSrc":"https://i.postimg.cc/Fs8hCX0P/Cursed-Circus-Tent.webp","raridade":"legendary"},
+            {"id":1056,"nome":"Dark Bone Crusher","imgSrc":"https://i.postimg.cc/C1h0nhpJ/Dark-Bone-Crusher.webp","raridade":"legendary"},
+            {"id":1057,"nome":"Dark Mansion","imgSrc":"https://i.postimg.cc/pdtRxQGn/Dark-Mansion.webp","raridade":"legendary"},
+            {"id":1058,"nome":"Dave Pumpkins","imgSrc":"https://i.postimg.cc/SNJyGxYj/Dave-Pumpkins.webp","raridade":"legendary"},
+            {"id":1059,"nome":"Dayflower","imgSrc":"https://i.postimg.cc/dVCwzN9z/Dayflower.webp","raridade":"legendary"},
+            {"id":1060,"nome":"Deathberry Pie","imgSrc":"https://i.postimg.cc/jq8xN75H/Deathberry-Pie.webp","raridade":"legendary"},
+            {"id":1061,"nome":"Devilborn","imgSrc":"https://i.postimg.cc/sXjzGjCn/Devilborn.webp","raridade":"legendary"},
+            {"id":1062,"nome":"Devilish Candle","imgSrc":"https://i.postimg.cc/KzGb3Ghd/Devilish-Candle.webp","raridade":"legendary"},
+            {"id":1063,"nome":"Doomthrust","imgSrc":"https://i.postimg.cc/vHkG2w5t/Doomthrust.webp","raridade":"legendary"},
+            {"id":1064,"nome":"Dragon Puppet","imgSrc":"https://i.postimg.cc/nzFx9Ff3/Dragon-Puppet.webp","raridade":"legendary"},
+            {"id":1065,"nome":"Easter Basket","imgSrc":"https://i.postimg.cc/zBzNHz15/Easter-Basket.webp","raridade":"legendary"},
+            {"id":1066,"nome":"Easter Chick","imgSrc":"https://i.postimg.cc/q7d40cb8/Easter-Chick.webp","raridade":"legendary"},
+            {"id":1067,"nome":"Eggnog Machine","imgSrc":"https://i.postimg.cc/15f9K3V3/Eggnog-Machine.webp","raridade":"legendary"},
+            {"id":1068,"nome":"Elf Box","imgSrc":"https://i.postimg.cc/FznhQ28m/Elf-Box.webp","raridade":"legendary"},
+            {"id":1069,"nome":"Enchanted Circus Tent","imgSrc":"https://i.postimg.cc/bNWqVf1F/Enchanted-Circus-Tent.webp","raridade":"legendary"},
+            {"id":1070,"nome":"Eye of Blizzaria","imgSrc":"https://i.postimg.cc/j2jRms8H/Eye-of-Blizzaria.webp","raridade":"legendary"},
+            {"id":1071,"nome":"Fairy Tale Book","imgSrc":"https://i.postimg.cc/1XYyZL2t/Fairy-Tale-Book.webp","raridade":"legendary"},
+            {"id":1072,"nome":"Fall Harvester","imgSrc":"https://i.postimg.cc/kG57znj8/Fall-Harvester.webp","raridade":"legendary"},
+            {"id":1073,"nome":"Fall Wheelbarrow","imgSrc":"https://i.postimg.cc/MHGzNWsV/Fall-Wheelbarrow.webp","raridade":"legendary"},
+            {"id":1074,"nome":"Festive Candelabra","imgSrc":"https://i.postimg.cc/Gp1drP7R/Festive-Candelabra.webp","raridade":"legendary"},
+            {"id":1075,"nome":"Festive Fruitcake","imgSrc":"https://i.postimg.cc/QCMjwX6k/Festive-Fruitcake.webp","raridade":"legendary"},
+            {"id":1076,"nome":"Festive Pinecone","imgSrc":"https://i.postimg.cc/kMjJ8bGP/Festive-Pinecone.webp","raridade":"legendary"},
+            {"id":1077,"nome":"Festive Train","imgSrc":"https://i.postimg.cc/ncCH1hjy/Festive-Train.webp","raridade":"legendary"},
+            {"id":1078,"nome":"Fiery Phoenix","imgSrc":"https://i.postimg.cc/CKVSYCPL/Fiery-Phoenix.webp","raridade":"legendary"},
+            {"id":1079,"nome":"Fish Tank","imgSrc":"https://i.postimg.cc/nhmp6S1g/Fish-Tank.webp","raridade":"legendary"},
+            {"id":1080,"nome":"Flourished Fountain","imgSrc":"https://i.postimg.cc/tCYXz4nR/Flourished-Fountain.webp","raridade":"legendary"},
+            {"id":1081,"nome":"Fortune House","imgSrc":"https://i.postimg.cc/vZnbp2zR/Fortune-House.webp","raridade":"legendary"},
+            {"id":1082,"nome":"Frost Engine","imgSrc":"https://i.postimg.cc/gkQGtb3K/Frost-Engine.webp","raridade":"legendary"},
+            {"id":1083,"nome":"Frostbite","imgSrc":"https://i.postimg.cc/8cnTVq9P/Frostbite.webp","raridade":"legendary"},
+            {"id":1084,"nome":"Frosted Frequency","imgSrc":"https://i.postimg.cc/C56wVWXS/Frosted-Frequency.webp","raridade":"legendary"},
+            {"id":1085,"nome":"Frozen Fortress","imgSrc":"https://i.postimg.cc/yxr7zwtV/Frozen-Fortress.webp","raridade":"legendary"},
+            {"id":1086,"nome":"Fudge Bunny","imgSrc":"https://i.postimg.cc/ZYfb3dRs/Fudge-Bunny.webp","raridade":"legendary"},
+            {"id":1087,"nome":"Fungal Thumper","imgSrc":"https://i.postimg.cc/Kc9GLMzD/Fungal-Thumper.webp","raridade":"legendary"},
+            {"id":1088,"nome":"Gingerbread House","imgSrc":"https://i.postimg.cc/02b8CyKx/Gingerbread-House.webp","raridade":"legendary"},
+            {"id":1089,"nome":"Golden Firework","imgSrc":"https://i.postimg.cc/yYt7pC00/Golden-Firework.webp","raridade":"legendary"},
+            {"id":1090,"nome":"Gothic Bouquet","imgSrc":"https://i.postimg.cc/gJzpLzPz/Gothic-Bouquet.webp","raridade":"legendary"},
+            {"id":1091,"nome":"Grandfather Clock","imgSrc":"https://i.postimg.cc/nLtpZKR7/Grandfather-Clock.webp","raridade":"legendary"},
+            {"id":1092,"nome":"Grape Barrel","imgSrc":"https://i.postimg.cc/vTmGkQP7/Grape-Barrel.webp","raridade":"legendary"},
+            {"id":1093,"nome":"Grim Galleon","imgSrc":"https://i.postimg.cc/5tMb157y/Grim-Galleon.webp","raridade":"legendary"},
+            {"id":1094,"nome":"Haunted Circus Tent","imgSrc":"https://i.postimg.cc/hP6KZRVy/Haunted-Circus-Tent.webp","raridade":"legendary"},
+            {"id":1095,"nome":"Holiday Hotline","imgSrc":"https://i.postimg.cc/QxwjYZcp/Holiday-Hotline.webp","raridade":"legendary"},
+            {"id":1096,"nome":"Hollow Scythe","imgSrc":"https://i.postimg.cc/cJMZJK22/Hollow-Scythe.webp","raridade":"legendary"},
+            {"id":1097,"nome":"Honey Cheesecake","imgSrc":"https://i.postimg.cc/wMB9Z6Wn/Honey-Cheesecake.png","raridade":"legendary"},
+            {"id":1098,"nome":"Honey Hive Tree","imgSrc":"https://i.postimg.cc/152y71DN/Honey-Hive-Tree.webp","raridade":"legendary"},
+            {"id":1099,"nome":"Ice Sleigh","imgSrc":"https://i.postimg.cc/c4rscLtN/Ice-Sleigh.webp","raridade":"legendary"},
+            {"id":1100,"nome":"Icecream Mix","imgSrc":"https://i.postimg.cc/4dfGHfRj/Icecream-Mix.webp","raridade":"legendary"},
+            {"id":1101,"nome":"Irish Harp","imgSrc":"https://i.postimg.cc/C56wVWX5/Irish-Harp.webp","raridade":"legendary"},
+            {"id":1102,"nome":"Jade Viper","imgSrc":"https://i.postimg.cc/GmDdZgQh/Jade-Viper.webp","raridade":"legendary"},
+            {"id":1103,"nome":"Jello Dessert","imgSrc":"https://i.postimg.cc/VNcm19GJ/Jello-Dessert.webp","raridade":"legendary"},
+            {"id":1104,"nome":"Jingle Bells","imgSrc":"https://i.postimg.cc/kMjJ8bGd/Jingle-Bells.webp","raridade":"legendary"},
+            {"id":1105,"nome":"Jollyday Batter","imgSrc":"https://i.postimg.cc/9fjCVP8y/Jollyday-Batter.webp","raridade":"legendary"},
+            {"id":1106,"nome":"Krampus Chimney","imgSrc":"https://i.postimg.cc/yYkVT8g5/Krampus-Chimney.webp","raridade":"legendary"},
+            {"id":1107,"nome":"Leprechaun Boot","imgSrc":"https://i.postimg.cc/7hLqdxBf/Leprechaun-Boot.webp","raridade":"legendary"},
+            {"id":1108,"nome":"Light Bone Crusher","imgSrc":"https://i.postimg.cc/1zcPzg2g/Light-Bone-Crusher.webp","raridade":"legendary"},
+            {"id":1109,"nome":"Lil Tree","imgSrc":"https://i.postimg.cc/Dy82cw4W/Lil-Tree.webp","raridade":"legendary"},
+            {"id":1110,"nome":"Lilium Bush","imgSrc":"https://i.postimg.cc/GmDdZgjW/Lilium-Bush.webp","raridade":"legendary"},
+            {"id":1111,"nome":"Lily of The Valley","imgSrc":"https://i.postimg.cc/MHGzNWsd/Lily-of-The-Valley.png","raridade":"legendary"},
+            {"id":1112,"nome":"Lonely Date","imgSrc":"https://i.postimg.cc/hvGK6SCs/Lonely-Date.png","raridade":"legendary"},
+            {"id":1113,"nome":"Lovely Heart","imgSrc":"https://i.postimg.cc/tgtyg1wm/Lovely-Heart.webp","raridade":"legendary"},
+            {"id":1114,"nome":"Lovesick Bow","imgSrc":"https://i.postimg.cc/xCfQNfSr/Lovesick-Bow.webp","raridade":"legendary"},
+            {"id":1115,"nome":"Lucky Top Hat","imgSrc":"https://i.postimg.cc/wjNgS4kr/Lucky-Top-Hat.webp","raridade":"legendary"},
+            {"id":1116,"nome":"Lunar Scepter","imgSrc":"https://i.postimg.cc/0NdxN6F7/Lunar-Scepter.webp","raridade":"legendary"},
+            {"id":1117,"nome":"Lunar Witch Broom","imgSrc":"https://i.postimg.cc/YCFMJDxz/Lunar-Witch-Broom.webp","raridade":"legendary"},
+            {"id":1118,"nome":"Luxury Projector","imgSrc":"https://i.postimg.cc/TPXfGjkz/Luxury-Projector.webp","raridade":"legendary"},
+            {"id":1119,"nome":"Magical Portal","imgSrc":"https://rmVTRVL2/Magical-Portal.webp","raridade":"legendary"},
+            {"id":1120,"nome":"Marching Drums","imgSrc":"https://i.postimg.cc/65gBbxCZ/Marching-Drums.webp","raridade":"legendary"},
+            {"id":1121,"nome":"Marine Anchor","imgSrc":"https://i.postimg.cc/k5F95VzL/Marine-Anchor.webp","raridade":"legendary"},
+            {"id":1122,"nome":"Merry Music Box","imgSrc":"https://i.postimg.cc/504JQ4WK/Merry-Music-Box.webp","raridade":"legendary"},
+            {"id":1123,"nome":"Midnight Light","imgSrc":"https://i.postimg.cc/xdSnYGx2/Midnight-Light.webp","raridade":"legendary"},
+            {"id":1124,"nome":"Moon Staff","imgSrc":"https://i.postimg.cc/K8TxdpNG/Moon-Staff.webp","raridade":"legendary"},
+            {"id":1125,"nome":"Mothership","imgSrc":"https://i.postimg.cc/d0KwvRHM/Mothership.webp","raridade":"legendary"},
+            {"id":1126,"nome":"Mycelium Mallet","imgSrc":"https://i.postimg.cc/59P4vC03/Mycelium-Mallet.webp","raridade":"legendary"},
+            {"id":1127,"nome":"Mystical Trident","imgSrc":"https://i.postimg.cc/HkMdfv2H/Mystical-Trident.webp","raridade":"legendary"},
+            {"id":1128,"nome":"Nightbloom","imgSrc":"https://i.postimg.cc/Z5N41sLX/Nightbloom.webp","raridade":"legendary"},
+            {"id":1129,"nome":"Owl Tree","imgSrc":"https://i.postimg.cc/yYt7pC0D/Owl-Tree.webp","raridade":"legendary"},
+            {"id":1130,"nome":"Paint Canvas","imgSrc":"https://i.postimg.cc/Y2XrgW9Z/Paint-Canvas.webp","raridade":"legendary"},
+            {"id":1131,"nome":"Paranormal Hot Balloon","imgSrc":"https://i.postimg.cc/VNB1NSpq/Paranormal-Hot-Balloon.webp","raridade":"legendary"},
+            {"id":1132,"nome":"Party Balloons","imgSrc":"https://i.postimg.cc/qRJr6JdV/Party-Balloons.webp","raridade":"legendary"},
+            {"id":1133,"nome":"Pegasus Blade","imgSrc":"https://i.postimg.cc/Qt8DK8rD/Pegasus-Blade.webp","raridade":"legendary"},
+            {"id":1134,"nome":"Permafrost Axe","imgSrc":"https://i.postimg.cc/gj0GQYM3/Permafrost-Axe.webp","raridade":"legendary"},
+            {"id":1135,"nome":"Phantom Light","imgSrc":"https://i.postimg.cc/mrGBR3XL/Phantom-Light.webp","raridade":"legendary"},
+            {"id":1136,"nome":"Pharaoh Sarcophagus","imgSrc":"https://i.postimg.cc/gj0GQYM6/Pharaoh-Sarcophagus.webp","raridade":"legendary"},
+            {"id":1137,"nome":"Pinata","imgSrc":"https://i.postimg.cc/mrNRrcJ3/Pinata.webp","raridade":"legendary"},
+            {"id":1138,"nome":"Pot O Gold","imgSrc":"https://i.postimg.cc/d1sFZsKK/Pot-O-Gold.webp","raridade":"legendary"},
+            {"id":1139,"nome":"Pristine Chocolatery","imgSrc":"https://i.postimg.cc/YSfkS4Zb/Pristine-Chocolatery.webp","raridade":"legendary"},
+            {"id":1140,"nome":"Psycho's Chainsaw","imgSrc":"https://i.postimg.cc/B6S3PSfw/Psycho-s-Chainsaw.webp","raridade":"legendary"},
+            {"id":1141,"nome":"Pumpkin Slice","imgSrc":"https://i.postimg.cc/mDL41LGB/Pumpkin-Slice.webp","raridade":"legendary"},
+            {"id":1142,"nome":"Ragebringer","imgSrc":"https://i.postimg.cc/N0wBY8J5/Ragebringer.webp","raridade":"legendary"},
+            {"id":1143,"nome":"Red Nutcracker","imgSrc":"https://i.postimg.cc/wjNgS4kb/Red-Nutcracker.webp","raridade":"legendary"},
+            {"id":1144,"nome":"Roasted Turkey","imgSrc":"https://i.postimg.cc/LsM2RkCF/Roasted-Turkey.webp","raridade":"legendary"},
+            {"id":1145,"nome":"Sakura Parasol","imgSrc":"https://i.postimg.cc/zBzNHzYs/Sakura-Parasol.png","raridade":"legendary"},
+            {"id":1146,"nome":"Sand Castle","imgSrc":"https://i.postimg.cc/8CBDCF94/Sand-Castle.webp","raridade":"legendary"},
+            {"id":1147,"nome":"Santa Boot","imgSrc":"https://i.postimg.cc/mg9B0pwG/Santa-Boot.webp","raridade":"legendary"},
+            {"id":1148,"nome":"Santa Box","imgSrc":"https://i.postimg.cc/3Nb3HPVh/Santa-Box.webp","raridade":"legendary"},
+            {"id":1149,"nome":"Santa Chimney","imgSrc":"https://i.postimg.cc/Qd7hRYqf/Santa-Chimney.webp","raridade":"legendary"},
+            {"id":1150,"nome":"Santa's Reindeer","imgSrc":"https://i.postimg.cc/vmdbM7qx/Santa-s-Reindeer.webp","raridade":"legendary"},
+            {"id":1151,"nome":"Santa's Sleigh","imgSrc":"https://i.postimg.cc/fTpMqQYc/Santa-s-Sleigh.webp","raridade":"legendary"},
+            {"id":1152,"nome":"Scareapple Pie","imgSrc":"https://i.postimg.cc/nVdF7DzY/Scareapple-Pie.webp","raridade":"legendary"},
+            {"id":1153,"nome":"Scarlet Firework","imgSrc":"https://i.postimg.cc/QCnjrRwM/Scarlet-Firework.webp","raridade":"legendary"},
+            {"id":1154,"nome":"Shroomy Smasher","imgSrc":"https://i.postimg.cc/tRrqPxTz/Shroomy-Smasher.webp","raridade":"legendary"},
+            {"id":1155,"nome":"Snow Globe","imgSrc":"https://i.postimg.cc/x1mnWpPg/Snow-Globe.webp","raridade":"legendary"},
+            {"id":1156,"nome":"Snowboarder Penguin","imgSrc":"https://i.postimg.cc/gj0GQYMv/Snowboarder-Penguin.webp","raridade":"legendary"},
+            {"id":1157,"nome":"Snowman","imgSrc":"https://i.postimg.cc/sDvVJgGQ/Snowman.webp","raridade":"legendary"},
+            {"id":1158,"nome":"Snowman Box","imgSrc":"https://i.postimg.cc/GtSb1ZV1/Snowman-Box.webp","raridade":"legendary"},
+            {"id":1159,"nome":"Solar Witch Broom","imgSrc":"https://i.postimg.cc/qvK49DGG/Solar-Witch-Broom.webp","raridade":"legendary"},
+            {"id":1160,"nome":"Soulless Theater","imgSrc":"https://i.postimg.cc/pdYxd94g/Soulless-Theater.webp","raridade":"legendary"},
+            {"id":1161,"nome":"Spookpumpkin Pie","imgSrc":"https://i.postimg.cc/jq8xN75y/Spookpumpkin-Pie.webp","raridade":"legendary"},
+            {"id":1162,"nome":"Spooky Brew","imgSrc":"https://i.postimg.cc/rmVTRV23/Spooky-Brew.webp","raridade":"legendary"},
+            {"id":1163,"nome":"Spring World","imgSrc":"https://i.postimg.cc/nLYZLsg5/Spring-World.webp","raridade":"legendary"},
+            {"id":1164,"nome":"Stack of Presents","imgSrc":"https://i.postimg.cc/xjsfHz8Q/Stack-of-Presents.webp","raridade":"legendary"},
+            {"id":1165,"nome":"Starborne Reverie","imgSrc":"https://i.postimg.cc/fybMpwHS/Starborne-Reverie.webp","raridade":"legendary"},
+            {"id":1166,"nome":"Strawberry Fields","imgSrc":"https://i.postimg.cc/B6S3PSfz/Strawberry-Fields.png","raridade":"legendary"},
+            {"id":1167,"nome":"Strawberry Jelly Basket","imgSrc":"https://i.postimg.cc/bvH8vGWB/Strawberry-Jelly-Basket.webp","raridade":"legendary"},
+            {"id":1168,"nome":"Sweet Train","imgSrc":"https://i.postimg.cc/jdLshSnY/Sweet-Train.webp","raridade":"legendary"},
+            {"id":1169,"nome":"Sweethearts Store","imgSrc":"https://i.postimg.cc/9Q9Cvgp5/Sweethearts-Store.png","raridade":"legendary"},
+            {"id":1170,"nome":"Theatrical Spotlight","imgSrc":"https://i.postimg.cc/FFPrcLRq/Theatrical-Spotlight.webp","raridade":"legendary"},
+            {"id":1171,"nome":"Toasted Marshmallow","imgSrc":"https://i.postimg.cc/c1DxYnHw/Toasted-Marshmallow.webp","raridade":"legendary"},
+            {"id":1172,"nome":"Tombstone Bash","imgSrc":"https://i.postimg.cc/yNzsBhQV/Tombstone-Bash.webp","raridade":"legendary"},
+            {"id":1173,"nome":"Toy Box","imgSrc":"https://i.postimg.cc/bNWqVf1H/Toy-Box.webp","raridade":"legendary"},
+            {"id":1174,"nome":"Toy Elf","imgSrc":"https://i.postimg.cc/qMzkGv63/Toy-Elf.webp","raridade":"legendary"},
+            {"id":1175,"nome":"Toy Santa","imgSrc":"https://i.postimg.cc/JzXM9YQ2/Toy-Santa.webp","raridade":"legendary"},
+            {"id":1176,"nome":"Tropical Drink","imgSrc":"https://i.postimg.cc/zDdzWgBt/Tropical-Drink.webp","raridade":"legendary"},
+            {"id":1177,"nome":"Twisted Passion","imgSrc":"https://i.postimg.cc/85pGfpgt/Twisted-Passion.webp","raridade":"legendary"},
+            {"id":1178,"nome":"Unchained Beast","imgSrc":"https://i.postimg.cc/TYpRc3LB/Unchained-Beast.webp","raridade":"legendary"},
+            {"id":1179,"nome":"Veridian Greenhouse","imgSrc":"https://i.postimg.cc/T1PTFRkS/Veridian-Greenhouse.png","raridade":"legendary"},
+            {"id":1180,"nome":"Vintage TV","imgSrc":"https://i.postimg.cc/mk6TG0Jf/Vintage-TV.webp","raridade":"legendary"},
+            {"id":1181,"nome":"VIP Ban Hammer","imgSrc":"https://i.postimg.cc/tTkXB1z3/VIP-Ban-Hammer.webp","raridade":"legendary"},
+            {"id":1182,"nome":"Warlock Hunter","imgSrc":"https://i.postimg.cc/9ftVf4Kq/Warlock-Hunter.webp","raridade":"legendary"},
+            {"id":1183,"nome":"Watering Can","imgSrc":"https://i.postimg.cc/02F9X17K/Watering-Can.webp","raridade":"legendary"},
+            {"id":1184,"nome":"Winter Breeze","imgSrc":"https://i.postimg.cc/wxWqJmM8/Winter-Breeze.webp","raridade":"legendary"},
+            {"id":1185,"nome":"Winter Train","imgSrc":"https://i.postimg.cc/ZKCTL5vt/Winter-Train.webp","raridade":"legendary"},
+            {"id":1186,"nome":"Witch Hunter","imgSrc":"https://i.postimg.cc/SK7qKX32/Witch-Hunter.webp","raridade":"legendary"},
+            {"id":1187,"nome":"Woodland Staff","imgSrc":"https://i.postimg.cc/Y0StZpXP/Woodland-Staff.png","raridade":"legendary"},
+            {"id":1188,"nome":"Year Of The Horse","imgSrc":"https://i.postimg.cc/FzKh89PT/Year-Of-The-Horse.png","raridade":"legendary"},
+            {"id":1189,"nome":"Yuletide Gift","imgSrc":"https://i.postimg.cc/9fjCVP8M/Yuletide-Gift.webp","raridade":"legendary"},
+            {"id":1190,"nome":"Zombie Hand","imgSrc":"https://i.postimg.cc/zvfq6Jdh/Zombie-Hand.webp","raridade":"legendary"}
+        ];
 
-card.innerHTML = `
-    <button class="btn-deletar" style="position: absolute; top: 8px; right: 8px; background: transparent; border: none; color: #62697e; font-weight: bold; cursor: pointer; font-size: 12px; z-index: 5;">❌</button>
-    <div style="background-color: transparent; width: 100%; height: 110px; display: flex; align-items: center; justify-content: center; margin-bottom: 10px;">
-        <img src="${caminhoImagem}" alt="${item.nome}" loading="lazy" style="max-width: 100%; max-height: 100%; object-fit: contain;" onerror="this.src='https://placehold.co/150x110/0b0f19/ffffff?text=Sem+Foto'">
-    </div>
-    <span class="txt-posicao-automatica" style="position: absolute; top: 12px; left: 12px; background: #ffa502; color: #000; font-size: 10px; font-weight: bold; padding: 2px 5px; border-radius: 4px;">#--</span>
-    <h3 style="margin: 0 0 2px 0; color: #ffffff; font-size: 14px; font-weight: bold; white-space: nowrap; overflow: hidden; text-overflow: ellipsis;" title="${item.nome}">${item.nome}</h3>
-    <span style="color: #62697e; font-size: 9px; font-weight: bold; text-transform: uppercase;">${item.raridade || 'legendary'}</span>
-    <div style="margin-top: 10px; font-size: 11px; display: flex; flex-direction: column; gap: 6px;">
-        <div>
-            <div style="color: #4b5266; font-size: 8px; font-weight: bold; text-transform: uppercase;">VALUE</div>
-            <div style="display: flex; justify-content: space-between; align-items: center;">
-                <span class="box-valor-dinamico" style="font-size: 16px; font-weight: bold;"></span>
-                <span class="txt-estabilidade" style="background: #161c2e; color: #8fa0c4; font-size: 9px; font-weight: bold; padding: 2px 6px; border-radius: 4px; border: 1px solid #232f4b;">${item.templates || 'Stable'}</span>
-            </div>
-        </div>
-        <div class="box-badge-status" style="display: flex; justify-content: flex-end; margin-top: -2px;"></div>
-        <div style="display: flex; justify-content: space-between; align-items: center; margin-top: 2px; border-top: 1px solid #161c2e; padding-top: 8px;">
-            <span style="color: #4b5266; font-size: 8px; font-weight: bold;">DEMAND</span>
-            <span class="txt-demanda-estrelas" style="font-size: 11px;"></span>
-        </div>
-    </div>
-    <div class="btn-acoes-card" style="margin-top: 12px; display: flex; flex-direction: column; gap: 4px; border-top: 1px solid #161c2e; padding-top: 8px;">
-        <div style="display: flex; gap: 4px;">
-            <button class="btn-subir" style="flex: 1; background: #121826; color: #fff; border: 1px solid #232f4b; padding: 4px; cursor: pointer; border-radius: 4px; font-size: 10px;">▲ Subir</button>
-            <button class="btn-descer" style="flex: 1; background: #121826; color: #fff; border: 1px solid #232f4b; padding: 4px; cursor: pointer; border-radius: 4px; font-size: 10px;">▼ Descer</button>
-        </div>
-        <button class="btn-editar" style="background: #1c2336; color: #ffa502; border: 1px solid #2d3854; padding: 4px; cursor: pointer; border-radius: 4px; font-size: 10px; font-weight: bold;">✏️ Editar</button>
-    </div>
-`;
+        let listaDeMarretas = [];
+        let raridadeAtual = 'legendary'; 
+        
+        function inicializarBancoDados() {
+            let dadosLocais = [];
+            try {
+                dadosLocais = JSON.parse(localStorage.getItem('ftf_custom_v3'));
+            } catch(e) {
+                dadosLocais = null;
+            }
 
+            if(!Array.isArray(dadosLocais) || dadosLocais === null || dadosLocais.length === 0) {
+                forçarInjecaoListaPadrao();
+            } else {
+                listaDeMarretas = dadosLocais;
+            }
+            carregarCardsSalvos();
+        }
 
+        function forçarInjecaoListaPadrao() {
+            listaDeMarretas = BASE_PADRAO_MARRETAS.map(m => ({
+                id: m.id,
+                nome: m.nome || "Marreta",
+                valor: m.valor || '10',
+                raridade: m.raridade || 'legendary',
+                demanda: m.demanda || '5',
+                tendencia: m.tendencia || 'none',
+                status: m.status || 'none',
+                templates: m.templates || 'Stable',
+                imgSrc: m.imgSrc
+            }));
+            localStorage.setItem('ftf_custom_v3', JSON.stringify(listaDeMarretas));
+        }
+
+        function resetarParaPadraoCodigo() {
+            localStorage.removeItem('ftf_custom_v3');
+            forçarInjecaoListaPadrao();
+            carregarCardsSalvos();
+            alert("Memória limpa! Todas as marretas foram carregadas do zero! 💎");
+        }
+
+        function mudarAbaForm(aba) {
+            document.getElementById('tab-unico').classList.remove('active');
+            document.getElementById('tab-massa').classList.remove('active');
+            document.getElementById('form-individual').style.display = 'none';
+            document.getElementById('form-massa').style.display = 'none';
+
+            if(aba === 'unico') {
+                document.getElementById('tab-unico').classList.add('active');
+                document.getElementById('form-individual').style.display = 'block';
+            } else {
+                document.getElementById('tab-massa').classList.add('active');
+                document.getElementById('form-massa').style.display = 'block';
+            }
+        }
+
+        function importarLinksEmMassa() {
+            const campoTexto = document.getElementById('listaLinksMassa').value;
+            if(!campoTexto.trim()) return;
+
+            const regexLinks = /(https?:\/\/[^\s]+)/g;
+            const linksEncontrados = campoTexto.match(regexLinks);
+
+            if(!linksEncontrados) {
+                alert('Nenhum link extra válido detectado.');
+                return;
+            }
+
+            linksEncontrados.forEach((url, i) => {
+                const novoObj = { 
+                    id: Date.now() + i + Math.floor(Math.random() * 9000), 
+                    nome: `Item Extra ${listaDeMarretas.length + 1}`, 
+                    valor: '10', 
+                    raridade: raridadeAtual, 
+                    demanda: '5', 
+                    tendencia: 'none', 
+                    status: 'none', 
+                    templates: 'Stable', 
+                    imgSrc: url.trim() 
+                };
+                listaDeMarretas.push(novoObj);
+            });
+
+            localStorage.setItem('ftf_custom_v3', JSON.stringify(listaDeMarretas));
+            carregarCardsSalvos();
+            document.getElementById('listaLinksMassa').value = '';
+            alert('Links extras adicionados!');
+        }
+
+        function togglePrintMode() {
+            document.body.classList.toggle('hide-mode');
+            const btn = document.getElementById('togglePrintBtn');
+            if (document.body.classList.contains('hide-mode')) {
+                btn.innerText = "Modo Edição";
+                btn.style.background = "#ffa502";
+                btn.style.color = "#000";
+            } else {
+                btn.innerText = "Modo Print";
+                btn.style.background = "#1c2336";
+                btn.style.color = "#ffa502";
+            }
+        }
+
+        function criarNovoCard() {
+            const nome = document.getElementById('nomeItem').value;
+            const urlImagem = document.getElementById('linkImagem').value || 'https://via.placeholder.com/150';
+            let valor = document.getElementById('valorItem').value || '10';
+            const raridade = document.getElementById('raridadeItem').value;
+            const demanda = document.getElementById('demandaNota').value || '5';
+            const tendencia = document.getElementById('tendenciaValor').value;
+            const status = document.getElementById('statusItem').value;
+            const estabilidade = document.getElementById('estabilidadeItem').value || 'Stable';
+
+            if (!nome) {
+                alert('Por favor, dê um nome!');
+                return;
+            }
+
+            const novoObj = { 
+                id: Date.now(), 
+                nome: nome, 
+                valor: valor.toString().trim(), 
+                raridade: raridade || 'legendary', 
+                demanda: demanda, 
+                tendencia: tendencia, 
+                status: status, 
+                templates: estabilidade, 
+                imgSrc: urlImagem 
+            };
             
+            listaDeMarretas.push(novoObj);
+            localStorage.setItem('ftf_custom_v3', JSON.stringify(listaDeMarretas));
+            
+            raridadeAtual = raridade;
+            definirAbaAtivaVisual(raridade);
+            carregarCardsSalvos();
+
+            document.getElementById('nomeItem').value = '';
+            document.getElementById('linkImagem').value = '';
+            document.getElementById('valorItem').value = '';
+        }
+
+        // FUNÇÃO RESPONSÁVEL POR GERAR O HTML DE CADA CARD CORRETAMENTE
+        function renderizarCardHTML(item) {
+            const container = document.getElementById('container-cards');
+            const card = document.createElement("div");
+
+            card.style.backgroundColor = '#0b0f19';
+            card.style.border = `1.5px solid #ffa502`; 
+            card.style.borderRadius = '12px';
+            card.style.padding = '12px';
+            card.style.width = '100%'; 
+            card.style.color = '#fff';
+            card.style.position = 'relative';
+            card.style.boxSizing = 'border-box';
+            card.style.display = 'flex';
+            card.style.flexDirection = 'column';
+            card.setAttribute('data-id', item.id);
+
+            const listaPNG = [
+                "Bundle-Of-Harmony", "Bundle-Of-Longevity", "Honey-Cheesecake", 
+                "Lily-of-The-Valley", "Lonely-Date", "Sakura-Parasol", 
+                "Strawberry-Fields", "Sweethearts-Store", "Veridian-Greenhouse", 
+                "Woodland-Staff", "Year-Of-The-Horse"
+            ];
+            
+            const extensao = listaPNG.includes(item.nome.replace(/\s+/g, '-')) ? "png" : "webp";
+            const caminhoImagem = item.imgSrc || `./imagens/${item.id}.${extensao}`;
+
+            card.innerHTML = `
+                <button class="btn-deletar" style="position: absolute; top: 8px; right: 8px; background: transparent; border: none; color: #62697e; font-weight: bold; cursor: pointer; font-size: 12px; z-index: 5;">❌</button>
+                <div style="background-color: transparent; width: 100%; height: 110px; display: flex; align-items: center; justify-content: center; margin-bottom: 10px;">
+                    <img src="${caminhoImagem}" alt="${item.nome}" loading="lazy" style="max-width: 100%; max-height: 100%; object-fit: contain;" onerror="this.src='https://placehold.co/150x110/0b0f19/ffffff?text=Sem+Foto'">
+                </div>
+                <span class="txt-posicao-automatica" style="position: absolute; top: 12px; left: 12px; background: #ffa502; color: #000; font-size: 10px; font-weight: bold; padding: 2px 5px; border-radius: 4px;">#--</span>
+                <h3 style="margin: 0 0 2px 0; color: #ffffff; font-size: 14px; font-weight: bold; white-space: nowrap; overflow: hidden; text-overflow: ellipsis;" title="${item.nome}">${item.nome}</h3>
+                <span style="color: #62697e; font-size: 9px; font-weight: bold; text-transform: uppercase;">${item.raridade || 'legendary'}</span>
+                <div style="margin-top: 10px; font-size: 11px; display: flex; flex-direction: column; gap: 6px;">
+                    <div>
+                        <div style="color: #4b5266; font-size: 8px; font-weight: bold; text-transform: uppercase;">VALUE</div>
+                        <div style="display: flex; justify-content: space-between; align-items: center;">
+                            <span class="box-valor-dinamico" style="font-size: 16px; font-weight: bold;"></span>
+                            <span class="txt-estabilidade" style="background: #161c2e; color: #8fa0c4; font-size: 9px; font-weight: bold; padding: 2px 6px; border-radius: 4px; border: 1px solid #232f4b;">${item.templates || 'Stable'}</span>
+                        </div>
+                    </div>
+                    <div class="box-badge-status" style="display: flex; justify-content: flex-end; margin-top: -2px;"></div>
+                    <div style="display: flex; justify-content: space-between; align-items: center; margin-top: 2px; border-top: 1px solid #161c2e; padding-top: 8px;">
+                        <span style="color: #4b5266; font-size: 8px; font-weight: bold;">DEMAND</span>
+                        <span class="txt-demanda-estrelas" style="font-size: 11px;"></span>
+                    </div>
+                </div>
+                <div class="btn-acoes-card" style="margin-top: 12px; display: flex; flex-direction: column; gap: 4px; border-top: 1px solid #161c2e; padding-top: 8px;">
+                    <div style="display: flex; gap: 4px;">
+                        <button class="btn-subir" style="flex: 1; background: #121826; color: #fff; border: 1px solid #232f4b; padding: 4px; cursor: pointer; border-radius: 4px; font-size: 10px;">▲ Subir</button>
+                        <button class="btn-descer" style="flex: 1; background: #121826; color: #fff; border: 1px solid #232f4b; padding: 4px; cursor: pointer; border-radius: 4px; font-size: 10px;">▼ Descer</button>
+                    </div>
+                    <button class="btn-editar" style="background: #1c2336; color: #ffa502; border: 1px solid #2d3854; padding: 4px; cursor: pointer; border-radius: 4px; font-size: 10px; font-weight: bold;">✏️ Editar</button>
+                </div>
+            `;
 
             card.querySelector('.btn-editar').addEventListener('click', function() {
                 const novoNome = prompt("Mudar nome:", item.nome);
@@ -705,5 +1045,4 @@ card.innerHTML = `
         // Executa ao abrir a página
         inicializarBancoDados();
     </script>
-</body>
-</html>
+
