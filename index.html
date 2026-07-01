@@ -38,7 +38,7 @@
 
     <div style="text-align: center; margin-bottom: 20px; display: flex; justify-content: center; gap: 10px;">
         <button id="togglePrintBtn" onclick="togglePrintMode()" style="background: #1c2336; color: #ffa502; border: 1px solid #ffa502; padding: 12px 24px; border-radius: 8px; font-weight: bold; cursor: pointer; font-size: 16px;">Modo Print</button>
-        <button id="btn-limpar-tudo" onclick="limparTudoForçado()" style="background: #ff4757; color: white; border: none; padding: 12px 24px; border-radius: 8px; font-weight: bold; cursor: pointer; font-size: 16px;">⚠️ Resetar Site</button>
+        <button id="btn-limpar-tudo" onclick="resetarParaPadraoCodigo()" style="background: #ff4757; color: white; border: none; padding: 12px 24px; border-radius: 8px; font-weight: bold; cursor: pointer; font-size: 16px;">⚠️ Restaurar Tudo da Lista</button>
     </div>
 
     <div id="search-container" style="max-width: 450px; margin: 0 auto 20px auto; text-align: center;">
@@ -49,11 +49,11 @@
         
         <div class="form-tabs">
             <button class="form-tab-btn active" id="tab-unico" onclick="mudarAbaForm('unico')">Individual</button>
-            <button class="form-tab-btn" id="tab-massa" onclick="mudarAbaForm('massa')">Importar Vários Links 🚀</button>
+            <button class="form-tab-btn" id="tab-massa" onclick="mudarAbaForm('massa')">Adicionar Vários Links Extra 🚀</button>
         </div>
 
         <div id="form-individual">
-            <h3 style="margin-top: 0; color: #ffa502; margin-bottom: 15px;">Adicionar Novo Item</h3>
+            <h3 style="margin-top: 0; color: #ffa502; margin-bottom: 15px;">Adicionar Novo Item Avulso</h3>
             <input type="text" id="nomeItem" placeholder="Nome do Item" style="width: 95%; padding: 10px; margin-bottom: 12px; background: #121826; color: #fff; border: 1px solid #232f4b; border-radius: 6px;">
             <input type="text" id="linkImagem" placeholder="Link da Imagem (URL)" style="width: 95%; padding: 10px; margin-bottom: 12px; background: #121826; color: #fff; border: 1px solid #232f4b; border-radius: 6px;">
             <input type="text" id="valorItem" placeholder="Valor em FV" style="width: 95%; padding: 10px; margin-bottom: 12px; background: #121826; color: #fff; border: 1px solid #232f4b; border-radius: 6px;">
@@ -90,10 +90,10 @@
         </div>
 
         <div id="form-massa" style="display: none;">
-            <h3 style="margin-top: 0; color: #ffa502; margin-bottom: 5px;">Importador Automático</h3>
-            <p style="color: #62697e; font-size: 12px; margin-bottom: 15px;">Cole aqui os links (pode colocar quantos quiser):</p>
-            <textarea id="listaLinksMassa" rows="8" placeholder="Cole os links aqui..." style="width: 95%; padding: 10px; background: #121826; color: #fff; border: 1px solid #232f4b; border-radius: 6px; font-family: monospace; font-size: 12px; margin-bottom: 15px; resize: vertical;"></textarea>
-            <button type="button" onclick="importarLinksEmMassa()" style="width: 100%; padding: 12px; background: #2ed573; color: white; border: none; border-radius: 6px; cursor: pointer; font-weight: bold; font-size: 15px;">Gerar Cards do Estoque 🚀</button>
+            <h3 style="margin-top: 0; color: #ffa502; margin-bottom: 5px;">Importador Extra</h3>
+            <p style="color: #62697e; font-size: 12px; margin-bottom: 15px;">Quer adicionar mais links no futuro? Cole aqui:</p>
+            <textarea id="listaLinksMassa" rows="8" placeholder="Cole os links extras aqui..." style="width: 95%; padding: 10px; background: #121826; color: #fff; border: 1px solid #232f4b; border-radius: 6px; font-family: monospace; font-size: 12px; margin-bottom: 15px; resize: vertical;"></textarea>
+            <button type="button" onclick="importarLinksEmMassa()" style="width: 100%; padding: 12px; background: #2ed573; color: white; border: none; border-radius: 6px; cursor: pointer; font-weight: bold; font-size: 15px;">Adicionar à Lista 🚀</button>
         </div>
 
     </div>
@@ -110,7 +110,7 @@
         </div>
 
         <div id="btn-exportar-container" style="text-align: center; margin-bottom: 25px;">
-            <button type="button" onclick="exportarLista()" style="background: #2ed573; color: white; border: none; padding: 10px 20px; border-radius: 6px; font-weight: bold; cursor: pointer; font-size: 14px;">Copiar Código da Lista 📋</button>
+            <button type="button" onclick="exportarLista()" style="background: #2ed573; color: white; border: none; padding: 10px 20px; border-radius: 6px; font-weight: bold; cursor: pointer; font-size: 14px;">Copiar Backup da Lista 📋</button>
         </div>
 
         <h2 id="titulo-secao" style="color: #fff; font-size: 24px; margin-left: 10px; border-left: 4px solid #ffa502; padding-left: 10px; text-transform: uppercase;">📋 LISTA DE ITENS: LEGENDARY</h2>
@@ -119,18 +119,245 @@
     </div>
 
     <script>
+        // TODAS AS SUAS MARRETAS JÁ EMBUTIDAS PERFEITAMENTE DIRETO NO CÓDIGO FONTE!
+        const BASE_PADRAO_MARRETAS = [
+            {"id":1001,"nome":"1 Billion","imgSrc":"https://i.postimg.cc/RZt4jpTP/1-Billion.webp"},
+            {"id":1002,"nome":"2019","imgSrc":"https://i.postimg.cc/HkMdfvtB/2019.webp"},
+            {"id":1003,"nome":"2020","imgSrc":"https://i.postimg.cc/qMSpDH27/2020.webp"},
+            {"id":1004,"nome":"2021","imgSrc":"https://i.postimg.cc/sx03Rt88/2021.webp"},
+            {"id":1005,"nome":"2022","imgSrc":"https://i.postimg.cc/brFqjKM4/2022.webp"},
+            {"id":1006,"nome":"2023","imgSrc":"https://i.postimg.cc/5ykfMZGZ/2023.webp"},
+            {"id":1007,"nome":"2024","imgSrc":"https://i.postimg.cc/KjsmydV6/2024.webp"},
+            {"id":1008,"nome":"2025","imgSrc":"https://i.postimg.cc/7hQqypdv/2025.webp"},
+            {"id":1009,"nome":"2026","imgSrc":"https://i.postimg.cc/90fcKWxR/2026.webp"},
+            {"id":1010,"nome":"2nd Anniversary","imgSrc":"https://i.postimg.cc/rF3qZ25f/2nd-Anniversary.webp"},
+            {"id":1011,"nome":"3rd Anniversary","imgSrc":"https://i.postimg.cc/ncgnSfqh/3rd-Anniversary.webp"},
+            {"id":1012,"nome":"4th Anniversary","imgSrc":"https://i.postimg.cc/tJm9HLfS/4th-Anniversary.webp"},
+            {"id":1013,"nome":"5 Billion","imgSrc":"https://i.postimg.cc/DZ62xWc1/5-Billion.webp"},
+            {"id":1014,"nome":"5th Anniversary","imgSrc":"https://i.postimg.cc/tJm9HLfv/5th-Anniversary.webp"},
+            {"id":1015,"nome":"6th Anniversary","imgSrc":"https://i.postimg.cc/J0dRW9gd/6th-Anniversary.webp"},
+            {"id":1016,"nome":"7th Anniversary","imgSrc":"https://i.postimg.cc/mkrTJbdP/7th-Anniversary.webp"},
+            {"id":1017,"nome":"8th Anniversary","imgSrc":"https://i.postimg.cc/qq7pSkmg/8th-Anniversary.webp"},
+            {"id":1018,"nome":"Acidic Potions","imgSrc":"https://i.postimg.cc/FKgmKf8c/Acidic-Potions.webp"},
+            {"id":1019,"nome":"Alchemist Hunter","imgSrc":"https://i.postimg.cc/LsBRsqw1/Alchemist-Hunter.webp"},
+            {"id":1020,"nome":"Ancestral Trident","imgSrc":"https://i.postimg.cc/W1ZTQYns/Ancestral-Trident.webp"},
+            {"id":1021,"nome":"Ancient Portal","imgSrc":"https://i.postimg.cc/MZs6RQTR/Ancient-Portal.webp"},
+            {"id":1022,"nome":"Ancient Trident","imgSrc":"https://i.postimg.cc/YCFMJD3M/Ancient-Trident.webp"},
+            {"id":1023,"nome":"Antique Piano","imgSrc":"https://i.postimg.cc/jjQKjWmD/Antique-Piano.webp"},
+            {"id":1024,"nome":"Aurora Abolisher","imgSrc":"https://i.postimg.cc/TYFTNvng/Aurora-Abolisher.webp"},
+            {"id":1025,"nome":"Autumn Crops","imgSrc":"https://i.postimg.cc/vHcQvZgk/Autumn-Crops.webp"},
+            {"id":1026,"nome":"Autumn Lamp","imgSrc":"https://i.postimg.cc/KjsmydVQ/Autumn-Lamp.webp"},
+            {"id":1027,"nome":"Autumn Scarecrow","imgSrc":"https://i.postimg.cc/QMrhsg41/Autumn-Scarecrow.webp"},
+            {"id":1028,"nome":"Autumn Tent","imgSrc":"https://i.postimg.cc/rpLMcGnL/Autumn-Tent.webp"},
+            {"id":1029,"nome":"Batwing Basher","imgSrc":"https://i.postimg.cc/HxYm8Y1h/Batwing-Basher.webp"},
+            {"id":1030,"nome":"Beach Boat","imgSrc":"https://i.postimg.cc/J7TrJknT/Beach-Boat.webp"},
+            {"id":1031,"nome":"Bitter Lemonade Basket","imgSrc":"https://i.postimg.cc/3wC7wyVF/Bitter-Lemonade-Basket.webp"},
+            {"id":1032,"nome":"Black Light Madness","imgSrc":"https://i.postimg.cc/MKvWYpfK/Black-Light-Madness.webp"},
+            {"id":1033,"nome":"Blade of Thorns","imgSrc":"https://i.postimg.cc/LsBRsqwn/Blade-of-Thorns.webp"},
+            {"id":1034,"nome":"Bleeding Heart","imgSrc":"https://i.postimg.cc/MGbxGcNt/Bleeding-Heart.webp"},
+            {"id":1035,"nome":"Bloodline Bat","imgSrc":"https://i.postimg.cc/tJg9wXr1/Bloodline-Bat.webp"},
+            {"id":1036,"nome":"Bloodthirst Axe","imgSrc":"https://i.postimg.cc/DzdFzWHd/Bloodthirst-Axe.webp"},
+            {"id":1037,"nome":"Blue Nutcracker","imgSrc":"https://i.postimg.cc/gknYK2LL/Blue-Nutcracker.webp"},
+            {"id":1038,"nome":"Blueberry Jam Basket","imgSrc":"https://i.postimg.cc/7LMDLCdV/Blueberry-Jam-Basket.webp"},
+            {"id":1039,"nome":"Book of Fortunes","imgSrc":"https://i.postimg.cc/fTpMqQYL/Book-of-Fortunes.webp"},
+            {"id":1040,"nome":"Bundle Of Harmony","imgSrc":"https://i.postimg.cc/mrNRrcJn/Bundle-Of-Harmony.png"},
+            {"id":1041,"nome":"Bundle Of Longevity","imgSrc":"https://i.postimg.cc/4y3XqJ8w/Bundle-Of-Longevity.png"},
+            {"id":1042,"nome":"Candy Cane Jar","imgSrc":"https://i.postimg.cc/htmcHZrn/Candy-Cane-Jar.webp"},
+            {"id":1043,"nome":"Celestial Witch Broom","imgSrc":"https://i.postimg.cc/NjXBWCx7/Celestial-Witch-Broom.webp"},
+            {"id":1044,"nome":"Cherry Blossom Tree","imgSrc":"https://i.postimg.cc/KzGb3GyZ/Cherry-Blossom-Tree.webp"},
+            {"id":1045,"nome":"Chromatic Phoenix","imgSrc":"https://i.postimg.cc/BQkJ7f2L/Chromatic-Phoenix.webp"},
+            {"id":1046,"nome":"Circus Cage","imgSrc":"https://i.postimg.cc/cC5dNV2G/Circus-Cage.webp"},
+            {"id":1047,"nome":"Classic","imgSrc":"https://i.postimg.cc/7LMDLCdF/Classic.webp"},
+            {"id":1048,"nome":"Coastal Lighthouse","imgSrc":"https://i.postimg.cc/v8PY9VBK/Coastal-Lighthouse.webp"},
+            {"id":1049,"nome":"Cocoa Machine","imgSrc":"https://i.postimg.cc/4xcsr21P/Cocoa-Machine.webp"},
+            {"id":1050,"nome":"Coffin","imgSrc":"https://i.postimg.cc/N0wBY8JQ/Coffin.webp"},
+            {"id":1051,"nome":"Cornucopia","imgSrc":"https://i.postimg.cc/d3SJKzXW/Cornucopia.webp"},
+            {"id":1052,"nome":"Cozy Cocoa","imgSrc":"https://i.postimg.cc/3rL8pvRz/Cozy-Cocoa.webp"},
+            {"id":1053,"nome":"Cranberry Barrel","imgSrc":"https://i.postimg.cc/bvjp80CD/Cranberry-Barrel.webp"},
+            {"id":1054,"nome":"Cuddly Bunny","imgSrc":"https://i.postimg.cc/h4CDxdj2/Cuddly-Bunny.webp"},
+            {"id":1055,"nome":"Cursed Circus Tent","imgSrc":"https://i.postimg.cc/Fs8hCX0P/Cursed-Circus-Tent.webp"},
+            {"id":1056,"nome":"Dark Bone Crusher","imgSrc":"https://i.postimg.cc/C1h0nhpJ/Dark-Bone-Crusher.webp"},
+            {"id":1057,"nome":"Dark Mansion","imgSrc":"https://i.postimg.cc/pdtRxQGn/Dark-Mansion.webp"},
+            {"id":1058,"nome":"Dave Pumpkins","imgSrc":"https://i.postimg.cc/SNJyGxYj/Dave-Pumpkins.webp"},
+            {"id":1059,"nome":"Dayflower","imgSrc":"https://i.postimg.cc/dVCwzN9z/Dayflower.webp"},
+            {"id":1060,"nome":"Deathberry Pie","imgSrc":"https://i.postimg.cc/jq8xN75H/Deathberry-Pie.webp"},
+            {"id":1061,"nome":"Devilborn","imgSrc":"https://i.postimg.cc/sXjzGjCn/Devilborn.webp"},
+            {"id":1062,"nome":"Devilish Candle","imgSrc":"https://i.postimg.cc/KzGb3Ghd/Devilish-Candle.webp"},
+            {"id":1063,"nome":"Doomthrust","imgSrc":"https://i.postimg.cc/vHkG2w5t/Doomthrust.webp"},
+            {"id":1064,"nome":"Dragon Puppet","imgSrc":"https://i.postimg.cc/nzFx9Ff3/Dragon-Puppet.webp"},
+            {"id":1065,"nome":"Easter Basket","imgSrc":"https://i.postimg.cc/zBzNHz15/Easter-Basket.webp"},
+            {"id":1066,"nome":"Easter Chick","imgSrc":"https://i.postimg.cc/q7d40cb8/Easter-Chick.webp"},
+            {"id":1067,"nome":"Eggnog Machine","imgSrc":"https://i.postimg.cc/15f9K3V3/Eggnog-Machine.webp"},
+            {"id":1068,"nome":"Elf Box","imgSrc":"https://i.postimg.cc/FznhQ28m/Elf-Box.webp"},
+            {"id":1069,"nome":"Enchanted Circus Tent","imgSrc":"https://i.postimg.cc/bNWqVf1F/Enchanted-Circus-Tent.webp"},
+            {"id":1070,"nome":"Eye of Blizzaria","imgSrc":"https://i.postimg.cc/j2jRms8H/Eye-of-Blizzaria.webp"},
+            {"id":1071,"nome":"Fairy Tale Book","imgSrc":"https://i.postimg.cc/1XYyZL2t/Fairy-Tale-Book.webp"},
+            {"id":1072,"nome":"Fall Harvester","imgSrc":"https://i.postimg.cc/kG57znj8/Fall-Harvester.webp"},
+            {"id":1073,"nome":"Fall Wheelbarrow","imgSrc":"https://i.postimg.cc/MHGzNWsV/Fall-Wheelbarrow.webp"},
+            {"id":1074,"nome":"Festive Candelabra","imgSrc":"https://i.postimg.cc/Gp1drP7R/Festive-Candelabra.webp"},
+            {"id":1075,"nome":"Festive Fruitcake","imgSrc":"https://i.postimg.cc/QCMjwX6k/Festive-Fruitcake.webp"},
+            {"id":1076,"nome":"Festive Pinecone","imgSrc":"https://i.postimg.cc/kMjJ8bGP/Festive-Pinecone.webp"},
+            {"id":1077,"nome":"Festive Train","imgSrc":"https://i.postimg.cc/ncCH1hjy/Festive-Train.webp"},
+            {"id":1078,"nome":"Fiery Phoenix","imgSrc":"https://i.postimg.cc/CKVSYCPL/Fiery-Phoenix.webp"},
+            {"id":1079,"nome":"Fish Tank","imgSrc":"https://i.postimg.cc/nhmp6S1g/Fish-Tank.webp"},
+            {"id":1080,"nome":"Flourished Fountain","imgSrc":"https://i.postimg.cc/tCYXz4nR/Flourished-Fountain.webp"},
+            {"id":1081,"nome":"Fortune House","imgSrc":"https://i.postimg.cc/vZnbp2zR/Fortune-House.webp"},
+            {"id":1082,"nome":"Frost Engine","imgSrc":"https://i.postimg.cc/gkQGtb3K/Frost-Engine.webp"},
+            {"id":1083,"nome":"Frostbite","imgSrc":"https://i.postimg.cc/8cnTVq9P/Frostbite.webp"},
+            {"id":1084,"nome":"Frosted Frequency","imgSrc":"https://i.postimg.cc/C56wVWXS/Frosted-Frequency.webp"},
+            {"id":1085,"nome":"Frozen Fortress","imgSrc":"https://i.postimg.cc/yxr7zwtV/Frozen-Fortress.webp"},
+            {"id":1086,"nome":"Fudge Bunny","imgSrc":"https://i.postimg.cc/ZYfb3dRs/Fudge-Bunny.webp"},
+            {"id":1087,"nome":"Fungal Thumper","imgSrc":"https://i.postimg.cc/Kc9GLMzD/Fungal-Thumper.webp"},
+            {"id":1088,"nome":"Gingerbread House","imgSrc":"https://i.postimg.cc/02b8CyKx/Gingerbread-House.webp"},
+            {"id":1089,"nome":"Golden Firework","imgSrc":"https://i.postimg.cc/yYt7pC00/Golden-Firework.webp"},
+            {"id":1090,"nome":"Gothic Bouquet","imgSrc":"https://i.postimg.cc/gJzpLzPz/Gothic-Bouquet.webp"},
+            {"id":1091,"nome":"Grandfather Clock","imgSrc":"https://i.postimg.cc/nLtpZKR7/Grandfather-Clock.webp"},
+            {"id":1092,"nome":"Grape Barrel","imgSrc":"https://i.postimg.cc/vTmGkQP7/Grape-Barrel.webp"},
+            {"id":1093,"nome":"Grim Galleon","imgSrc":"https://i.postimg.cc/5tMb157y/Grim-Galleon.webp"},
+            {"id":1094,"nome":"Haunted Circus Tent","imgSrc":"https://i.postimg.cc/hP6KZRVy/Haunted-Circus-Tent.webp"},
+            {"id":1095,"nome":"Holiday Hotline","imgSrc":"https://i.postimg.cc/QxwjYZcp/Holiday-Hotline.webp"},
+            {"id":1096,"nome":"Hollow Scythe","imgSrc":"https://i.postimg.cc/cJMZJK22/Hollow-Scythe.webp"},
+            {"id":1097,"nome":"Honey Cheesecake","imgSrc":"https://i.postimg.cc/wMB9Z6Wn/Honey-Cheesecake.png"},
+            {"id":1098,"nome":"Honey Hive Tree","imgSrc":"https://i.postimg.cc/152y71DN/Honey-Hive-Tree.webp"},
+            {"id":1099,"nome":"Ice Sleigh","imgSrc":"https://i.postimg.cc/c4rscLtN/Ice-Sleigh.webp"},
+            {"id":1100,"nome":"Icecream Mix","imgSrc":"https://i.postimg.cc/4dfGHfRj/Icecream-Mix.webp"},
+            {"id":1101,"nome":"Irish Harp","imgSrc":"https://i.postimg.cc/C56wVWX5/Irish-Harp.webp"},
+            {"id":1102,"nome":"Jade Viper","imgSrc":"https://i.postimg.cc/GmDdZgQh/Jade-Viper.webp"},
+            {"id":1103,"nome":"Jello Dessert","imgSrc":"https://i.postimg.cc/VNcm19GJ/Jello-Dessert.webp"},
+            {"id":1104,"nome":"Jingle Bells","imgSrc":"https://i.postimg.cc/kMjJ8bGd/Jingle-Bells.webp"},
+            {"id":1105,"nome":"Jollyday Batter","imgSrc":"https://i.postimg.cc/9fjCVP8y/Jollyday-Batter.webp"},
+            {"id":1106,"nome":"Krampus Chimney","imgSrc":"https://i.postimg.cc/yYkVT8g5/Krampus-Chimney.webp"},
+            {"id":1107,"nome":"Leprechaun Boot","imgSrc":"https://i.postimg.cc/7hLqdxBf/Leprechaun-Boot.webp"},
+            {"id":1108,"nome":"Light Bone Crusher","imgSrc":"https://i.postimg.cc/1zcPzg2g/Light-Bone-Crusher.webp"},
+            {"id":1109,"nome":"Lil Tree","imgSrc":"https://i.postimg.cc/Dy82cw4W/Lil-Tree.webp"},
+            {"id":1110,"nome":"Lilium Bush","imgSrc":"https://i.postimg.cc/GmDdZgjW/Lilium-Bush.webp"},
+            {"id":1111,"nome":"Lily of The Valley","imgSrc":"https://i.postimg.cc/MHGzNWsd/Lily-of-The-Valley.png"},
+            {"id":1112,"nome":"Lonely Date","imgSrc":"https://i.postimg.cc/hvGK6SCs/Lonely-Date.png"},
+            {"id":1113,"nome":"Lovely Heart","imgSrc":"https://i.postimg.cc/tgtyg1wm/Lovely-Heart.webp"},
+            {"id":1114,"nome":"Lovesick Bow","imgSrc":"https://i.postimg.cc/xCfQNfSr/Lovesick-Bow.webp"},
+            {"id":1115,"nome":"Lucky Top Hat","imgSrc":"https://i.postimg.cc/wjNgS4kr/Lucky-Top-Hat.webp"},
+            {"id":1116,"nome":"Lunar Scepter","imgSrc":"https://i.postimg.cc/0NdxN6F7/Lunar-Scepter.webp"},
+            {"id":1117,"nome":"Lunar Witch Broom","imgSrc":"https://i.postimg.cc/YCFMJDxz/Lunar-Witch-Broom.webp"},
+            {"id":1118,"nome":"Luxury Projector","imgSrc":"https://i.postimg.cc/TPXfGjkz/Luxury-Projector.webp"},
+            {"id":1119,"nome":"Magical Portal","imgSrc":"https://i.postimg.cc/rmVTRVL2/Magical-Portal.webp"},
+            {"id":1120,"nome":"Marching Drums","imgSrc":"https://i.postimg.cc/65gBbxCZ/Marching-Drums.webp"},
+            {"id":1121,"nome":"Marine Anchor","imgSrc":"https://i.postimg.cc/k5F95VzL/Marine-Anchor.webp"},
+            {"id":1122,"nome":"Merry Music Box","imgSrc":"https://i.postimg.cc/504JQ4WK/Merry-Music-Box.webp"},
+            {"id":1123,"nome":"Midnight Light","imgSrc":"https://i.postimg.cc/xdSnYGx2/Midnight-Light.webp"},
+            {"id":1124,"nome":"Moon Staff","imgSrc":"https://i.postimg.cc/K8TxdpNG/Moon-Staff.webp"},
+            {"id":1125,"nome":"Mothership","imgSrc":"https://i.postimg.cc/d0KwvRHM/Mothership.webp"},
+            {"id":1126,"nome":"Mycelium Mallet","imgSrc":"https://i.postimg.cc/59P4vC03/Mycelium-Mallet.webp"},
+            {"id":1127,"nome":"Mystical Trident","imgSrc":"https://i.postimg.cc/HkMdfv2H/Mystical-Trident.webp"},
+            {"id":1128,"nome":"Nightbloom","imgSrc":"https://i.postimg.cc/Z5N41sLX/Nightbloom.webp"},
+            {"id":1129,"nome":"Owl Tree","imgSrc":"https://i.postimg.cc/yYt7pC0D/Owl-Tree.webp"},
+            {"id":1130,"nome":"Paint Canvas","imgSrc":"https://i.postimg.cc/Y2XrgW9Z/Paint-Canvas.webp"},
+            {"id":1131,"nome":"Paranormal Hot Balloon","imgSrc":"https://i.postimg.cc/VNB1NSpq/Paranormal-Hot-Balloon.webp"},
+            {"id":1132,"nome":"Party Balloons","imgSrc":"https://i.postimg.cc/qRJr6JdV/Party-Balloons.webp"},
+            {"id":1133,"nome":"Pegasus Blade","imgSrc":"https://i.postimg.cc/Qt8DK8rD/Pegasus-Blade.webp"},
+            {"id":1134,"nome":"Permafrost Axe","imgSrc":"https://i.postimg.cc/gj0GQYM3/Permafrost-Axe.webp"},
+            {"id":1135,"nome":"Phantom Light","imgSrc":"https://i.postimg.cc/mrGBR3XL/Phantom-Light.webp"},
+            {"id":1136,"nome":"Pharaoh Sarcophagus","imgSrc":"https://i.postimg.cc/gj0GQYM6/Pharaoh-Sarcophagus.webp"},
+            {"id":1137,"nome":"Pinata","imgSrc":"https://i.postimg.cc/mrNRrcJ3/Pinata.webp"},
+            {"id":1138,"nome":"Pot O Gold","imgSrc":"https://i.postimg.cc/d1sFZsKK/Pot-O-Gold.webp"},
+            {"id":1139,"nome":"Pristine Chocolatery","imgSrc":"https://i.postimg.cc/YSfkS4Zb/Pristine-Chocolatery.webp"},
+            {"id":1140,"nome":"Psycho's Chainsaw","imgSrc":"https://i.postimg.cc/B6S3PSfw/Psycho-s-Chainsaw.webp"},
+            {"id":1141,"nome":"Pumpkin Slice","imgSrc":"https://i.postimg.cc/mDL41LGB/Pumpkin-Slice.webp"},
+            {"id":1142,"nome":"Ragebringer","imgSrc":"https://i.postimg.cc/N0wBY8J5/Ragebringer.webp"},
+            {"id":1143,"nome":"Red Nutcracker","imgSrc":"https://i.postimg.cc/wjNgS4kb/Red-Nutcracker.webp"},
+            {"id":1144,"nome":"Roasted Turkey","imgSrc":"https://i.postimg.cc/LsM2RkCF/Roasted-Turkey.webp"},
+            {"id":1145,"nome":"Sakura Parasol","imgSrc":"https://i.postimg.cc/zBzNHzYs/Sakura-Parasol.png"},
+            {"id":1146,"nome":"Sand Castle","imgSrc":"https://i.postimg.cc/8CBDCF94/Sand-Castle.webp"},
+            {"id":1147,"nome":"Santa Boot","imgSrc":"https://i.postimg.cc/mg9B0pwG/Santa-Boot.webp"},
+            {"id":1148,"nome":"Santa Box","imgSrc":"https://i.postimg.cc/3Nb3HPVh/Santa-Box.webp"},
+            {"id":1149,"nome":"Santa Chimney","imgSrc":"https://i.postimg.cc/Qd7hRYqf/Santa-Chimney.webp"},
+            {"id":1150,"nome":"Santa's Reindeer","imgSrc":"https://i.postimg.cc/vmdbM7qx/Santa-s-Reindeer.webp"},
+            {"id":1151,"nome":"Santa's Sleigh","imgSrc":"https://i.postimg.cc/fTpMqQYc/Santa-s-Sleigh.webp"},
+            {"id":1152,"nome":"Scareapple Pie","imgSrc":"https://i.postimg.cc/nVdF7DzY/Scareapple-Pie.webp"},
+            {"id":1153,"nome":"Scarlet Firework","imgSrc":"https://i.postimg.cc/QCnjrRwM/Scarlet-Firework.webp"},
+            {"id":1154,"nome":"Shroomy Smasher","imgSrc":"https://i.postimg.cc/tRrqPxTz/Shroomy-Smasher.webp"},
+            {"id":1155,"nome":"Snow Globe","imgSrc":"https://i.postimg.cc/x1mnWpPg/Snow-Globe.webp"},
+            {"id":1156,"nome":"Snowboarder Penguin","imgSrc":"https://i.postimg.cc/gj0GQYMv/Snowboarder-Penguin.webp"},
+            {"id":1157,"nome":"Snowman","imgSrc":"https://i.postimg.cc/sDvVJgGQ/Snowman.webp"},
+            {"id":1158,"nome":"Snowman Box","imgSrc":"https://i.postimg.cc/GtSb1ZV1/Snowman-Box.webp"},
+            {"id":1159,"nome":"Solar Witch Broom","imgSrc":"https://i.postimg.cc/qvK49DGG/Solar-Witch-Broom.webp"},
+            {"id":1160,"nome":"Soulless Theater","imgSrc":"https://i.postimg.cc/pdYxd94g/Soulless-Theater.webp"},
+            {"id":1161,"nome":"Spookpumpkin Pie","imgSrc":"https://i.postimg.cc/jq8xN75y/Spookpumpkin-Pie.webp"},
+            {"id":1162,"nome":"Spooky Brew","imgSrc":"https://i.postimg.cc/rmVTRV23/Spooky-Brew.webp"},
+            {"id":1163,"nome":"Spring World","imgSrc":"https://i.postimg.cc/nLYZLsg5/Spring-World.webp"},
+            {"id":1164,"nome":"Stack of Presents","imgSrc":"https://i.postimg.cc/xjsfHz8Q/Stack-of-Presents.webp"},
+            {"id":1165,"nome":"Starborne Reverie","imgSrc":"https://i.postimg.cc/fybMpwHS/Starborne-Reverie.webp"},
+            {"id":1166,"nome":"Strawberry Fields","imgSrc":"https://i.postimg.cc/B6S3PSfz/Strawberry-Fields.png"},
+            {"id":1167,"nome":"Strawberry Jelly Basket","imgSrc":"https://i.postimg.cc/bvH8vGWB/Strawberry-Jelly-Basket.webp"},
+            {"id":1168,"nome":"Sweet Train","imgSrc":"https://i.postimg.cc/jdLshSnY/Sweet-Train.webp"},
+            {"id":1169,"nome":"Sweethearts Store","imgSrc":"https://i.postimg.cc/9Q9Cvgp5/Sweethearts-Store.png"},
+            {"id":1170,"nome":"Theatrical Spotlight","imgSrc":"https://i.postimg.cc/FFPrcLRq/Theatrical-Spotlight.webp"},
+            {"id":1171,"nome":"Toasted Marshmallow","imgSrc":"https://i.postimg.cc/c1DxYnHw/Toasted-Marshmallow.webp"},
+            {"id":1172,"nome":"Tombstone Bash","imgSrc":"https://i.postimg.cc/yNzsBhQV/Tombstone-Bash.webp"},
+            {"id":1173,"nome":"Toy Box","imgSrc":"https://i.postimg.cc/bNWqVf1H/Toy-Box.webp"},
+            {"id":1174,"nome":"Toy Elf","imgSrc":"https://i.postimg.cc/qMzkGv63/Toy-Elf.webp"},
+            {"id":1175,"nome":"Toy Santa","imgSrc":"https://i.postimg.cc/JzXM9YQ2/Toy-Santa.webp"},
+            {"id":1176,"nome":"Tropical Drink","imgSrc":"https://i.postimg.cc/zDdzWgBt/Tropical-Drink.webp"},
+            {"id":1177,"nome":"Twisted Passion","imgSrc":"https://i.postimg.cc/85pGfpgt/Twisted-Passion.webp"},
+            {"id":1178,"nome":"Unchained Beast","imgSrc":"https://i.postimg.cc/TYpRc3LB/Unchained-Beast.webp"},
+            {"id":1179,"nome":"Veridian Greenhouse","imgSrc":"https://i.postimg.cc/T1PTFRkS/Veridian-Greenhouse.png"},
+            {"id":1180,"nome":"Vintage TV","imgSrc":"https://i.postimg.cc/mk6TG0Jf/Vintage-TV.webp"},
+            {"id":1181,"nome":"VIP Ban Hammer","imgSrc":"https://i.postimg.cc/tTkXB1z3/VIP-Ban-Hammer.webp"},
+            {"id":1182,"nome":"Warlock Hunter","imgSrc":"https://i.postimg.cc/9ftVf4Kq/Warlock-Hunter.webp"},
+            {"id":1183,"nome":"Watering Can","imgSrc":"https://i.postimg.cc/02F9X17K/Watering-Can.webp"},
+            {"id":1184,"nome":"Winter Breeze","imgSrc":"https://i.postimg.cc/wxWqJmM8/Winter-Breeze.webp"},
+            {"id":1185,"nome":"Winter Train","imgSrc":"https://i.postimg.cc/ZKCTL5vt/Winter-Train.webp"},
+            {"id":1186,"nome":"Witch Hunter","imgSrc":"https://i.postimg.cc/SK7qKX32/Witch-Hunter.webp"},
+            {"id":1187,"nome":"Woodland Staff","imgSrc":"https://i.postimg.cc/Y0StZpXP/Woodland-Staff.png"},
+            {"id":1188,"nome":"Year Of The Horse","imgSrc":"https://i.postimg.cc/FzKh89PT/Year-Of-The-Horse.png"},
+            {"id":1189,"nome":"Yuletide Gift","imgSrc":"https://i.postimg.cc/9fjCVP8M/Yuletide-Gift.webp"},
+            {"id":1190,"nome":"Zombie Hand","imgSrc":"https://i.postimg.cc/zvfq6Jdh/Zombie-Hand.webp"}
+        ];
+
         let listaDeMarretas = [];
-        try {
-            listaDeMarretas = JSON.parse(localStorage.getItem('ftf_custom_list_url')) || [];
-        } catch(e) {
-            listaDeMarretas = [];
-        }
         
+        // Inicialização inteligente do banco de dados
+        function inicializarBancoDados() {
+            let dadosLocais = [];
+            try {
+                dadosLocais = JSON.parse(localStorage.getItem('ftf_custom_list_url')) || [];
+            } catch(e) {
+                dadosLocais = [];
+            }
+
+            // Se o LocalStorage estiver vazio, injetamos as 190 marretas do código fonte
+            if(dadosLocais.length === 0) {
+                listaDeMarretas = BASE_PADRAO_MARRETAS.map(m => ({
+                    id: m.id,
+                    nome: m.nome,
+                    valor: 'unstable',
+                    raridade: 'legendary',
+                    demanda: '5',
+                    tendencia: 'none',
+                    status: 'none',
+                    templates: 'Stable',
+                    imgSrc: m.imgSrc
+                }));
+                localStorage.setItem('ftf_custom_list_url', JSON.stringify(listaDeMarretas));
+            } else {
+                listaDeMarretas = dadosLocais;
+            }
+        }
+
         let raridadeAtual = 'legendary'; 
 
         window.onload = function() {
+            inicializarBancoDados();
             carregarCardsSalvos();
         };
+
+        function resetarParaPadraoCodigo() {
+            if(confirm("Amg, isso vai restaurar todas as 190 marretas originais e apagar as edições atuais. Tem certeza?")) {
+                localStorage.removeItem('ftf_custom_list_url');
+                inicializarBancoDados();
+                carregarCardsSalvos();
+                alert("Todas as 190 marretas foram restauradas com sucesso! 💎");
+            }
+        }
 
         function mudarAbaForm(aba) {
             document.getElementById('tab-unico').classList.remove('active');
@@ -147,38 +374,22 @@
             }
         }
 
-        function limparTudoForçado() {
-            if(confirm("Amg, quer deletar TUDO mesmo e começar do zero?")) {
-                localStorage.removeItem('ftf_custom_list_url');
-                listaDeMarretas = [];
-                carregarCardsSalvos();
-                alert("Site limpinho e desbugado! Pode usar! ✨");
-            }
-        }
-
-        // Sistema ultra permissivo que aceita qualquer texto que contenha um link
         function importarLinksEmMassa() {
             const campoTexto = document.getElementById('listaLinksMassa').value;
-            if(!campoTexto.trim()) {
-                alert('Cole os links primeiro! 😂');
-                return;
-            }
+            if(!campoTexto.trim()) return;
 
-            // Captura qualquer coisa que comece com http ou https até o próximo espaço/quebra
             const regexLinks = /(https?:\/\/[^\s]+)/g;
             const linksEncontrados = campoTexto.match(regexLinks);
 
-            if(!linksEncontrados || linksEncontrados.length === 0) {
-                alert('Nenhum link detectado! Copie direto a lista de URLs.');
+            if(!linksEncontrados) {
+                alert('Nenhum link extra válido detectado.');
                 return;
             }
 
-            let adicionados = 0;
-            linksEncontrados.forEach((url) => {
-                adicionados++;
+            linksEncontrados.forEach((url, i) => {
                 const novoObj = { 
-                    id: Date.now() + adicionados + Math.floor(Math.random() * 9000), 
-                    nome: `Nova Marreta ${listaDeMarretas.length + 1}`, 
+                    id: Date.now() + i + Math.floor(Math.random() * 9000), 
+                    nome: `Item Extra ${listaDeMarretas.length + 1}`, 
                     valor: 'unstable', 
                     raridade: raridadeAtual, 
                     demanda: '5', 
@@ -188,13 +399,12 @@
                     imgSrc: url.trim() 
                 };
                 listaDeMarretas.push(novoObj);
-                // Salva na hora cada unidade criada
-                localStorage.setItem('ftf_custom_list_url', JSON.stringify(listaDeMarretas));
             });
 
+            localStorage.setItem('ftf_custom_list_url', JSON.stringify(listaDeMarretas));
             carregarCardsSalvos();
             document.getElementById('listaLinksMassa').value = '';
-            alert(`Show! ${adicionados} marretas salvas com sucesso! 😎`);
+            alert('Links extras adicionados!');
         }
 
         function togglePrintMode() {
@@ -222,7 +432,7 @@
             const estabilidade = document.getElementById('estabilidadeItem').value || 'Stable';
 
             if (!nome) {
-                alert('Dá um nome para o item, amg!');
+                alert('Por favor, dê um nome!');
                 return;
             }
 
@@ -272,7 +482,7 @@
                     <img src="${item.imgSrc}" alt="${item.nome}" style="max-width: 100%; max-height: 100%; object-fit: contain;" onerror="this.src='https://placehold.co/150x110/0b0f19/ffffff?text=Sem+Foto'">
                 </div>
                 <span class="txt-posicao-automatica" style="position: absolute; top: 12px; left: 12px; background: #ffa502; color: #000; font-size: 10px; font-weight: bold; padding: 2px 5px; border-radius: 4px;">#--</span>
-                <h3 style="margin: 0 0 2px 0; color: #ffffff; font-size: 14px; font-weight: bold; white-space: nowrap; overflow: hidden; text-overflow: ellipsis;">${item.nome}</h3>
+                <h3 style="margin: 0 0 2px 0; color: #ffffff; font-size: 14px; font-weight: bold; white-space: nowrap; overflow: hidden; text-overflow: ellipsis;" title="${item.nome}">${item.nome}</h3>
                 <span style="color: #62697e; font-size: 9px; font-weight: bold; text-transform: uppercase;">${item.raridade || 'legendary'}</span>
                 <div style="margin-top: 10px; font-size: 11px; display: flex; flex-direction: column; gap: 6px;">
                     <div>
@@ -440,15 +650,10 @@
         }
 
         function exportarLista() {
-            if (listaDeMarretas.length === 0) {
-                alert("Adicione itens primeiro!");
-                return;
-            }
             navigator.clipboard.writeText(JSON.stringify(listaDeMarretas, null, 2)).then(() => {
-                alert("Lista copiada! 📋");
+                alert("Backup copiado com sucesso! 📋");
             });
         }
     </script>
 </body>
 </html>
-
