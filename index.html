@@ -640,20 +640,30 @@
             atualizarNumbersVisuais();
         }
 
-        function reordenarArrayEGuardar() {
-            const cardsNaTela = document.querySelectorAll('#container-cards > div');
+                function reordenarArrayEGuardar() {
+            // 1. Pegamos todos os cards que NÃO SÃO da raridade atual (para não mexer neles)
             let listaLimpa = listaDeMarretas.filter(item => (item.raridade || 'legendary') !== raridadeAtual);
             
+            // 2. Criamos uma lista temporária para colocar os cards da aba atual na ordem nova da tela
+            let itensReordenadosDaAba = [];
+
+            const cardsNaTela = document.querySelectorAll('#container-cards > div');
             cardsNaTela.forEach((cardHTML) => {
                 const id = parseInt(cardHTML.getAttribute('data-id'));
                 const correspondente = listaDeMarretas.find(m => m.id === id);
-                if (correspondente) listaLimpa.push(correspondente);
+                if (correspondente) {
+                    itensReordenadosDaAba.push(correspondente); // Junta na ordem certinha que está na tela
+                }
             });
             
-            listaDeMarretas = listaLimpa;
+            // 3. JUNTAMOS as duas listas: as outras raridades + a raridade atual reordenada
+            listaDeMarretas = [...listaLimpa, ...itensReordenadosDaAba];
+            
+            // 4. Salva de verdade no localStorage
             localStorage.setItem('ftf_custom_v3', JSON.stringify(listaDeMarretas));
             atualizarNumbersVisuais();
         }
+
 
         function atualizarNumbersVisuais() {
             const cardsNaTela = document.querySelectorAll('#container-cards > div');
