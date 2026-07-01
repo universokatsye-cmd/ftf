@@ -315,23 +315,20 @@
         let listaDeMarretas = [];
         let raridadeAtual = 'legendary'; 
         
-        
         function inicializarBancoDados() {
-    let dadosLocais = [];
-    try {
-        dadosLocais = JSON.parse(localStorage.getItem('ftf_custom_v3'));
-    } catch(e) {
-        dadosLocais = null;
-    }
+            let dadosLocais = [];
+            try {
+                dadosLocais = JSON.parse(localStorage.getItem('ftf_custom_v3'));
+            } catch(e) {
+                dadosLocais = null;
+            }
 
-    // Se não tiver nada salvo, injeta o padrão. Se tiver, carrega!
-    if (!dadosLocais || dadosLocais.length === 0) {
-        forçarInjecaoListaPadrao();
-    } else {
-        listaDeMarretas = dadosLocais;
-    }
-}
-
+            if(!dadosLocais || dadosLocais.length === 0) {
+                forçarInjecaoListaPadrao();
+            } else {
+                listaDeMarretas = dadosLocais;
+            }
+        }
 
         function forçarInjecaoListaPadrao() {
             listaDeMarretas = BASE_PADRAO_MARRETAS.map(m => ({
@@ -659,4 +656,3 @@
     </script>
 </body>
 </html>
-
