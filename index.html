@@ -347,12 +347,19 @@
 
         document.addEventListener("DOMContentLoaded", () => {
     inicializarBancoDados();
+            
+            setTimeout(() => {
+    filtrarRaridade("legendary");
+}, 100);
 
-    // força a renderização depois que a página terminou de montar
     requestAnimationFrame(() => {
         raridadeAtual = "legendary";
         definirAbaAtivaVisual("legendary");
         carregarCardsSalvos();
+
+        setTimeout(() => {
+            carregarCardsSalvos();
+        }, 50);
     });
 });
 
