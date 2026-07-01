@@ -119,7 +119,6 @@
     </div>
 
     <script>
-        // TODAS AS SUAS MARRETAS JÁ EMBUTIDAS PERFEITAMENTE DIRETO NO CÓDIGO FONTE!
         const BASE_PADRAO_MARRETAS = [
             {"id":1001,"nome":"1 Billion","imgSrc":"https://i.postimg.cc/RZt4jpTP/1-Billion.webp"},
             {"id":1002,"nome":"2019","imgSrc":"https://i.postimg.cc/HkMdfvtB/2019.webp"},
@@ -290,7 +289,7 @@
             {"id":1167,"nome":"Strawberry Jelly Basket","imgSrc":"https://i.postimg.cc/bvH8vGWB/Strawberry-Jelly-Basket.webp"},
             {"id":1168,"nome":"Sweet Train","imgSrc":"https://i.postimg.cc/jdLshSnY/Sweet-Train.webp"},
             {"id":1169,"nome":"Sweethearts Store","imgSrc":"https://i.postimg.cc/9Q9Cvgp5/Sweethearts-Store.png"},
-            {"id":1170,"nome":"Theatrical Spotlight","imgSrc":"https://i.postimg.cc/FFPrcLRq/Theatrical-Spotlight.webp"},
+            {"id":1170,"literal":"Theatrical Spotlight","imgSrc":"https://i.postimg.cc/FFPrcLRq/Theatrical-Spotlight.webp"},
             {"id":1171,"nome":"Toasted Marshmallow","imgSrc":"https://i.postimg.cc/c1DxYnHw/Toasted-Marshmallow.webp"},
             {"id":1172,"nome":"Tombstone Bash","imgSrc":"https://i.postimg.cc/yNzsBhQV/Tombstone-Bash.webp"},
             {"id":1173,"nome":"Toy Box","imgSrc":"https://i.postimg.cc/bNWqVf1H/Toy-Box.webp"},
@@ -314,36 +313,39 @@
         ];
 
         let listaDeMarretas = [];
+        let raridadeAtual = 'legendary'; 
         
-        // Inicialização inteligente do banco de dados
+        // CORREÇÃO CRÍTICA: Força o uso do banco limpo caso o navegador esteja engasgado
         function inicializarBancoDados() {
+            // Alteramos a chave para 'ftf_custom_v3' para zerar totalmente qualquer travamento antigo do tablet
             let dadosLocais = [];
             try {
-                dadosLocais = JSON.parse(localStorage.getItem('ftf_custom_list_url')) || [];
+                dadosLocais = JSON.parse(localStorage.getItem('ftf_custom_v3')) || [];
             } catch(e) {
                 dadosLocais = [];
             }
 
-            // Se o LocalStorage estiver vazio, injetamos as 190 marretas do código fonte
             if(dadosLocais.length === 0) {
-                listaDeMarretas = BASE_PADRAO_MARRETAS.map(m => ({
-                    id: m.id,
-                    nome: m.nome,
-                    valor: 'unstable',
-                    raridade: 'legendary',
-                    demanda: '5',
-                    tendencia: 'none',
-                    status: 'none',
-                    templates: 'Stable',
-                    imgSrc: m.imgSrc
-                }));
-                localStorage.setItem('ftf_custom_list_url', JSON.stringify(listaDeMarretas));
+                forçarInjecaoListaPadrao();
             } else {
                 listaDeMarretas = dadosLocais;
             }
         }
 
-        let raridadeAtual = 'legendary'; 
+        function forçarInjecaoListaPadrao() {
+            listaDeMarretas = BASE_PADRAO_MARRETAS.map(m => ({
+                id: m.id,
+                nome: m.nome || m.literal || "Marreta",
+                valor: 'unstable',
+                raridade: 'legendary',
+                demanda: '5',
+                tendencia: 'none',
+                status: 'none',
+                templates: 'Stable',
+                imgSrc: m.imgSrc
+            }));
+            localStorage.setItem('ftf_custom_v3', JSON.stringify(listaDeMarretas));
+        }
 
         window.onload = function() {
             inicializarBancoDados();
@@ -351,12 +353,10 @@
         };
 
         function resetarParaPadraoCodigo() {
-            if(confirm("Amg, isso vai restaurar todas as 190 marretas originais e apagar as edições atuais. Tem certeza?")) {
-                localStorage.removeItem('ftf_custom_list_url');
-                inicializarBancoDados();
-                carregarCardsSalvos();
-                alert("Todas as 190 marretas foram restauradas com sucesso! 💎");
-            }
+            localStorage.removeItem('ftf_custom_v3');
+            forçarInjecaoListaPadrao();
+            carregarCardsSalvos();
+            alert("Memória limpa! Todas as 190 marretas carregadas do zero! 💎");
         }
 
         function mudarAbaForm(aba) {
@@ -401,7 +401,7 @@
                 listaDeMarretas.push(novoObj);
             });
 
-            localStorage.setItem('ftf_custom_list_url', JSON.stringify(listaDeMarretas));
+            localStorage.setItem('ftf_custom_v3', JSON.stringify(listaDeMarretas));
             carregarCardsSalvos();
             document.getElementById('listaLinksMassa').value = '';
             alert('Links extras adicionados!');
@@ -449,7 +449,7 @@
             };
             
             listaDeMarretas.push(novoObj);
-            localStorage.setItem('ftf_custom_list_url', JSON.stringify(listaDeMarretas));
+            localStorage.setItem('ftf_custom_v3', JSON.stringify(listaDeMarretas));
             
             raridadeAtual = raridade;
             definirAbaAtivaVisual(raridade);
@@ -524,14 +524,14 @@
                 if (novoStatus) item.status = novoStatus.trim().toLowerCase();
                 if (novaRaridade) item.raridade = novaRaridade.trim().toLowerCase();
 
-                localStorage.setItem('ftf_custom_list_url', JSON.stringify(listaDeMarretas));
+                localStorage.setItem('ftf_custom_v3', JSON.stringify(listaDeMarretas));
                 carregarCardsSalvos();
             });
 
             card.querySelector('.btn-deletar').addEventListener('click', function() {
                 listaDeMarretas = listaDeMarretas.filter(m => m.id !== item.id);
                 card.remove();
-                localStorage.setItem('ftf_custom_list_url', JSON.stringify(listaDeMarretas));
+                localStorage.setItem('ftf_custom_v3', JSON.stringify(listaDeMarretas));
                 atualizarNumbersVisuais();
             });
 
@@ -607,7 +607,7 @@
             for (let i = 1; i <= 5; i++) {
                 if (notaNum >= i) estrelasTexto += '<span style="color: #ffb830;">⭐</span>';
                 else if (notaNum > i - 1 && notaNum < i) estrelasTexto += '<span>✨</span>';
-                else estrelasTexto += '<span style="color: #323b54;">☆</span>';
+                else HTMLTexto = estrelasTexto += '<span style="color: #323b54;">☆</span>';
             }
             containerEstrelas.innerHTML = estrelasTexto;
         }
@@ -637,7 +637,7 @@
             });
             
             listaDeMarretas = listaLimpa;
-            localStorage.setItem('ftf_custom_list_url', JSON.stringify(listaDeMarretas));
+            localStorage.setItem('ftf_custom_v3', JSON.stringify(listaDeMarretas));
             atualizarNumbersVisuais();
         }
 
