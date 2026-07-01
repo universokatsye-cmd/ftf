@@ -345,23 +345,13 @@
             localStorage.setItem('ftf_custom_v3', JSON.stringify(listaDeMarretas));
         }
 
-        document.addEventListener("DOMContentLoaded", () => {
-    inicializarBancoDados();
+
             
-            setTimeout(() => {
-    filtrarRaridade("legendary");
-}, 100);
-
-    requestAnimationFrame(() => {
-        raridadeAtual = "legendary";
-        definirAbaAtivaVisual("legendary");
-        carregarCardsSalvos();
-
-        setTimeout(() => {
-            carregarCardsSalvos();
-        }, 50);
-    });
-});
+window.onload = function () {
+    inicializarBancoDados();
+    definirAbaAtivaVisual("legendary");
+    carregarCardsSalvos();
+};
 
         function resetarParaPadraoCodigo() {
             localStorage.removeItem('ftf_custom_v3');
