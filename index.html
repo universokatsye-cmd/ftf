@@ -454,8 +454,19 @@
         }
 
         function renderizarCardHTML(item) {
-            const container = document.getElementById('container-cards');
-            const card = document.createElement('div');
+    const card = document.createElement("div");
+    card.className = "card";
+
+    card.setAttribute("data-id", item.id);
+
+    card.innerHTML = `
+        <img src="${item.imgSrc}" loading="lazy">
+        <div class="nome">${item.nome}</div>
+        <div class="raridade">${item.raridade}</div>
+    `;
+
+    return card; // 👈 ISSO É O MAIS IMPORTANTE
+        }
             
             card.style.backgroundColor = '#0b0f19';
             card.style.border = `1.5px solid #ffa502`; 
@@ -606,21 +617,34 @@
         }
 
         function carregarCardsSalvos() {
-            console.log("RARIDADE ATUAL:", raridadeAtual);
-console.log("TOTAL ITENS:", listaDeMarretas.length);
-console.log("EXEMPLO ITEM:", listaDeMarretas[0]);
-console.log("RARIDADES:", listaDeMarretas.map(i => i.raridade));
-            document.getElementById('container-cards').innerHTML = '';
-            const termoPesquisa = document.getElementById('barraPesquisa').value.toLowerCase();
-            
-            const itensFiltrados = listaDeMarretas.filter(item => {
-                const bateRaridade = (item.raridade || 'legendary') === raridadeAtual;
-                const bateNome = item.nome.toLowerCase().includes(termoPesquisa);
-                return bateRaridade && bateNome;
-            });
-            
-            itensFiltrados.forEach(item => { renderizarCardHTML(item); });
-            atualizarNumbersVisuais();
+    console.log("RARIDADE ATUAL:", raridadeAtual);
+
+    const container = document.getElementById('container-cards');
+    if (!container) return;
+
+    const termoPesquisa = (document.getElementById('barraPesquisa')?.value || "").toLowerCase();
+
+    const itensFiltrados = listaDeMarretas.filter(item => {
+        const bateRaridade = (item.raridade || 'legendary') === raridadeAtual;
+        const bateNome = (item.nome || "").toLowerCase().includes(termoPesquisa);
+        return bateRaridade && bateNome;
+    });
+
+    console.log("ITENS FILTRADOS:", itensFiltrados.length);
+
+    // ⚠️ IMPORTANTE: limpa UMA vez só aqui
+    container.innerHTML = '';
+
+    const fragment = document.createDocumentFragment();
+
+    itensFiltrados.forEach(item => {
+        const card = renderizarCardHTML(item); // agora PRECISA retornar elemento
+        if (card) fragment.appendChild(card);
+    });
+
+    container.appendChild(fragment);
+
+    atualizarNumbersVisuais();
         }
 
         function reordenarArrayEGuardar() {
