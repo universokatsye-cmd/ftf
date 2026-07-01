@@ -1,4 +1,3 @@
-
 <!DOCTYPE html>
 <html lang="pt-BR">
 <head>
@@ -24,6 +23,11 @@
         .hide-mode #search-container,
         .hide-mode .btn-deletar,
         .hide-mode .btn-acoes-card { display: none !important; }
+
+        /* Estilos para as abas do formulário */
+        .form-tabs { display: flex; gap: 5px; margin-bottom: 15px; border-bottom: 1px solid #1a2235; padding-bottom: 8px; }
+        .form-tab-btn { background: transparent; color: #62697e; border: none; padding: 6px 12px; cursor: pointer; font-weight: bold; font-size: 13px; border-radius: 4px; }
+        .form-tab-btn.active { background: #1c2336; color: #7b89f4; border: 1px solid #2d3854; }
     </style>
 </head>
 <body style="background-color: #060913; color: #ffffff; font-family: sans-serif; padding: 20px; margin: 0;">
@@ -46,44 +50,56 @@
     </div>
 
     <div id="criador-form" style="background-color: #0b0f19; padding: 20px; border-radius: 10px; border: 1px solid #1a2235; max-width: 450px; margin: 0 auto 40px auto; box-shadow: 0 4px 15px rgba(0,0,0,0.5);">
-        <h3 style="margin-top: 0; color: #7b89f4; border-bottom: 1px solid #1a2235; padding-bottom: 10px;">Adicionar Novo Item</h3>
         
-        <input type="text" id="nomeItem" placeholder="Nome do Item (Ex: Party Balloons)" style="width: 95%; padding: 10px; margin-bottom: 12px; background: #121826; color: #fff; border: 1px solid #232f4b; border-radius: 6px;">
-        
-        <input type="text" id="linkImagem" placeholder="Link da Imagem na Internet (URL)" style="width: 95%; padding: 10px; margin-bottom: 12px; background: #121826; color: #fff; border: 1px solid #232f4b; border-radius: 6px;">
+        <div class="form-tabs">
+            <button class="form-tab-btn active" id="tab-unico" onclick="mudarAbaForm('unico')">Individual</button>
+            <button class="form-tab-btn" id="tab-massa" onclick="mudarAbaForm('massa')">Importar Vários Links 🚀</button>
+        </div>
 
-        <input type="text" id="valorItem" placeholder="Valor em FV (Ex: 300)" style="width: 95%; padding: 10px; margin-bottom: 12px; background: #121826; color: #fff; border: 1px solid #232f4b; border-radius: 6px;">
+        <div id="form-individual">
+            <h3 style="margin-top: 0; color: #7b89f4; margin-bottom: 15px;">Adicionar Novo Item</h3>
+            <input type="text" id="nomeItem" placeholder="Nome do Item (Ex: Party Balloons)" style="width: 95%; padding: 10px; margin-bottom: 12px; background: #121826; color: #fff; border: 1px solid #232f4b; border-radius: 6px;">
+            <input type="text" id="linkImagem" placeholder="Link da Imagem na Internet (URL)" style="width: 95%; padding: 10px; margin-bottom: 12px; background: #121826; color: #fff; border: 1px solid #232f4b; border-radius: 6px;">
+            <input type="text" id="valorItem" placeholder="Valor em FV (Ex: 300)" style="width: 95%; padding: 10px; margin-bottom: 12px; background: #121826; color: #fff; border: 1px solid #232f4b; border-radius: 6px;">
 
-        <label style="color: #8fa0c4; font-size: 14px; display: block; margin-bottom: 5px;">Raridade do Item:</label>
-        <select id="raridadeItem" style="width: 100%; padding: 10px; margin-bottom: 12px; background: #121826; color: #fff; border: 1px solid #232f4b; border-radius: 6px; cursor: pointer;">
-            <option value="legendary">⭐ Legendary</option>
-            <option value="epics">✨ Epics</option>
-            <option value="rares">💎 Rares</option>
-            <option value="commons">📦 Commons</option>
-        </select>
+            <label style="color: #8fa0c4; font-size: 14px; display: block; margin-bottom: 5px;">Raridade do Item:</label>
+            <select id="raridadeItem" style="width: 100%; padding: 10px; margin-bottom: 12px; background: #121826; color: #fff; border: 1px solid #232f4b; border-radius: 6px; cursor: pointer;">
+                <option value="legendary">⭐ Legendary</option>
+                <option value="epics">✨ Epics</option>
+                <option value="rares">💎 Rares</option>
+                <option value="commons">📦 Commons</option>
+            </select>
 
-        <label style="color: #8fa0c4; font-size: 14px; display: block; margin-bottom: 5px;">Demanda (Aceita quebrados, Ex: 4.5):</label>
-        <input type="text" id="demandaNota" placeholder="Ex: 4.5" style="width: 95%; padding: 10px; margin-bottom: 12px; background: #121826; color: #fff; border: 1px solid #232f4b; border-radius: 6px;">
+            <label style="color: #8fa0c4; font-size: 14px; display: block; margin-bottom: 5px;">Demanda (Ex: 4.5):</label>
+            <input type="text" id="demandaNota" placeholder="Ex: 4.5" style="width: 95%; padding: 10px; margin-bottom: 12px; background: #121826; color: #fff; border: 1px solid #232f4b; border-radius: 6px;">
 
-        <label style="color: #8fa0c4; font-size: 14px; display: block; margin-bottom: 5px;">Tendência de Valor:</label>
-        <select id="tendenciaValor" style="width: 100%; padding: 10px; margin-bottom: 12px; background: #121826; color: #fff; border: 1px solid #232f4b; border-radius: 6px; cursor: pointer;">
-            <option value="none">Estável / Sem Setinha</option>
-            <option value="subiu">Subiu (↑ Verde)</option>
-            <option value="caiu">Caiu (↓ Vermelho)</option>
-            <option value="corrigido">Corrigido (* Amarelo)</option>
-        </select>
+            <label style="color: #8fa0c4; font-size: 14px; display: block; margin-bottom: 5px;">Tendência de Valor:</label>
+            <select id="tendenciaValor" style="width: 100%; padding: 10px; margin-bottom: 12px; background: #121826; color: #fff; border: 1px solid #232f4b; border-radius: 6px; cursor: pointer;">
+                <option value="none">Estável / Sem Setinha</option>
+                <option value="subiu">Subiu (↑ Verde)</option>
+                <option value="caiu">Caiu (↓ Vermelho)</option>
+                <option value="corrigido">Corrigido (* Amarelo)</option>
+            </select>
 
-        <label style="color: #8fa0c4; font-size: 14px; display: block; margin-bottom: 5px;">Status Especial:</label>
-        <select id="statusItem" style="width: 100%; padding: 10px; margin-bottom: 12px; background: #121826; color: #fff; border: 1px solid #232f4b; border-radius: 6px; cursor: pointer;">
-            <option value="none">Nenhum / Normal</option>
-            <option value="overpaid">Overpaid For (📈)</option>
-            <option value="underpaid">Underpaid For (📉)</option>
-            <option value="niche">Niche (💎 Raro)</option>
-        </select>
+            <label style="color: #8fa0c4; font-size: 14px; display: block; margin-bottom: 5px;">Status Especial:</label>
+            <select id="statusItem" style="width: 100%; padding: 10px; margin-bottom: 12px; background: #121826; color: #fff; border: 1px solid #232f4b; border-radius: 6px; cursor: pointer;">
+                <option value="none">Nenhum / Normal</option>
+                <option value="overpaid">Overpaid For (📈)</option>
+                <option value="underpaid">Underpaid For (📉)</option>
+                <option value="niche">Niche (💎 Raro)</option>
+            </select>
 
-        <input type="text" id="estabilidadeItem" placeholder="Estabilidade (Ex: Stable, Struggling)" style="width: 95%; padding: 10px; margin-bottom: 12px; background: #121826; color: #fff; border: 1px solid #232f4b; border-radius: 6px;">
+            <input type="text" id="estabilidadeItem" placeholder="Estabilidade (Ex: Stable, Struggling)" style="width: 95%; padding: 10px; margin-bottom: 12px; background: #121826; color: #fff; border: 1px solid #232f4b; border-radius: 6px;">
+            <button type="button" onclick="criarNovoCard()" style="width: 100%; padding: 12px; background: #5364e6; color: white; border: none; border-radius: 6px; cursor: pointer; font-weight: bold; font-size: 15px;">Adicionar Item à Lista ✨</button>
+        </div>
 
-        <button type="button" onclick="criarNovoCard()" style="width: 100%; padding: 12px; background: #5364e6; color: white; border: none; border-radius: 6px; cursor: pointer; font-weight: bold; font-size: 15px; transition: 0.2s;">Adicionar Item à Lista ✨</button>
+        <div id="form-massa" style="display: none;">
+            <h3 style="margin-top: 0; color: #7b89f4; margin-bottom: 5px;">Importador Automático</h3>
+            <p style="color: #62697e; font-size: 12px; margin-bottom: 15px;">Cole aqui a lista de links gerada no Postimages (um link por linha):</p>
+            <textarea id="listaLinksMassa" rows="8" placeholder="https://postimg.cc/...\nhttps://postimg.cc/..." style="width: 95%; padding: 10px; background: #121826; color: #fff; border: 1px solid #232f4b; border-radius: 6px; font-family: monospace; font-size: 12px; margin-bottom: 15px; resize: vertical;"></textarea>
+            <button type="button" onclick="importarLinksEmMassa()" style="width: 100%; padding: 12px; background: #2ed573; color: white; border: none; border-radius: 6px; cursor: pointer; font-weight: bold; font-size: 15px;">Gerar Cards do Estoque 🚀</button>
+        </div>
+
     </div>
 
     <hr style="border: 1px solid #1a2235; margin: 40px 0;">
@@ -109,7 +125,6 @@
     <script>
         let listaDeMarretas = [];
         try {
-            // Mudamos o nome da chave para não conflitar com dados antigos travados
             listaDeMarretas = JSON.parse(localStorage.getItem('ftf_custom_list_url')) || [];
         } catch(e) {
             listaDeMarretas = [];
@@ -140,6 +155,62 @@
         window.onload = function() {
             carregarCardsSalvos();
         };
+
+        // Alternar abas do formulário
+        function mudarAbaForm(aba) {
+            document.getElementById('tab-unico').classList.remove('active');
+            document.getElementById('tab-massa').classList.remove('active');
+            document.getElementById('form-individual').style.display = 'none';
+            document.getElementById('form-massa').style.display = 'none';
+
+            if(aba === 'unico') {
+                document.getElementById('tab-unico').classList.add('active');
+                document.getElementById('form-individual').style.display = 'block';
+            } else {
+                document.getElementById('tab-massa').classList.add('active');
+                document.getElementById('form-massa').style.display = 'block';
+            }
+        }
+
+        // Função para importar vários links de uma vez
+        function importarLinksEmMassa() {
+            const campoTexto = document.getElementById('listaLinksMassa').value;
+            if(!campoTexto.trim()) {
+                alert('Cole os links primeiro, amg! 😂');
+                return;
+            }
+
+            const links = campoTexto.split('\n');
+            let adicionados = 0;
+
+            links.forEach((linha) => {
+                const url = linha.trim();
+                if(url.startsWith('http')) {
+                    adicionados++;
+                    const novoObj = { 
+                        id: Date.now() + adicionados, 
+                        nome: `Nova Marreta ${adicionados}`, 
+                        valor: 'unstable', 
+                        raridade: raridadeAtual, 
+                        demanda: '5', 
+                        tendencia: 'none', 
+                        status: 'none', 
+                        templates: 'Stable', 
+                        imgSrc: url 
+                    };
+                    listaDeMarretas.push(novoObj);
+                }
+            });
+
+            if(adicionados > 0) {
+                atualizarLocalStorage();
+                carregarCardsSalvos();
+                document.getElementById('listaLinksMassa').value = '';
+                alert(`Sucesso! ${adicionados} marretas adicionadas como rascunho na aba atual. Agora é só editá-las! 😎`);
+            } else {
+                alert('Nenhum link válido encontrado. Verifique se eles começam com http.');
+            }
+        }
 
         // Função do Modo Print
         function togglePrintMode() {
@@ -261,17 +332,21 @@
             `;
 
             card.querySelector('.btn-editar').addEventListener('click', function() {
+                const novoNome = prompt("Mudar nome da Marreta:", item.nome);
                 const novoValor = prompt("Novo Valor em FV:", item.valor);
                 const novaDemanda = prompt("Nova Demanda (0 a 5):", item.demanda);
                 const novaEstabilidade = prompt("Nova Estabilidade:", item.templates);
                 const novaTendencia = prompt("Nova tendência (subiu, caiu, corrigido, none):", item.tendencia);
                 const novoStatus = prompt("Novo Status (overpaid, underpaid, niche, none):", item.status || 'none');
+                const novaRaridade = prompt("Mudar Raridade (legendary, epics, rares, commons):", item.raridade);
 
+                if (novoNome !== null && novoNome.trim() !== '') item.nome = novoNome.trim();
                 if (novoValor !== null && novoValor.trim() !== '') item.valor = novoValor.trim();
                 if (novaDemanda !== null) item.demanda = novaDemanda;
                 if (novaEstabilidade !== null) item.templates = novaEstabilidade;
                 if (novaTendencia !== null) item.tendencia = novaTendencia.trim().toLowerCase();
                 if (novoStatus !== null) item.status = novoStatus.trim().toLowerCase();
+                if (novaRaridade !== null && novaRaridade.trim() !== '') item.raridade = novaRaridade.trim().toLowerCase();
 
                 atualizarLocalStorage();
                 carregarCardsSalvos();
