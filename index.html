@@ -289,7 +289,7 @@
             {"id":1167,"nome":"Strawberry Jelly Basket","imgSrc":"https://i.postimg.cc/bvH8vGWB/Strawberry-Jelly-Basket.webp"},
             {"id":1168,"nome":"Sweet Train","imgSrc":"https://i.postimg.cc/jdLshSnY/Sweet-Train.webp"},
             {"id":1169,"nome":"Sweethearts Store","imgSrc":"https://i.postimg.cc/9Q9Cvgp5/Sweethearts-Store.png"},
-            {"id":1170,"literal":"Theatrical Spotlight","imgSrc":"https://i.postimg.cc/FFPrcLRq/Theatrical-Spotlight.webp"},
+            {"id":1170,"nome":"Theatrical Spotlight","imgSrc":"https://i.postimg.cc/FFPrcLRq/Theatrical-Spotlight.webp"},
             {"id":1171,"nome":"Toasted Marshmallow","imgSrc":"https://i.postimg.cc/c1DxYnHw/Toasted-Marshmallow.webp"},
             {"id":1172,"nome":"Tombstone Bash","imgSrc":"https://i.postimg.cc/yNzsBhQV/Tombstone-Bash.webp"},
             {"id":1173,"nome":"Toy Box","imgSrc":"https://i.postimg.cc/bNWqVf1H/Toy-Box.webp"},
@@ -315,11 +315,6 @@
         let listaDeMarretas = [];
         let raridadeAtual = 'legendary'; 
         
-            <script>
-        // ... (mantenha a sua lista BASE_PADRAO_MARRETAS e as variáveis aqui em cima igualzinho)
-
-        // SUBSITUA APENAS AS FUNÇÕES DE INICIALIZAÇÃO POR ESTAS:
-        
         function inicializarBancoDados() {
             let dadosLocais = [];
             try {
@@ -328,7 +323,7 @@
                 dadosLocais = [];
             }
 
-            if(dadosLocais.length === 0) {
+            if(dadosLocLocal === undefined || dadosLocais.length === 0) {
                 forçarInjecaoListaPadrao();
             } else {
                 listaDeMarretas = dadosLocais;
@@ -350,33 +345,9 @@
             localStorage.setItem('ftf_custom_v3', JSON.stringify(listaDeMarretas));
         }
 
-        // CORREÇÃO AQUI: Garante a ordem certa ao carregar a página
         window.onload = function() {
             inicializarBancoDados();
-            definirAbaAtivaVisual('legendary'); // Força a aba lendária visualmente
-            carregarCardsSalvos();             // Desenha os cards logo em seguida
-        };
-
-        // ... (mantenha o restante das funções como criarNovoCard, renderizarCardHTML, etc. igualzinho abaixo)
-
-
-        function forçarInjecaoListaPadrao() {
-            listaDeMarretas = BASE_PADRAO_MARRETAS.map(m => ({
-                id: m.id,
-                nome: m.nome || m.literal || "Marreta",
-                valor: 'unstable',
-                raridade: 'legendary',
-                demanda: '5',
-                tendencia: 'none',
-                status: 'none',
-                templates: 'Stable',
-                imgSrc: m.imgSrc
-            }));
-            localStorage.setItem('ftf_custom_v3', JSON.stringify(listaDeMarretas));
-        }
-
-        window.onload = function() {
-            inicializarBancoDados();
+            definirAbaAtivaVisual('legendary');
             carregarCardsSalvos();
         };
 
@@ -384,7 +355,7 @@
             localStorage.removeItem('ftf_custom_v3');
             forçarInjecaoListaPadrao();
             carregarCardsSalvos();
-            alert("Memória limpa! Todas as 190 marretas carregadas do zero! 💎");
+            alert("Memória limpa! Todas as marretas foram carregadas do zero! 💎");
         }
 
         function mudarAbaForm(aba) {
@@ -601,7 +572,7 @@
                 botaoAtivo.style.background = '#1c2336';
                 botaoAtivo.style.borderColor = '#ffa502';
             }
-            document.getElementById('titulo-secao').innerText = `📋 LISTA DE ITENS: ${raridadeAlvo}`;
+            document.getElementById('titulo-secao').innerText = `📋 LISTA DE ITENS: ${raridadeAlvo.toUpperCase()}`;
         }
 
         function atualizarEstiloValorDoCard(cardHTML, item) {
@@ -635,7 +606,7 @@
             for (let i = 1; i <= 5; i++) {
                 if (notaNum >= i) estrelasTexto += '<span style="color: #ffb830;">⭐</span>';
                 else if (notaNum > i - 1 && notaNum < i) estrelasTexto += '<span>✨</span>';
-                else HTMLTexto = estrelasTexto += '<span style="color: #323b54;">☆</span>';
+                else estrelasTexto += '<span style="color: #323b54;">☆</span>';
             }
             containerEstrelas.innerHTML = estrelasTexto;
         }
@@ -685,3 +656,4 @@
     </script>
 </body>
 </html>
+
