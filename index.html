@@ -27,26 +27,26 @@
         /* Estilos para as abas do formulário */
         .form-tabs { display: flex; gap: 5px; margin-bottom: 15px; border-bottom: 1px solid #1a2235; padding-bottom: 8px; }
         .form-tab-btn { background: transparent; color: #62697e; border: none; padding: 6px 12px; cursor: pointer; font-weight: bold; font-size: 13px; border-radius: 4px; }
-        .form-tab-btn.active { background: #1c2336; color: #7b89f4; border: 1px solid #2d3854; }
+        .form-tab-btn.active { background: #1c2336; color: #ffa502; border: 1px solid #2d3854; }
     </style>
 </head>
 <body style="background-color: #060913; color: #ffffff; font-family: sans-serif; padding: 20px; margin: 0;">
 
     <div style="text-align: center; margin-bottom: 30px;">
-        <h1 style="color: #7b89f4; font-size: 42px; margin-bottom: 5px; font-weight: bold; letter-spacing: 1px;">FTF Custom Values 👑</h1>
+        <h1 style="color: #ffa502; font-size: 42px; margin-bottom: 5px; font-weight: bold; letter-spacing: 1px;">FTF Custom Values 👑</h1>
         <p style="color: #62697e; margin: 0;">O seu ranking personalizado, justo e sem manipulação</p>
     </div>
 
     <div style="text-align: center; margin-bottom: 20px;">
-        <button id="togglePrintBtn" onclick="togglePrintMode()" style="background: #1c2336; color: #7b89f4; border: 1px solid #7b89f4; padding: 12px 24px; border-radius: 8px; font-weight: bold; cursor: pointer; font-size: 16px;">Ocultar Botões (Modo Print)</button>
+        <button id="togglePrintBtn" onclick="togglePrintMode()" style="background: #1c2336; color: #ffa502; border: 1px solid #ffa502; padding: 12px 24px; border-radius: 8px; font-weight: bold; cursor: pointer; font-size: 16px;">Ocultar Botões (Modo Print)</button>
     </div>
 
     <div style="text-align: center; margin-bottom: 20px;">
-        <button id="btnInstalarApp" style="display: none; background: linear-gradient(135deg, #6c5ce7, #a55eea); color: white; border: none; padding: 12px 24px; border-radius: 8px; font-weight: bold; cursor: pointer; font-size: 16px; box-shadow: 0 4px 15px rgba(108, 92, 231, 0.4);">✨ Instalar Aplicativo FTF ✨</button>
+        <button id="btnInstalarApp" style="display: none; background: linear-gradient(135deg, #ffa502, #ffb830); color: black; border: none; padding: 12px 24px; border-radius: 8px; font-weight: bold; cursor: pointer; font-size: 16px; box-shadow: 0 4px 15px rgba(255, 165, 0, 0.4);">✨ Instalar Aplicativo FTF ✨</button>
     </div>
 
     <div id="search-container" style="max-width: 450px; margin: 0 auto 20px auto; text-align: center;">
-        <input type="text" id="barraPesquisa" placeholder="🔍 Pesquisar marreta pelo nome..." oninput="carregarCardsSalvos()" style="width: 95%; padding: 12px; background: #121826; color: #fff; border: 1px solid #7b89f4; border-radius: 8px; font-size: 15px;">
+        <input type="text" id="barraPesquisa" placeholder="🔍 Pesquisar marreta pelo nome..." oninput="carregarCardsSalvos()" style="width: 95%; padding: 12px; background: #121826; color: #fff; border: 1px solid #ffa502; border-radius: 8px; font-size: 15px;">
     </div>
 
     <div id="criador-form" style="background-color: #0b0f19; padding: 20px; border-radius: 10px; border: 1px solid #1a2235; max-width: 450px; margin: 0 auto 40px auto; box-shadow: 0 4px 15px rgba(0,0,0,0.5);">
@@ -57,7 +57,7 @@
         </div>
 
         <div id="form-individual">
-            <h3 style="margin-top: 0; color: #7b89f4; margin-bottom: 15px;">Adicionar Novo Item</h3>
+            <h3 style="margin-top: 0; color: #ffa502; margin-bottom: 15px;">Adicionar Novo Item</h3>
             <input type="text" id="nomeItem" placeholder="Nome do Item (Ex: Party Balloons)" style="width: 95%; padding: 10px; margin-bottom: 12px; background: #121826; color: #fff; border: 1px solid #232f4b; border-radius: 6px;">
             <input type="text" id="linkImagem" placeholder="Link da Imagem na Internet (URL)" style="width: 95%; padding: 10px; margin-bottom: 12px; background: #121826; color: #fff; border: 1px solid #232f4b; border-radius: 6px;">
             <input type="text" id="valorItem" placeholder="Valor em FV (Ex: 300)" style="width: 95%; padding: 10px; margin-bottom: 12px; background: #121826; color: #fff; border: 1px solid #232f4b; border-radius: 6px;">
@@ -90,13 +90,13 @@
             </select>
 
             <input type="text" id="estabilidadeItem" placeholder="Estabilidade (Ex: Stable, Struggling)" style="width: 95%; padding: 10px; margin-bottom: 12px; background: #121826; color: #fff; border: 1px solid #232f4b; border-radius: 6px;">
-            <button type="button" onclick="criarNovoCard()" style="width: 100%; padding: 12px; background: #5364e6; color: white; border: none; border-radius: 6px; cursor: pointer; font-weight: bold; font-size: 15px;">Adicionar Item à Lista ✨</button>
+            <button type="button" onclick="criarNovoCard()" style="width: 100%; padding: 12px; background: #ffa502; color: black; border: none; border-radius: 6px; cursor: pointer; font-weight: bold; font-size: 15px;">Adicionar Item à Lista ✨</button>
         </div>
 
         <div id="form-massa" style="display: none;">
-            <h3 style="margin-top: 0; color: #7b89f4; margin-bottom: 5px;">Importador Automático</h3>
-            <p style="color: #62697e; font-size: 12px; margin-bottom: 15px;">Cole aqui a lista de links gerada no Postimages (um link por linha):</p>
-            <textarea id="listaLinksMassa" rows="8" placeholder="https://postimg.cc/...\nhttps://postimg.cc/..." style="width: 95%; padding: 10px; background: #121826; color: #fff; border: 1px solid #232f4b; border-radius: 6px; font-family: monospace; font-size: 12px; margin-bottom: 15px; resize: vertical;"></textarea>
+            <h3 style="margin-top: 0; color: #ffa502; margin-bottom: 5px;">Importador Automático</h3>
+            <p style="color: #62697e; font-size: 12px; margin-bottom: 15px;">Cole aqui os links (pode colocar de 15 em 15 ou quantos quiser):</p>
+            <textarea id="listaLinksMassa" rows="8" placeholder="https://i.postimg.cc/..." style="width: 95%; padding: 10px; background: #121826; color: #fff; border: 1px solid #232f4b; border-radius: 6px; font-family: monospace; font-size: 12px; margin-bottom: 15px; resize: vertical;"></textarea>
             <button type="button" onclick="importarLinksEmMassa()" style="width: 100%; padding: 12px; background: #2ed573; color: white; border: none; border-radius: 6px; cursor: pointer; font-weight: bold; font-size: 15px;">Gerar Cards do Estoque 🚀</button>
         </div>
 
@@ -107,7 +107,7 @@
     <div style="max-width: 1200px; margin: 0 auto;">
         
         <div class="btn-aba-container" style="display: flex; justify-content: center; gap: 10px; margin-bottom: 15px; background-color: #0b0f19; padding: 10px; border-radius: 8px; border: 1px solid #1a2235;">
-            <button class="btn-aba" id="aba-legendary" onclick="filtrarRaridade('legendary')" style="background: #1c2336; color: #ffb830; border: 1px solid #ffb830; padding: 10px 20px; border-radius: 6px; cursor: pointer; font-weight: bold; font-size: 14px;">👑 Legendaries</button>
+            <button class="btn-aba" id="aba-legendary" onclick="filtrarRaridade('legendary')" style="background: #1c2336; color: #ffa502; border: 1px solid #ffa502; padding: 10px 20px; border-radius: 6px; cursor: pointer; font-weight: bold; font-size: 14px;">👑 Legendaries</button>
             <button class="btn-aba" id="aba-epics" onclick="filtrarRaridade('epics')" style="background: transparent; color: #a55eea; border: 1px solid transparent; padding: 10px 20px; border-radius: 6px; cursor: pointer; font-weight: bold; font-size: 14px;">✨ Epics</button>
             <button class="btn-aba" id="aba-rares" onclick="filtrarRaridade('rares')" style="background: transparent; color: #45aaf2; border: 1px solid transparent; padding: 10px 20px; border-radius: 6px; cursor: pointer; font-weight: bold; font-size: 14px;">💎 Rares</button>
             <button class="btn-aba" id="aba-commons" onclick="filtrarRaridade('commons')" style="background: transparent; color: #a5b1c2; border: 1px solid transparent; padding: 10px 20px; border-radius: 6px; cursor: pointer; font-weight: bold; font-size: 14px;">📦 Commons</button>
@@ -117,7 +117,7 @@
             <button type="button" onclick="exportarLista()" style="background: #2ed573; color: white; border: none; padding: 10px 20px; border-radius: 6px; font-weight: bold; cursor: pointer; font-size: 14px; box-shadow: 0 4px 10px rgba(46, 213, 115, 0.3);">Copiar Código da Lista 📋</button>
         </div>
 
-        <h2 id="titulo-secao" style="color: #fff; font-size: 24px; margin-left: 10px; border-left: 4px solid #ffb830; padding-left: 10px; text-transform: uppercase;">📋 LISTA DE ITENS: LEGENDARY</h2>
+        <h2 id="titulo-secao" style="color: #fff; font-size: 24px; margin-left: 10px; border-left: 4px solid #ffa502; padding-left: 10px; text-transform: uppercase;">📋 LISTA DE ITENS: LEGENDARY</h2>
         
         <div id="container-cards" style="display: grid; grid-template-columns: repeat(auto-fill, minmax(190px, 1fr)); gap: 12px; padding: 5px;"></div>
     </div>
@@ -156,7 +156,6 @@
             carregarCardsSalvos();
         };
 
-        // Alternar abas do formulário
         function mudarAbaForm(aba) {
             document.getElementById('tab-unico').classList.remove('active');
             document.getElementById('tab-massa').classList.remove('active');
@@ -172,7 +171,7 @@
             }
         }
 
-        // Função para importar vários links de uma vez
+        // Função CORRIGIDA que aceita lotes pequenos e ignora linhas vazias
         function importarLinksEmMassa() {
             const campoTexto = document.getElementById('listaLinksMassa').value;
             if(!campoTexto.trim()) {
@@ -184,12 +183,12 @@
             let adicionados = 0;
 
             links.forEach((linha) => {
-                const url = linha.trim();
-                if(url.startsWith('http')) {
+                const url = linha.trim(); // Limpa espaços invisíveis
+                if(url && url.toLowerCase().startsWith('http')) {
                     adicionados++;
                     const novoObj = { 
-                        id: Date.now() + adicionados, 
-                        nome: `Nova Marreta ${adicionados}`, 
+                        id: Date.now() + adicionados + Math.floor(Math.random() * 1000), 
+                        nome: `Nova Marreta ${listaDeMarretas.length + 1}`, 
                         valor: 'unstable', 
                         raridade: raridadeAtual, 
                         demanda: '5', 
@@ -206,24 +205,23 @@
                 atualizarLocalStorage();
                 carregarCardsSalvos();
                 document.getElementById('listaLinksMassa').value = '';
-                alert(`Sucesso! ${adicionados} marretas adicionadas como rascunho na aba atual. Agora é só editá-las! 😎`);
+                alert(`Sucesso! ${adicionados} marretas adicionadas. Agora salva e edita sem medo! 😎`);
             } else {
-                alert('Nenhum link válido encontrado. Verifique se eles começam com http.');
+                alert('Amg, nenhum link válido que começa com http foi achado nas linhas que você colou!');
             }
         }
 
-        // Função do Modo Print
         function togglePrintMode() {
             document.body.classList.toggle('hide-mode');
             const btn = document.getElementById('togglePrintBtn');
             if (document.body.classList.contains('hide-mode')) {
                 btn.innerText = "Mostrar Botões (Modo Edição)";
-                btn.style.background = "#7b89f4";
+                btn.style.background = "#ffa502";
                 btn.style.color = "#000";
             } else {
                 btn.innerText = "Ocultar Botões (Modo Print)";
                 btn.style.background = "#1c2336";
-                btn.style.color = "#7b89f4";
+                btn.style.color = "#ffa502";
             }
         }
 
@@ -276,13 +274,11 @@
             const container = document.getElementById('container-cards');
             const card = document.createElement('div');
             
-            let corRaridade = '#ffb830'; 
-            if (item.raridade === 'epics') corRaridade = '#a55eea';
-            if (item.raridade === 'rares') corRaridade = '#45aaf2';
-            if (item.raridade === 'commons') corRaridade = '#a5b1c2';
+            // BORDAS SEMPRE AMARELAS (#ffa502) CONFORME PEDIDO
+            let corBordaFixa = '#ffa502'; 
 
             card.style.backgroundColor = '#0b0f19';
-            card.style.border = `1.5px solid ${corRaridade}`; 
+            card.style.border = `1.5px solid ${corBordaFixa}`; 
             card.style.borderRadius = '12px';
             card.style.padding = '12px';
             card.style.width = '100%'; 
@@ -300,10 +296,10 @@
                     <img src="${item.imgSrc}" alt="${item.nome}" style="max-width: 100%; max-height: 100%; object-fit: contain;" onerror="this.src='https://placehold.co/150x110/0b0f19/ffffff?text=Sem+Foto'">
                 </div>
 
-                <span class="txt-posicao-automatica" style="position: absolute; top: 12px; left: 12px; background: #5364e6; color: #fff; font-size: 10px; font-weight: bold; padding: 2px 5px; border-radius: 4px;">#--</span>
+                <span class="txt-posicao-automatica" style="position: absolute; top: 12px; left: 12px; background: #ffa502; color: #000; font-size: 10px; font-weight: bold; padding: 2px 5px; border-radius: 4px;">#--</span>
 
                 <h3 style="margin: 0 0 2px 0; color: #ffffff; font-size: 14px; font-weight: bold; letter-spacing: 0.3px; white-space: nowrap; overflow: hidden; text-overflow: ellipsis;">${item.nome}</h3>
-                <span style="color: ${corRaridade}; font-size: 9px; font-weight: bold; text-transform: uppercase; letter-spacing: 1px;">${item.raridade || 'legendary'}</span>
+                <span style="color: #62697e; font-size: 9px; font-weight: bold; text-transform: uppercase; letter-spacing: 1px;">${item.raridade || 'legendary'}</span>
                 
                 <div style="margin-top: 10px; font-size: 11px; display: flex; flex-direction: column; gap: 6px;">
                     <div>
@@ -327,7 +323,7 @@
                         <button class="btn-subir" style="flex: 1; background: #121826; color: #fff; border: 1px solid #232f4b; padding: 4px; cursor: pointer; border-radius: 4px; font-size: 10px;">▲ Subir</button>
                         <button class="btn-descer" style="flex: 1; background: #121826; color: #fff; border: 1px solid #232f4b; padding: 4px; cursor: pointer; border-radius: 4px; font-size: 10px;">▼ Descer</button>
                     </div>
-                    <button class="btn-editar" style="background: #1c2336; color: #7b89f4; border: 1px solid #2d3854; padding: 4px; cursor: pointer; border-radius: 4px; font-size: 10px; font-weight: bold;">✏️ Editar</button>
+                    <button class="btn-editar" style="background: #1c2336; color: #ffa502; border: 1px solid #2d3854; padding: 4px; cursor: pointer; border-radius: 4px; font-size: 10px; font-weight: bold;">✏️ Editar</button>
                 </div>
             `;
 
@@ -392,16 +388,16 @@
                 btn.style.borderColor = 'transparent';
             });
 
-            const coresAbas = { legendary: '#ffb830', epics: '#a55eea', rares: '#45aaf2', commons: '#a5b1c2' };
+            const coresAbas = { legendary: '#ffa502', epics: '#a55eea', rares: '#45aaf2', commons: '#a5b1c2' };
             const botaoAtivo = document.getElementById('aba-' + raridadeAlvo);
             if (botaoAtivo) {
                 botaoAtivo.style.background = '#1c2336';
-                botaoAtivo.style.borderColor = coresAbas[raridadeAlvo];
+                botaoAtivo.style.borderColor = '#ffa502';
             }
 
             const titulo = document.getElementById('titulo-secao');
             if (titulo) {
-                titulo.style.borderLeftColor = coresAbas[raridadeAlvo];
+                titulo.style.borderLeftColor = '#ffa502';
                 titulo.innerText = `📋 LISTA DE ITENS: ${raridadeAlvo}`;
             }
         }
@@ -412,6 +408,7 @@
             if (!containerValor) return;
 
             let badgeTendencia = '';
+            // TEXTO DO VALOR EM AMARELO PADRÃO (#ffa502) CONFORME PEDIDO
             let corValor = '#ffa502';
 
             let valorExibido = "unstable";
@@ -421,9 +418,9 @@
                 item.valor = "unstable";
             }
 
-            if (item.tendencia === 'subiu') { badgeTendencia = ` <span style="color: #2ed573;">↑</span>`; corValor = '#2ed573'; }
-            else if (item.tendencia === 'caiu') { badgeTendencia = ` <span style="color: #ff4757;">↓</span>`; corValor = '#ff4757'; }
-            else if (item.tendencia === 'corrigido') { badgeTendencia = ` <span style="color: #ffa502;">*</span>`; corValor = '#ffa502'; }
+            if (item.tendencia === 'subiu') { badgeTendencia = ` <span style="color: #2ed573;">↑</span>`; }
+            else if (item.tendencia === 'caiu') { badgeTendencia = ` <span style="color: #ff4757;">↓</span>`; }
+            else if (item.tendencia === 'corrigido') { badgeTendencia = ` <span style="color: #ffa502;">*</span>`; }
             
             containerValor.style.color = corValor;
             containerValor.innerHTML = `${valorExibido}${badgeTendencia}`;
