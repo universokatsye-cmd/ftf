@@ -614,19 +614,23 @@ window.onload = function () {
         }
 
         function carregarCardsSalvos() {
-            console.log("carregou", listaDeMarretas.length, raridadeAtual);
-            document.getElementById('container-cards').innerHTML = '';
-            const termoPesquisa = document.getElementById('barraPesquisa').value.toLowerCase();
-            
-            const itensFiltrados = listaDeMarretas.filter(item => {
-                const bateRaridade = (item.raridade || 'legendary') === raridadeAtual;
-                const bateNome = item.nome.toLowerCase().includes(termoPesquisa);
-                return bateRaridade && bateNome;
-            });
-            
-            itensFiltrados.forEach(item => { renderizarCardHTML(item); });
-            atualizarNumbersVisuais();
+    alert("carregou: " + listaDeMarretas.length + " | " + raridadeAtual);
+
+    document.getElementById('container-cards').innerHTML = '';
+    const termoPesquisa = document.getElementById('barraPesquisa').value.toLowerCase();
+
+    const itensFiltrados = listaDeMarretas.filter(item => {
+        const bateRaridade = (item.raridade || 'legendary') === raridadeAtual;
+        const bateNome = item.nome.toLowerCase().includes(termoPesquisa);
+        return bateRaridade && bateNome;
+    });
+
+    alert("itens filtrados: " + itensFiltrados.length);
+
+    itensFiltrados.forEach(item => renderizarCardHTML(item));
+    atualizarNumbersVisuais();
         }
+
 
         function reordenarArrayEGuardar() {
             const cardsNaTela = document.querySelectorAll('#container-cards > div');
