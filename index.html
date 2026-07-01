@@ -1,6 +1,7 @@
 <!DOCTYPE html>
 <html lang="pt-BR">
 <head>
+
     <meta charset="UTF-8">
     <title>FTF Custom Values - Dark Edition</title>
 
@@ -685,6 +686,22 @@
         }
 
         inicializarBancoDados();
+
+<button onclick="localStorage.clear(); location.reload();"
+style="
+position: fixed;
+bottom: 10px;
+right: 10px;
+z-index: 99999;
+padding: 10px;
+background: red;
+color: white;
+border: none;
+border-radius: 8px;
+">
+RESET
+</button>
+        
     </script>
 </body>
 </html>
